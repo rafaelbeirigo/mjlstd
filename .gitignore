@@ -1,0 +1,10 @@
+# Emacs
+**/\#*
+**/*~
+TAGS
+
+# KDE
+**/.directory
+
+# Octave
+**/octave-workspace

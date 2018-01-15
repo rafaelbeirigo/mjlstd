@@ -1,3 +1,5 @@
+rand_seed = 1;
+
 initial_mode = 1;
 
 x0 = [1; 1];

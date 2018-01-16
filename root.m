@@ -10,14 +10,13 @@ for i=1:N
 end
 Pc=cumsum(P,2);
 Fe=zeros(N,J);
-Fee=zeros(N,J);
 
 for r=1:R
   rand('seed',r);
   for i=1:N
     Ys(:,:,i)=zeros(size(As,1));
   end
-  Fs=F_opt/2;
+  Fs=F_opt*0.0;
   for j=1:J
     for i=1:N
       for t=1:T
@@ -49,22 +48,25 @@ for r=1:R
 
           Upsilons(:,:,i)=(A+B*F)*Upsilons(:,:,i);
         end
+
         gamma=1/t;
         Yaux=Ys(:,:,i);
         Ys(:,:,i)=Ys(:,:,i)+gamma*Sum(:,:,i);
+
+        for l=1:N
+          A=As(:,:,l);
+          B=Bs(:,:,l);
+          D=Ds(:,:,l);
+          S=Ys(:,:,l);
+
+          FsAux(:,:,l)=-inv(B'*S*B+D'*D)*B'*S*A;
+          Fee(l,(j-1)*T+t)=max(abs(F_opt(:,:,i)-FsAux(:,:,i)));
+        end
 
         maxDiff=max(max(abs(Ys(:,:,i)-Yaux)));
         if maxDiff<epsilon
           break
         end
-
-        A=As(:,:,i);
-        B=Bs(:,:,i);
-        D=Ds(:,:,i);
-        S=Ys(:,:,i);
-
-        FsAux(:,:,i)=-inv(B'*S*B+D'*D)*B'*S*A;
-        Fee(i,(j-1)*T+t)=max(max(abs(F_opt(:,:,i)-Fs(:,:,i))));
       end
     end
     for i=1:N
@@ -86,3 +88,4 @@ for r=1:R
   end
 end
 csvwrite('Fe.csv',[[1:J]',Fe'/R]);
+csvwrite('Fee.csv',[[1:J*T]',Fee'/R]);

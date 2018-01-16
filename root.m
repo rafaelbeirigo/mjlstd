@@ -17,7 +17,7 @@ for i=1:N
   Ys(:,:,i)=zeros(size(As,1));
 end
 
-Fs=F_opt;
+Fs=F_opt*0;
 
 Err_F=zeros(N,T);
 

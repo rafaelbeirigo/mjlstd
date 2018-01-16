@@ -10,6 +10,7 @@ for i=1:N
 end
 Pc=cumsum(P,2);
 Fe=zeros(N,J);
+Fee=zeros(N,J);
 
 for r=1:R
   rand('seed',r);
@@ -56,6 +57,14 @@ for r=1:R
         if maxDiff<epsilon
           break
         end
+
+        A=As(:,:,i);
+        B=Bs(:,:,i);
+        D=Ds(:,:,i);
+        S=Ys(:,:,i);
+
+        FsAux(:,:,i)=-inv(B'*S*B+D'*D)*B'*S*A;
+        Fee(i,(j-1)*T+t)=max(max(abs(F_opt(:,:,i)-Fs(:,:,i))));
       end
     end
     for i=1:N
@@ -65,7 +74,6 @@ for r=1:R
       S=Ys(:,:,i);
 
       Fs(:,:,i)=-inv(B'*S*B+D'*D)*B'*S*A;
-
       Fe(i,j)=max(max(abs(F_opt(:,:,i)-Fs(:,:,i))));
     end
 

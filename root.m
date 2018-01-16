@@ -19,6 +19,8 @@ end
 
 Fs=F_opt;
 
+Err_F=zeros(N,T);
+
 for i=1:N
   for t=1:T
     Upsilons(:,:,i)=eye(size(As,1));
@@ -67,5 +69,6 @@ for i=1:N
 
     maxDiff=max(max(abs(Falg(:,:,i)-F_opt(:,:,i))));
     maxDiff
+    Err_F(i,t)=maxDiff;
   end
 end

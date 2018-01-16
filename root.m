@@ -17,7 +17,7 @@ for i=1:N
   Ys(:,:,i)=zeros(size(As,1));
 end
 
-Fs=F_opt*0;
+Fs=F_opt/2;
 
 Fe=zeros(N,T);
 
@@ -72,3 +72,5 @@ for i=1:N
     Fe(i,t)=maxDiff;
   end
 end
+
+csvwrite('Fe.csv',[[1:T]',Fe']);

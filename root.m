@@ -19,7 +19,7 @@ end
 
 Fs=F_opt*0;
 
-Err_F=zeros(N,T);
+Fe=zeros(N,T);
 
 for i=1:N
   for t=1:T
@@ -69,6 +69,6 @@ for i=1:N
 
     maxDiff=max(max(abs(Falg(:,:,i)-F_opt(:,:,i))));
     maxDiff
-    Err_F(i,t)=maxDiff;
+    Fe(i,t)=maxDiff;
   end
 end

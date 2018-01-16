@@ -6,7 +6,7 @@ parameters;
 
 rand('seed',rand_seed);
 
-Theta=zeros(N,T);
+Theta=zeros(N,K);
 for i=1:N
   Theta(i,1)=i;
 end
@@ -22,7 +22,7 @@ end
 Fs=F_opt;
 
 for i=1:N
-  for k=1:T-1
+  for k=1:K-1
     Theta(i,k+1)=find(Pc(Theta(i,k),:)>=rand())(1);
 
     U=Upsilons(:,:,i);

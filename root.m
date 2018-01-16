@@ -11,26 +11,27 @@ end
 Pc=cumsum(P,2);
 Fe=zeros(N,J);
 
+Fee=zeros(J*T,[3,1]);
+
 for r=1:R
   rand('seed',r);
   for i=1:N
     Ys(:,:,i)=zeros(size(As,1));
   end
-  Fs=F_opt*0.0;
+  Fs=F_opt;
   for j=1:J
     for i=1:N
-      for l=1:N
-        A=As(:,:,l);
-        B=Bs(:,:,l);
-        D=Ds(:,:,l);
-        S=Ys(:,:,l);
-
-        FsAux(:,:,l)=-inv(B'*S*B+D'*D)*B'*S*A;
-        Fee(l,1)=max(abs(F_opt(:,:,l)-FsAux(:,:,l)));
-        pause;
-      end
-
       for t=1:T
+        for l=1:N
+          A=As(:,:,l);
+          B=Bs(:,:,l);
+          D=Ds(:,:,l);
+          S=Ys(:,:,l);
+
+          FsAux(:,:,l)=-inv(B'*S*B+D'*D)*B'*S*A;
+          Fee((j-1)*T+t,l)=Fee((j-1)*T+t,l)+max(abs(F_opt(:,:,l)-FsAux(:,:,l)));
+        end
+
         Upsilons(:,:,i)=eye(size(As,1));
         Sum(:,:,i)=zeros(size(As,1));
         for k=1:K-1
@@ -54,7 +55,7 @@ for r=1:R
 
           maxDiff=max(max(abs(Sum(:,:,i)-SumAux)));
           if maxDiff<epsilon
-            break
+            %% break
           end
 
           Upsilons(:,:,i)=(A+B*F)*Upsilons(:,:,i);
@@ -64,19 +65,9 @@ for r=1:R
         Yaux=Ys(:,:,i);
         Ys(:,:,i)=Ys(:,:,i)+gamma*Sum(:,:,i);
 
-        for l=1:N
-          A=As(:,:,l);
-          B=Bs(:,:,l);
-          D=Ds(:,:,l);
-          S=Ys(:,:,l);
-
-          FsAux(:,:,l)=-inv(B'*S*B+D'*D)*B'*S*A;
-          Fee(l,(j-1)*T+t+1)=max(abs(F_opt(:,:,l)-FsAux(:,:,l)));
-        end
-
         maxDiff=max(max(abs(Ys(:,:,i)-Yaux)));
         if maxDiff<epsilon
-          break
+          %% %% break
         end
       end
     end
@@ -94,10 +85,10 @@ for r=1:R
     if j>1
       maxDiff=abs(Fe(:,j)-Fe(:,j-1));
       if maxDiff<epsilon
-        break
+        %% break
       end
     end
   end
 end
 csvwrite('Fe.csv',[[1:J]',Fe'/R]);
-csvwrite('Fee.csv',[[1:J*T]',Fee'/R]);
+csvwrite('Fee.csv',[[1:size(Fee,1)]',Fee/R]);

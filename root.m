@@ -19,6 +19,17 @@ for r=1:R
   Fs=F_opt*0.0;
   for j=1:J
     for i=1:N
+      for l=1:N
+        A=As(:,:,l);
+        B=Bs(:,:,l);
+        D=Ds(:,:,l);
+        S=Ys(:,:,l);
+
+        FsAux(:,:,l)=-inv(B'*S*B+D'*D)*B'*S*A;
+        Fee(l,1)=max(abs(F_opt(:,:,l)-FsAux(:,:,l)));
+        pause;
+      end
+
       for t=1:T
         Upsilons(:,:,i)=eye(size(As,1));
         Sum(:,:,i)=zeros(size(As,1));
@@ -60,7 +71,7 @@ for r=1:R
           S=Ys(:,:,l);
 
           FsAux(:,:,l)=-inv(B'*S*B+D'*D)*B'*S*A;
-          Fee(l,(j-1)*T+t)=max(abs(F_opt(:,:,i)-FsAux(:,:,i)));
+          Fee(l,(j-1)*T+t+1)=max(abs(F_opt(:,:,l)-FsAux(:,:,l)));
         end
 
         maxDiff=max(max(abs(Ys(:,:,i)-Yaux)));
@@ -69,14 +80,15 @@ for r=1:R
         end
       end
     end
-    for i=1:N
-      A=As(:,:,i);
-      B=Bs(:,:,i);
-      D=Ds(:,:,i);
-      S=Ys(:,:,i);
 
-      Fs(:,:,i)=-inv(B'*S*B+D'*D)*B'*S*A;
-      Fe(i,j)=max(max(abs(F_opt(:,:,i)-Fs(:,:,i))));
+    for l=1:N
+      A=As(:,:,l);
+      B=Bs(:,:,l);
+      D=Ds(:,:,l);
+      S=Ys(:,:,l);
+
+      Fs(:,:,l)=-inv(B'*S*B+D'*D)*B'*S*A;
+      Fe(l,j)=max(max(abs(F_opt(:,:,l)-Fs(:,:,l))));
     end
 
     if j>1

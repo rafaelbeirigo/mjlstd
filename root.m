@@ -4,73 +4,77 @@ clear all;
 constants;
 parameters;
 
-rand('seed',rand_seed);
-
 Theta=zeros(N,K);
 for i=1:N
   Theta(i,1)=i;
 end
-
 Pc=cumsum(P,2);
+Fe=zeros(N,J);
 
-for i=1:N
-  Ys(:,:,i)=zeros(size(As,1));
-end
+for r=1:R
+  rand('seed',r);
+  for i=1:N
+    Ys(:,:,i)=zeros(size(As,1));
+  end
+  Fs=F_opt/2;
+  for j=1:J
+    for i=1:N
+      for t=1:T
+        Upsilons(:,:,i)=eye(size(As,1));
+        Sum(:,:,i)=zeros(size(As,1));
+        for k=1:K-1
+          Theta(i,k+1)=find(Pc(Theta(i,k),:)>=rand())(1);
 
-Fs=F_opt/2;
+          U=Upsilons(:,:,i);
+          A=As(:,:,Theta(i,k+1));
+          B=Bs(:,:,Theta(i,k+1));
+          C=Cs(:,:,Theta(i,k+1));
+          D=Ds(:,:,Theta(i,k+1));
+          F=Fs(:,:,Theta(i,k+1));
+          Y1=Ys(:,:,Theta(i,k));
+          Y2=Ys(:,:,Theta(i,k+1));
 
-Fe=zeros(N,T);
+          Bcal(:,:,i)=U'*(C'*C+F'*D'*D*F)*U;
+          Ccal(:,:,i)=U'*((A+B*F)'*Y2*(A+B*F)-Y1)*U;
+          Dcal(:,:,i)=Bcal(:,:,i)+Ccal(:,:,i);
 
-for i=1:N
-  for t=1:T
-    Upsilons(:,:,i)=eye(size(As,1));
-    Sum(:,:,i)=zeros(size(As,1));
-    for k=1:K-1
-      Theta(i,k+1)=find(Pc(Theta(i,k),:)>=rand())(1);
+          SumAux=Sum(:,:,i);
+          Sum(:,:,i)=Sum(:,:,i)+power(lambda,k)*Dcal(:,:,i);
 
-      U=Upsilons(:,:,i);
-      A=As(:,:,Theta(i,k+1));
-      B=Bs(:,:,Theta(i,k+1));
-      C=Cs(:,:,Theta(i,k+1));
-      D=Ds(:,:,Theta(i,k+1));
-      F=Fs(:,:,Theta(i,k+1));
-      Y1=Ys(:,:,Theta(i,k));
-      Y2=Ys(:,:,Theta(i,k+1));
+          maxDiff=max(max(abs(Sum(:,:,i)-SumAux)));
+          if maxDiff<epsilon
+            break
+          end
 
-      Bcal(:,:,i)=U'*(C'*C+F'*D'*D*F)*U;
-      Ccal(:,:,i)=U'*((A+B*F)'*Y2*(A+B*F)-Y1)*U;
-      Dcal(:,:,i)=Bcal(:,:,i)+Ccal(:,:,i);
+          Upsilons(:,:,i)=(A+B*F)*Upsilons(:,:,i);
+        end
+        gamma=1/t;
+        Yaux=Ys(:,:,i);
+        Ys(:,:,i)=Ys(:,:,i)+gamma*Sum(:,:,i);
 
-      Sum_old=Sum(:,:,i);
-      Sum(:,:,i)=Sum(:,:,i)+power(lambda,k)*Dcal(:,:,i);
+        maxDiff=max(max(abs(Ys(:,:,i)-Yaux)));
+        if maxDiff<epsilon
+          break
+        end
+      end
+    end
+    for i=1:N
+      A=As(:,:,i);
+      B=Bs(:,:,i);
+      D=Ds(:,:,i);
+      S=Ys(:,:,i);
 
-      maxDiff=max(max(abs(Sum(:,:,i)-Sum_old)));
+      Fs(:,:,i)=-inv(B'*S*B+D'*D)*B'*S*A;
+
+      Fe(i,j)=max(max(abs(F_opt(:,:,i)-Fs(:,:,i))));
+    end
+
+    if j>1
+      maxDiff=abs(Fe(:,j)-Fe(:,j-1));
       if maxDiff<epsilon
         break
       end
-
-      Upsilons(:,:,i)=(A+B*F)*Upsilons(:,:,i);
     end
-    gamma=power(t,-1);
-    Ys_old=Ys(:,:,i);
-    Ys(:,:,i)=Ys(:,:,i)+gamma*Sum(:,:,i);
-
-    maxDiff=max(max(abs(Ys(:,:,i)-Ys_old)));
-    if maxDiff<epsilon
-      break
-    end
-
-    A=As(:,:,i);
-    B=Bs(:,:,i);
-    D=Ds(:,:,i);
-    S=Ys(:,:,i);
-
-    Falg(:,:,i)=-inv(B'*S*B+D'*D)*B'*S*A;
-
-    maxDiff=max(max(abs(Falg(:,:,i)-F_opt(:,:,i))));
-    maxDiff
-    Fe(i,t)=maxDiff;
   end
 end
-
-csvwrite('Fe.csv',[[1:T]',Fe']);
+csvwrite('Fe.csv',[[1:J]',Fe'/R]);

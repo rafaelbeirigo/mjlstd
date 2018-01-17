@@ -10,7 +10,6 @@ for i=1:N
 end
 Pc=cumsum(P,2);
 Fe=zeros(N,J);
-
 Fee=zeros(J*T,[3,1]);
 
 for r=1:R

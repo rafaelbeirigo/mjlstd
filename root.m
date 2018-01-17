@@ -18,20 +18,24 @@ for r=1:R
   for i=1:N
     Ys(:,:,i)=zeros(size(As,1));
   end
-  Fs=F_opt/2;
+  Yconverged=zeros(N);
+  Fs=F_opt*0.75;
   for j=1:J
-    for i=1:N
-      for t=1:T
-        for l=1:N
-          A=As(:,:,l);
-          B=Bs(:,:,l);
-          D=Ds(:,:,l);
-          S=Ys(:,:,l);
+    for t=1:T
+      for l=1:N
+        A=As(:,:,l);
+        B=Bs(:,:,l);
+        D=Ds(:,:,l);
+        S=Ys(:,:,l);
 
-          FsAux(:,:,l)=-inv(B'*S*B+D'*D)*B'*S*A;
-          Fee((j-1)*T+t,l)=Fee((j-1)*T+t,l)+max(abs(F_opt(:,:,l)-FsAux(:,:,l)));
+        FsAux(:,:,l)=-inv(B'*S*B+D'*D)*B'*S*A;
+        Fee((j-1)*T+t,l)=Fee((j-1)*T+t,l)+max(abs(F_opt(:,:,l)-FsAux(:,:,l)));
+      end
+
+      for i=1:N
+        if Yconverged(i)
+          continue
         end
-
         Upsilons(:,:,i)=eye(size(As,1));
         Sum(:,:,i)=zeros(size(As,1));
         for k=1:K-1
@@ -60,14 +64,19 @@ for r=1:R
 
           Upsilons(:,:,i)=(A+B*F)*Upsilons(:,:,i);
         end
+      end
 
-        gamma=1/t;
+      gamma=1/t;
+      for i=1:N
+        if Yconverged(i)
+          continue
+        end
         Yaux=Ys(:,:,i);
         Ys(:,:,i)=Ys(:,:,i)+gamma*Sum(:,:,i);
 
         maxDiff=max(max(abs(Ys(:,:,i)-Yaux)));
         if maxDiff<epsilon
-          break
+          Yconverged(i)=1;
         end
       end
     end

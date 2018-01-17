@@ -18,7 +18,7 @@ for r=1:R
   for i=1:N
     Ys(:,:,i)=zeros(size(As,1));
   end
-  Fs=F_opt*0.0;
+  Fs=F_opt/2;
   for j=1:J
     for i=1:N
       for t=1:T

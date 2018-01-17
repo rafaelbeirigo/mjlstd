@@ -55,7 +55,7 @@ for r=1:R
 
           maxDiff=max(max(abs(Sum(:,:,i)-SumAux)));
           if maxDiff<epsilon
-            %% break
+            break
           end
 
           Upsilons(:,:,i)=(A+B*F)*Upsilons(:,:,i);
@@ -67,7 +67,7 @@ for r=1:R
 
         maxDiff=max(max(abs(Ys(:,:,i)-Yaux)));
         if maxDiff<epsilon
-          %% %% break
+          break
         end
       end
     end
@@ -85,7 +85,7 @@ for r=1:R
     if j>1
       maxDiff=abs(Fe(:,j)-Fe(:,j-1));
       if maxDiff<epsilon
-        %% break
+        break
       end
     end
   end

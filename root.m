@@ -100,3 +100,8 @@ for r=1:R
 end
 %% csvwrite('Fe.csv',[[1:J]',Fe'/R]);
 %% csvwrite('Fee.csv',[[1:size(Fee,1)]',Fee/R]);
+
+Fe_avg = mean(Fe, 3);
+Fe_std = std(Fe, 0, 3);
+Fee_avg = mean(Fee, 3);
+Fee_std = std(Fee, 0, 3);

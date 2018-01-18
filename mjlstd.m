@@ -1,4 +1,4 @@
-function [Fe Fee] = mjlstd(lambda,J,T,K,epsilon,N,P,As,Bs,Cs,Ds,F_opt,X_opt,seed)
+function [Fe Fee] = mjlstd(lambda,J,T,K,epsilon,N,P,As,Bs,Cs,Ds,F_opt,Fs,X_opt,seed)
   Theta=zeros(N,K);
   for i=1:N
     Theta(i,1)=i;
@@ -12,7 +12,6 @@ function [Fe Fee] = mjlstd(lambda,J,T,K,epsilon,N,P,As,Bs,Cs,Ds,F_opt,X_opt,seed
     Ys(:,:,i)=zeros(size(As,1));
   end
   Yconverged=zeros(N);
-  Fs=F_opt*0.75;
   for j=1:J
     for t=1:T
       for i=1:N

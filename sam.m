@@ -7,8 +7,9 @@ sam_parameters;
 Fe=zeros(N,J,R);
 Fee=zeros(J*T,[3,1],R);
 
+Fs=F_opt*0.75;
 for r=1:R
-  [Fe(:,:,r) Fee(:,:,r)] = mjlstd(lambda,J,T,K,epsilon,N,P,As,Bs,Cs,Ds,F_opt,X_opt,r);
+  [Fe(:,:,r) Fee(:,:,r)] = mjlstd(lambda,J,T,K,epsilon,N,P,As,Bs,Cs,Ds,F_opt,Fs,X_opt,r);
 end
 
 Fe_avg = mean(Fe,3);

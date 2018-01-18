@@ -15,14 +15,14 @@ function [Fe Fee] = mjlstd(lambda,J,T,K,epsilon,N,P,As,Bs,Cs,Ds,F_opt,X_opt,seed
   Fs=F_opt*0.75;
   for j=1:J
     for t=1:T
-      for l=1:N
-        A=As(:,:,l);
-        B=Bs(:,:,l);
-        D=Ds(:,:,l);
-        S=Ys(:,:,l);
+      for i=1:N
+        A=As(:,:,i);
+        B=Bs(:,:,i);
+        D=Ds(:,:,i);
+        S=Ys(:,:,i);
 
-        FsAux(:,:,l)=-inv(B'*S*B+D'*D)*B'*S*A;
-        Fee((j-1)*T+t,l)=Fee((j-1)*T+t,l)+max(abs(F_opt(:,:,l)-FsAux(:,:,l)));
+        FsAux(:,:,i)=-inv(B'*S*B+D'*D)*B'*S*A;
+        Fee((j-1)*T+t,i)=Fee((j-1)*T+t,i)+max(abs(F_opt(:,:,i)-FsAux(:,:,i)));
       end
 
       for i=1:N
@@ -74,14 +74,14 @@ function [Fe Fee] = mjlstd(lambda,J,T,K,epsilon,N,P,As,Bs,Cs,Ds,F_opt,X_opt,seed
       end
     end
 
-    for l=1:N
-      A=As(:,:,l);
-      B=Bs(:,:,l);
-      D=Ds(:,:,l);
-      S=Ys(:,:,l);
+    for i=1:N
+      A=As(:,:,i);
+      B=Bs(:,:,i);
+      D=Ds(:,:,i);
+      S=Ys(:,:,i);
 
-      Fs(:,:,l)=-inv(B'*S*B+D'*D)*B'*S*A;
-      Fe(l,j)=max(max(abs(F_opt(:,:,l)-Fs(:,:,l))));
+      Fs(:,:,i)=-inv(B'*S*B+D'*D)*B'*S*A;
+      Fe(i,j)=max(max(abs(F_opt(:,:,i)-Fs(:,:,i))));
     end
 
     if j>1

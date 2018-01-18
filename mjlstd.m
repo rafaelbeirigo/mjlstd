@@ -1,4 +1,4 @@
-function [F X qtd_iter] = mjlstd(lambda,J,T,K,epsilon,N,P,As,Bs,Cs,Ds,F_opt,X_opt)
+function [F X qtd_iter] = mjlstd(lambda,J,T,K,epsilon,N,P,As,Bs,Cs,Ds,F_opt,X_opt,seed)
   Theta=zeros(N,K);
   for i=1:N
     Theta(i,1)=i;
@@ -7,7 +7,7 @@ function [F X qtd_iter] = mjlstd(lambda,J,T,K,epsilon,N,P,As,Bs,Cs,Ds,F_opt,X_op
   Fe=zeros(N,J,R);
   Fee=zeros(J*T,[3,1],R);
 
-  rand('seed',r);
+  rand('seed',seed);
   for i=1:N
     Ys(:,:,i)=zeros(size(As,1));
   end

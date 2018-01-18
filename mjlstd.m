@@ -1,4 +1,4 @@
-function [F X qtd_iter] = mjlstd(lambda,J,T,K,epsilon,N,P,As,Bs,Cs,Ds,F_opt,X_opt,seed)
+function [Fe Fee] = mjlstd(lambda,J,T,K,epsilon,N,P,As,Bs,Cs,Ds,F_opt,X_opt)
   Theta=zeros(N,K);
   for i=1:N
     Theta(i,1)=i;

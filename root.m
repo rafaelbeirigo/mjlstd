@@ -28,7 +28,7 @@ for r=1:R
         S=Ys(:,:,l);
 
         FsAux(:,:,l)=-inv(B'*S*B+D'*D)*B'*S*A;
-        Fee((j-1)*T+t,l)=Fee((j-1)*T+t,l)+max(abs(F_opt(:,:,l)-FsAux(:,:,l)));
+        Fee((j-1)*T+t,l,r)=Fee((j-1)*T+t,l,r)+max(abs(F_opt(:,:,l)-FsAux(:,:,l)));
       end
 
       for i=1:N
@@ -87,16 +87,16 @@ for r=1:R
       S=Ys(:,:,l);
 
       Fs(:,:,l)=-inv(B'*S*B+D'*D)*B'*S*A;
-      Fe(l,j)=max(max(abs(F_opt(:,:,l)-Fs(:,:,l))));
+      Fe(l,j,r)=max(max(abs(F_opt(:,:,l)-Fs(:,:,l))));
     end
 
     if j>1
-      maxDiff=abs(Fe(:,j)-Fe(:,j-1));
+      maxDiff=abs(Fe(:,j,r)-Fe(:,j-1,r));
       if maxDiff<epsilon
         break
       end
     end
   end
 end
-csvwrite('Fe.csv',[[1:J]',Fe'/R]);
-csvwrite('Fee.csv',[[1:size(Fee,1)]',Fee/R]);
+%% csvwrite('Fe.csv',[[1:J]',Fe'/R]);
+%% csvwrite('Fee.csv',[[1:size(Fee,1)]',Fee/R]);

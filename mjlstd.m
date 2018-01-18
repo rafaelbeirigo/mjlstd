@@ -1,4 +1,4 @@
-function [F X qtd_iter] = mjlstd()
+function [F X qtd_iter] = mjlstd(lambda,R,J,T,K,epsilon)
   Theta=zeros(N,K);
   for i=1:N
     Theta(i,1)=i;

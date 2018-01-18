@@ -4,8 +4,8 @@ function [F X qtd_iter] = mjlstd(lambda,J,T,K,epsilon,N,P,As,Bs,Cs,Ds,F_opt,X_op
     Theta(i,1)=i;
   end
   Pc=cumsum(P,2);
-  Fe=zeros(N,J,R);
-  Fee=zeros(J*T,[3,1],R);
+  Fe=zeros(N,J);
+  Fee=zeros(J*T,[3,1]);
 
   rand('seed',seed);
   for i=1:N

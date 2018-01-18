@@ -9,8 +9,8 @@ for i=1:N
   Theta(i,1)=i;
 end
 Pc=cumsum(P,2);
-Fe=zeros(N,J);
-Fee=zeros(J*T,[3,1]);
+Fe=zeros(N,J,R);
+Fee=zeros(J*T,[3,1],R);
 
 for r=1:R
   rand('seed',r);

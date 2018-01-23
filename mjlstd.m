@@ -1,4 +1,4 @@
-function [Fe Fee] = mjlstd(lambda,J,T,K,epsilon,N,P,As,Bs,Cs,Ds,F_opt,Fs,X_opt,seed)
+function [Fe Fee Yse] = mjlstd(lambda,J,T,K,epsilon,N,P,As,Bs,Cs,Ds,F_opt,Fs,X_opt,seed)
   Theta=zeros(N,K);
   for i=1:N
     Theta(i,1)=i;
@@ -6,12 +6,11 @@ function [Fe Fee] = mjlstd(lambda,J,T,K,epsilon,N,P,As,Bs,Cs,Ds,F_opt,Fs,X_opt,s
   Pc=cumsum(P,2);
   Fe=zeros(N,J);
   Fee=zeros(J*T,[3,1]);
-
-  rand('seed',seed);
   for i=1:N
     Ys(:,:,i)=zeros(size(As,1));
   end
   Yconverged=zeros(N);
+  rand('seed',seed);
   for j=1:J
     for t=1:T
       for i=1:N
@@ -63,14 +62,15 @@ function [Fe Fee] = mjlstd(lambda,J,T,K,epsilon,N,P,As,Bs,Cs,Ds,F_opt,Fs,X_opt,s
         if Yconverged(i)
           continue
         end
-        Yaux=Ys(:,:,i);
+        Yaux(:,:,i)=Ys(:,:,i);
         Ys(:,:,i)=Ys(:,:,i)+gamma*Sum(:,:,i);
-
-        maxDiff=max(max(abs(Ys(:,:,i)-Yaux)));
+        diff=abs(Ys(:,:,i)-Yaux(:,:,i));
+        maxDiff=max(max(diff));
         if maxDiff<epsilon
           Yconverged(i)=1;
         end
       end
+      Yse(:,:,:,(j-1)*T+t)=abs(Ys-Yaux);
     end
 
     for i=1:N

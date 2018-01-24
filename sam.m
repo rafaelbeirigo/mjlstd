@@ -16,13 +16,14 @@ for i=1:N
   B=Bs(:,:,i);
   F=Fs(:,:,i);
   Gamma(:,:,i)=A+B*F;
+
   curVal=power(norm(kron(Gamma(:,:,i),Gamma(:,:,i))),-1);
   if curVal>maxVal
     maxVal=curVal;
   end
 end
 if !(power(lambda,2)<maxVal)
-  disp "WARNING: Lemma 2's sufficient condition for lambda is not satisfied"
+  disp('WARNING: Lemma 2''s sufficient condition for lambda is not satisfied');
 end
 
 for r=1:R

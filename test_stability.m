@@ -6,20 +6,16 @@ function [r] = test_stability(Fs,As,Bs,P,N)
   %% discrete-time Markovian jump linear systems,"
   %% Automatica, vol. 38, pp. 217–225, 2002.
 
-  for j=1:N
-    I(:,:,j)=zeros([size(As(:,:,1))]);
-    for i=1:N
-      F=Fs(:,:,i);
-      A=As(:,:,i);
-      B=Bs(:,:,i);
-      G=A+B*F;
+  I=[];
+  for i=1:N
+    F=Fs(:,:,i);
+    A=As(:,:,i);
+    B=Bs(:,:,i);
+    G=A+B*F;
 
-      I(:,:,j)=I(:,:,j)+P(i,j)*G*G';
-    end
-    r(j)=max(abs(eig(I(:,:,j))));
+    I=blkdiag(I,kron(G,G))
   end
-  r
-  r_sigma=max(r);
+  r_sigma=max(abs(eig(I)));
   if (r_sigma<1)
     disp "F stabilizes (A,B)"
   else

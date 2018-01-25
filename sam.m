@@ -10,21 +10,7 @@ Ys=zeros(2,2,3,10,25);
 Ys=zeros(2,2,3,10,25);
 Fs=F_opt;
 
-maxVal=0;
-for i=1:N
-  A=As(:,:,i);
-  B=Bs(:,:,i);
-  F=Fs(:,:,i);
-  Gamma(:,:,i)=A+B*F;
-
-  curVal=power(norm(kron(Gamma(:,:,i),Gamma(:,:,i))),-1);
-  if curVal>maxVal
-    maxVal=curVal;
-  end
-end
-if !(power(lambda,2)<maxVal)
-  disp('WARNING: Lemma 2''s sufficient condition for lambda is not satisfied');
-end
+test_stability(lambda,Fs,As,Bs,P,N);
 
 for r=1:R
   [Fe(:,:,r) Fee(:,:,r) Yse(:,:,:,:,r)]=mjlstd(lambda,J,T,K,epsilon,N,P,As,Bs,Cs,Ds,F_opt,Fs,X_opt,r);

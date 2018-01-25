@@ -1,4 +1,4 @@
-function [r] = test_stability(Fs,As,Bs,P,N)
+function [r] = test_stability(lambda,Fs,As,Bs,P,N)
   %% Tests stability of (A,B) according to
   %%
   %% (1) O. L. V. Costa and J. C. C. Aya, "Monte Carlo
@@ -7,18 +7,28 @@ function [r] = test_stability(Fs,As,Bs,P,N)
   %% Automatica, vol. 38, pp. 217–225, 2002.
 
   I=[];
+  v_max=-Inf;
   for i=1:N
-    F=Fs(:,:,i);
     A=As(:,:,i);
     B=Bs(:,:,i);
+    F=Fs(:,:,i);
     G=A+B*F;
 
-    I=blkdiag(I,kron(G,G))
+    kr=kron(G,G);
+    %% Fs test
+    I=blkdiag(I,kr);
+
+    %% lambda test
+    v=power(norm(kr),-1);
+    if v>v_max
+      v_max=v;
+    end
   end
-  r_sigma=max(abs(eig(I)));
-  if (r_sigma<1)
-    disp "F stabilizes (A,B)"
-  else
-    disp "WARNING: F does not stabilize (A,B)"
+
+  if !(max(abs(eig(I)))<1)
+    disp('WARNING: F does not satisfy Lemma 3 (stabilizability)');
+  end
+  if !(power(lambda,2)<v_max)
+    disp('WARNING: lambda does not satisfy Lemma 2 (convergence)');
   end
 end

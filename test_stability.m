@@ -1,4 +1,4 @@
-function [r] = test_stability(lambda,Fs,As,Bs,P,N)
+function test_stability(lambda,Fs,As,Bs,P,N)
   %% Tests stability of (A,B) according to
   %%
   %% (1) O. L. V. Costa and J. C. C. Aya, "Monte Carlo

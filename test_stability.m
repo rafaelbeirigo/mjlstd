@@ -1,5 +1,5 @@
-function [r] = stabilizes(Fs,As,Bs,P,N)
-  %% Tests if F stabilizes (A,B) according to Lemma 3 of (1)
+function [r] = test_stability(Fs,As,Bs,P,N)
+  %% Tests stability of (A,B) according to
   %%
   %% (1) O. L. V. Costa and J. C. C. Aya, "Monte Carlo
   %% TD(\lambda)-methods for the optimal control of

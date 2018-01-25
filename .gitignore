@@ -8,3 +8,5 @@ TAGS
 
 # Octave
 **/octave-workspace
+/xs.csv
+/xs_opt.csv

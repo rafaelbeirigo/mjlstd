@@ -13,7 +13,8 @@ Fs=F_opt;
 test_stability(lambda,Fs,As,Bs,P,N);
 
 for r=1:R
-  [Fe(:,:,r) Fee(:,:,r) Yse(:,:,:,:,r)]=mjlstd(lambda,J,T,K,epsilon,N,P,As,Bs,Cs,Ds,F_opt,Fs,X_opt,r);
+  [Fss{end+1} Fe(:,:,r) Fee(:,:,r) Yse(:,:,:,:,r)]=mjlstd(lambda,J,T,K,epsilon,N,P,As,Bs,Cs,Ds,F_opt,Fs,X_opt,r,c,eta);
+end
 end
 
 Fe_avg=mean(Fe,3);

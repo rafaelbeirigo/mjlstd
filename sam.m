@@ -15,6 +15,13 @@ test_stability(lambda,Fs,As,Bs,P,N);
 for r=1:R
   [Fss{end+1} Fe(:,:,r) Fee(:,:,r) Yse(:,:,:,:,r)]=mjlstd(lambda,J,T,K,epsilon,N,P,As,Bs,Cs,Ds,F_opt,Fs,X_opt,r,c,eta);
 end
+
+%% Plot gain error history
+num_lin=size(Fss{1},2);
+num_col=size(Fss{1}{1},2)*size(Fss{1}{1},3);
+Fss_=zeros([num_lin,num_col]);
+for i=1:size(Fss{1},2)
+  Fss_(i,:,:,:,:,:,:)=reshape(Fss{1}{i}-F_opt,[1,num_col]);
 end
 
 Fe_avg=mean(Fe,3);

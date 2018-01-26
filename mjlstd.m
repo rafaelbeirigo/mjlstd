@@ -9,20 +9,11 @@ function [Fss Fe Fee Yse] = mjlstd(lambda,J,T,K,epsilon,N,P,As,Bs,Cs,Ds,F_opt,Fs
   for i=1:N
     Ys(:,:,i)=zeros(size(As,1));
   end
+  Fss={};
   Yconverged=zeros(N);
   rand('seed',seed);
   for j=1:J
     for t=1:T
-      for i=1:N
-        A=As(:,:,i);
-        B=Bs(:,:,i);
-        D=Ds(:,:,i);
-        S=Ys(:,:,i);
-
-        FsAux(:,:,i)=-inv(B'*S*B+D'*D)*B'*S*A;
-        Fee((j-1)*T+t,i)=Fee((j-1)*T+t,i)+max(abs(F_opt(:,:,i)-FsAux(:,:,i)));
-      end
-
       for i=1:N
         if Yconverged(i)
           continue
@@ -72,6 +63,17 @@ function [Fss Fe Fee Yse] = mjlstd(lambda,J,T,K,epsilon,N,P,As,Bs,Cs,Ds,F_opt,Fs
         end
       end
       Yse(:,:,:,(j-1)*T+t)=abs(Ys-Yaux);
+
+      for i=1:N
+        A=As(:,:,i);
+        B=Bs(:,:,i);
+        D=Ds(:,:,i);
+        S=Ys(:,:,i);
+
+        FsAux(:,:,i)=-inv(B'*S*B+D'*D)*B'*S*A;
+        Fee((j-1)*T+t,i)=Fee((j-1)*T+t,i)+max(abs(F_opt(:,:,i)-FsAux(:,:,i)));
+      end
+      Fss{end+1}=FsAux;
     end
 
     for i=1:N

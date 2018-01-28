@@ -1,4 +1,4 @@
-function [Fss Fe Fee Yse] = mjlstd(lambda,J,T,K,epsilon,N,P,As,Bs,Cs,Ds,F_opt,Fs,X_opt,seed,c,eta)
+function [Fss Yss Fe Fee Yse]=mjlstd(lambda,J,T,K,epsilon,N,P,As,Bs,Cs,Ds,F_opt,Fs,X_opt,seed,c,eta)
   Theta=zeros(N,K);
   for i=1:N
     Theta(i,1)=i;
@@ -9,7 +9,6 @@ function [Fss Fe Fee Yse] = mjlstd(lambda,J,T,K,epsilon,N,P,As,Bs,Cs,Ds,F_opt,Fs
   for i=1:N
     Ys(:,:,i)=zeros(size(As,1));
   end
-  Fss={};
   Yconverged=zeros(N);
   rand('seed',seed);
   for j=1:J
@@ -62,7 +61,7 @@ function [Fss Fe Fee Yse] = mjlstd(lambda,J,T,K,epsilon,N,P,As,Bs,Cs,Ds,F_opt,Fs
           Yconverged(i)=1;
         end
       end
-      Yse(:,:,:,(j-1)*T+t)=abs(Ys-Yaux);
+      Yss{end+1}=Ys;
 
       for i=1:N
         A=As(:,:,i);

@@ -1,4 +1,4 @@
-function [Fss Yss Fe Fee Yse]=mjlstd(lambda,J,T,K,epsilon,N,P,As,Bs,Cs,Ds,F_opt,Fs,X_opt,seed,c,eta)
+function [Fss Yss Fe Fee]=mjlstd(lambda,J,T,K,epsilon,N,P,As,Bs,Cs,Ds,F_opt,Fs,X_opt,seed,c,eta)
   Theta=zeros(N,K);
   for i=1:N
     Theta(i,1)=i;

@@ -3,7 +3,7 @@ import numpy as np
 import scipy.linalg as la
 
 
-def tet_tability(lambda_par, F, A, B, P, N):
+def test_stability(lambda_par, F, A, B, P, N):
     """Tests stability of (A, B) according to (1).
 
 (1) O. L. V. Costa and J. C. C. Aya, "Monte Carlo

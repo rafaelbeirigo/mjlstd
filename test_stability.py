@@ -26,15 +26,10 @@ Automatica, vol. 38, pp. 217–225, 2002."""
     # Fs test
     I_cal = la.block_diag(*krs)
 
-    print('max(abs(la.eig(I_cal)[0])): %s' %
-          (max(abs(la.eig(I_cal)[0])),))
-
     if not (max(abs(la.eig(I_cal)[0])) < 1):
         print('WARNING: F does not satisfy Lemma 3 ' +
               '(stabilizability)')
 
-    print('pow(lambda_par, 2): %s' % (pow(lambda_par, 2),))
-    print('v_max: %s' % (v_max,))
     if not (pow(lambda_par, 2) < v_max):
         print('WARNING: lambda_par does not satisfy ' +
               ' Lemma 2 (convergence)')

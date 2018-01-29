@@ -5,8 +5,8 @@ theta_0 = 1
 
 R = 1
 J = 200
-T = 1e2
-K = 1e6
+T = int(1e2)
+K = int(1e6)
 
 lambda_par = 1e-4
 c = 1

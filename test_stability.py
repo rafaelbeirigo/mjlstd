@@ -4,13 +4,6 @@ import scipy.linalg as la
 
 
 def test_stability(lambda_par, F, A, B, P, N):
-    """Tests stability of (A, B) according to (1).
-
-(1) O. L. V. Costa and J. C. C. Aya, "Monte Carlo
-TD(\lambda_par)-methods for the optimal control of
-discrete-time Markovian jump linear systems, "
-Automatica, vol. 38, pp. 217–225, 2002."""
-
     krs = []
     v_max = -math.inf
     for i in range(N):

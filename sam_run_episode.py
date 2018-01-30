@@ -2,8 +2,8 @@ import numpy as np
 from numpy import matmul
 
 
-def get_next_theta(theta_cur, P):
-    d = np.cumsum(P, 1)[theta_cur]
+def get_next_theta(theta, P):
+    d = np.cumsum(P, 1)[theta]
     r = np.random.random()
     return np.nonzero(d > r)[0][0]
 

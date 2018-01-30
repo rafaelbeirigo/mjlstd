@@ -8,7 +8,7 @@ J = 200
 T = int(1e2)
 K = int(1e6)
 
-lambda_par = 1e-4
+lambda_par = 1e-1
 c = 1
 eta = 1
 

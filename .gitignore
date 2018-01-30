@@ -9,3 +9,6 @@ TAGS
 # Octave
 **/octave-workspace
 **/*.csv
+
+# Python
+**/*.pyc

@@ -3,7 +3,7 @@ from numpy import matmul
 from scipy.linalg import inv
 
 
-def riccati(T, N, A, B, C, D, R):
+def riccati(T, N, A, B, C, D, R, epsilon):
     """Solve a MJLS by Riccati."""
     X = A * 0
     EX = X.copy()
@@ -22,6 +22,7 @@ def riccati(T, N, A, B, C, D, R):
             for j in range(N):
                 EX[i] += R[i, j] * X[j]
 
+        X_old = X.copy()
         # Calculate F and X based on the estimate of X
         for i in range(N):
             # Aliases (for legibility purposes)
@@ -31,5 +32,8 @@ def riccati(T, N, A, B, C, D, R):
 
             X0 = matmul(A_[i], matmul(EX[i], A[i])) + matmul(C_[i], C[i])
             X[i] = X0 + matmul(A_[i], matmul(EX[i], matmul(B[i], F[i])))
+
+        if abs(X_old - X).max() < epsilon:
+            break
 
     return [F, X]

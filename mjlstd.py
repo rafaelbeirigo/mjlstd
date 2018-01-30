@@ -15,7 +15,6 @@ def get_Y(As, Bs, Cs, Ds, Fs, P, Ys, Theta, N, T, K, c, eta,
 
         err = abs(Ys_old - Ys).max()
         if err < epsilon:
-            print('break on get_Y')
             break
 
     return Ys
@@ -109,15 +108,21 @@ def mjlstd(lambda_par, J, T, K, epsilon, N, P, As, Bs, Cs,
     np.random.seed(seed)
 
     for j in range(J):
+        # Log
         Ys_old = Ys.copy()
+        Fs_old = Fs.copy()
+
+        # Calculate updated Ys and Fs
         Ys = get_Y(As, Bs, Cs, Ds, Fs, P, Ys, Theta, N, T,
                    K, c, eta, lambda_par, epsilon)
-        err_Ys = abs(Ys_old - Ys).max()
-
-        Fs_old = Fs.copy()
         Fs = get_F(As, Bs, Ds, Fs, Ys, N)
-        err_Fs = abs(Fs_old - Fs).max()
 
-        print('err_Ys: %s\terr_Fs: %s' % (err_Ys, err_Fs))
+        # Log
+        err_Ys = abs(Ys_old - Ys).max()
+        err_Fs = abs(Fs_old - Fs).max()
+        err_Ys_par = abs(Ys_par - Ys).max()
+        err_Fs_par = abs(Fs_par - Fs).max()
+        print('err_Ys: %3.1e\terr_Fs: %3.1e\terr_Ys_par: %3.1e\terr_Fs_par: %3.1e' %
+              (err_Ys, err_Fs, err_Ys_par, err_Fs_par))
 
     return (Fs, Ys)

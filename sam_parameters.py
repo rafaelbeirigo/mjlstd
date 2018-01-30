@@ -12,4 +12,4 @@ lambda_par = 1e-1
 c = 1
 eta = 1
 
-epsilon = 1e-7
+epsilon = 1e-6

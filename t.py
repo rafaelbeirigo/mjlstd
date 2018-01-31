@@ -2,6 +2,7 @@ from mjlstd import mjlstd
 import sam_constants
 import sam_parameters
 from test_stability import test_stability
+from MJLS import MJLS
 
 print('wait...')
 
@@ -18,13 +19,12 @@ eta = 1
 
 epsilon = 1e-6
 
-Fs = sc.F_riccati
-Xs = sc.X_riccati
+m = MJLS(sc.As, sc.Bs, sc.Cs, sc.Ds,
+         sc.P, sc.F_ric, sc.X_ric)
 
 test_stability(lambda_par, Fs, sc.As, sc.Bs, sc.P, sc.N)
 
-(Fs, Ys) = mjlstd(lambda_par, J, T, K, epsilon, sc.N, sc.P, sc.As,
-                  sc.Bs, sc.Cs, sc.Ds, Xs, Fs, 0, c, eta)
+(Fs, Ys) = mjlstd(lambda_par, J, T, K, epsilon, sc.N, 0, c, eta)
 
 print(Ys)
 print(Fs)

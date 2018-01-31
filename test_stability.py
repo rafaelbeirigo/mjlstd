@@ -34,7 +34,9 @@ def test_stability(m, lambd):
     I_cal = la.block_diag(*krs)
 
     if not (max(abs(la.eig(I_cal)[0])) < 1):
-        print('WARNING: F does not satisfy Lemma 3 (stabilizability)')
+        print('test_stability: WARNING: F does not satisfy Lemma 3 '
+              '(stabilizability)')
 
     if not (pow(lambd, 2) < v_max):
-        print('WARNING: lambda does not satisfy Lemma 2 (convergence)')
+        print('test_stability: WARNING: lambda does not satisfy Lemma 2 '
+              '(convergence)')

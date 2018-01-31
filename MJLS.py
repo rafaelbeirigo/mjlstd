@@ -20,7 +20,7 @@ class MJLS:
             i (:obj:`int`, optional): index used to retrive
                 the matrices.
         """
-        if(i):
+        if(i is not None):
             return (self.A[i], self.B[i], self.C[i],
                     self.D[i])
         else:

@@ -32,8 +32,6 @@ def get_Y(As, Bs, Cs, Ds, Fs, P, Ys, Theta, N, T, K, c, eta,
         if err < epsilon:
             break
 
-        log(t, sum_D.flatten())
-
     return Ys
 
 
@@ -56,8 +54,6 @@ def get_sum_D(As, Bs, Cs, Ds, P, Fs, Ys, Theta, N, K, lambda_par, epsilon):
                 break
 
             Upsilons[i] = get_Upsilon(As, Bs, Fs, Theta, Upsilons, i, k)
-
-            log_D(k, got_D.flatten())
 
     return sum_D
 

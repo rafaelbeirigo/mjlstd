@@ -4,6 +4,20 @@ import scipy.linalg as la
 
 
 def test_stability(lambda_par, F, A, B, P, N):
+    """Tests parameters for TD(\lambda) stability.
+
+    Based on the article:
+
+    O. L. V. Costa and J. C. C. Aya, "Monte Carlo
+    TD(\lambda)-methods for the optimal control of
+    discrete-time Markovian jump linear systems",
+    Automatica, vol. 38, pp. 217–225, 2002.
+
+    Args:
+        m (:obj:`MJLS`): the corresponding Markov Jump Linear System.
+        lambd (:obj:`float`): the $\lambda$ value to be tested.
+
+    """
     krs = []
     v_max = -math.inf
     for i in range(N):

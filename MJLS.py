@@ -11,10 +11,15 @@ class MJLS:
         self.N = A.shape[0]
 
     def get_ABCD(self, i=None):
-        """Returns `A', `B', `C', and `D' matrices.
+        """Returns :obj: `A`, `B', `C', and `D' matrices.
 
-Returns all `A''s, `B''s, `C''s and `D''s, or the `i'th
-one, if `i' is provided."""
+        Returns all `A''s, `B''s, `C''s and `D''s, or the
+        `i'th one, if `i' is provided.
+
+        Args:
+            i (:obj:`int`, optional): index used to retrive
+                the matrices.
+        """
         if(i):
             return (self.A[i], self.B[i], self.C[i],
                     self.D[i])

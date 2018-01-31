@@ -4,13 +4,13 @@ from sam_run_episode import get_next_theta
 
 
 def log_D(k, got_D):
-    f = open('log_D.txt', 'a')
+    f = open('D.log', 'a')
     f.write('{: 6} {: 6.1e} {: 6.1e} {: 6.1e} {: 6.1e}\n'.format(k, *got_D))
     f.close()
 
 
 def log(t, sum_D):
-    f = open('log.txt', 'a')
+    f = open('sum_D.log', 'a')
     f.write('{: 6} {: 6.1e} {: 6.1e} {: 6.1e} {: 6.1e} {: 6.1e} {: 6.1e} {: 6.1e} {: 6.1e} {: 6.1e} {: 6.1e} {: 6.1e} {: 6.1e}\n'.format(t, *sum_D))
     f.close()
 

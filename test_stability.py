@@ -3,7 +3,7 @@ import numpy as np
 import scipy.linalg as la
 
 
-def test_stability(lambda_par, F, A, B, P, N):
+def test_stability(m, lambd):
     """Tests parameters for TD(\lambda) stability.
 
     Based on the article:
@@ -20,12 +20,12 @@ def test_stability(lambda_par, F, A, B, P, N):
     """
     krs = []
     v_max = -math.inf
-    for i in range(N):
-        G = A[i] + B[i].dot(F[i])
+    for i in range(m.N):
+        G = m.A[i] + m.B[i].dot(m.F[i])
         kr = np.kron(G, G)
         krs.append(kr)
 
-        # lambda_par test
+        # lambda test
         v = pow(la.norm(kr, ord=2), -1)
         if v > v_max:
             v_max = v
@@ -37,6 +37,6 @@ def test_stability(lambda_par, F, A, B, P, N):
         print('WARNING: F does not satisfy Lemma 3 ' +
               '(stabilizability)')
 
-    if not (pow(lambda_par, 2) < v_max):
-        print('WARNING: lambda_par does not satisfy ' +
+    if not (pow(lambd, 2) < v_max):
+        print('WARNING: lambda does not satisfy ' +
               ' Lemma 2 (convergence)')

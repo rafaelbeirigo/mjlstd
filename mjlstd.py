@@ -38,8 +38,11 @@ def log_D(k, got_D):
 
 
 def log(t, sum_D):
+    sdf = sum_D.flatten()
+    line = ''.join(('{: 6}', ' {: 6.1e}' * len(sdf), '\n')).format(t, *sdf)
+
     f = open('sum_D.log', 'a')
-    f.write('{: 6} {: 6.1e} {: 6.1e} {: 6.1e} {: 6.1e} {: 6.1e} {: 6.1e} {: 6.1e} {: 6.1e} {: 6.1e} {: 6.1e} {: 6.1e} {: 6.1e}\n'.format(t, *sum_D))
+    f.write(line)
     f.close()
 
 

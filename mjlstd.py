@@ -15,15 +15,15 @@ def log(t, sum_D):
     f.close()
 
 
-def get_Y(As, Bs, Cs, Ds, Fs, P, Ys, Theta, N, T, K, c, eta,
-          lambda_par, epsilon):
-    """Calculates Y."""
-
+def get_Y(m, Fs, Ys, Theta, T, K, c, eta, lambda_par, epsilon):
+    """Calculates Y.
+    Args:
+        m (:obj:`MJLS`): the corresponding Markov Jump Linear System.
+    """
     for t in range(1, T+1):
         Ys_old = Ys.copy()
 
-        sum_D = get_sum_D(As, Bs, Cs, Ds, P, Fs, Ys, Theta, N,
-                          K, lambda_par, epsilon)
+        sum_D = get_sum_D(m, Fs, Ys, Theta, K, lambda_par, epsilon)
 
         gamma = c * pow(t, -eta)
         Ys = Ys + gamma * sum_D

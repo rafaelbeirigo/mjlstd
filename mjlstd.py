@@ -3,6 +3,34 @@ from scipy.linalg import inv
 from sam_run_episode import get_next_theta
 
 
+class Parameters:
+    """Parameters for the MJLS TD(\lambda) algorithm."""
+    def __init__(self, L, T, K, lambda_, epsilon, c, eta, seed):
+        """
+        Args:
+            L (:obj:`int`): max iterations for calculating Y.
+            T (:obj:`int`): max interations for calculating each Y candidate.
+            K (:obj:`int`): max iterations for calculating the sum used to
+                calculate each Y candidate.
+            lambda_ (:obj:`float`): coefficient for the sum used to
+                calculate each Y candidate.
+            epsilon (:obj:`float`): minimum difference between two numbers to
+                consider them equal when testing for convergence.
+            c (:obj:`float`): coefficient used to calculate the step size.
+            eta (:obj:`float`): exponent used to calculate the step size.
+            seed (:obj:`int`): value used to initialize the random number
+                generator.
+        """
+        self.L = L
+        self.T = T
+        self.K = K
+        self.lambda_ = lambda_
+        self.epsilon = epsilon
+        self.c = c
+        self.eta = eta
+        self.seed = seed
+
+
 def log_D(k, got_D):
     f = open('D.log', 'a')
     f.write('{: 6} {: 6.1e} {: 6.1e} {: 6.1e} {: 6.1e}\n'.format(k, *got_D))
@@ -116,7 +144,7 @@ def get_F(m, Fs, Ys):
     return Fs
 
 
-def mjlstd(m, lambda_par, J, T, K, epsilon, seed, c, eta):
+def mjlstd(m, lambda_par, L, T, K, epsilon, seed, c, eta):
     """Applies the TD(\lambda) method to solve a MJLS.
     Args:
         m (:obj:`MJLS`): the corresponding Markov Jump Linear System.
@@ -131,7 +159,7 @@ def mjlstd(m, lambda_par, J, T, K, epsilon, seed, c, eta):
 
     np.random.seed(seed)
 
-    for j in range(J):
+    for _ in range(L):
         # Log
         Ys_old = Ys.copy()
         Fs_old = Fs.copy()

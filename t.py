@@ -1,13 +1,9 @@
 from mjlstd import mjlstd, Parameters
-import sam_constants
-import sam_parameters
+import sam_constants as sc
 from test_stability import test_stability
 from MJLS import MJLS
 
 print('wait...')
-
-sc = sam_constants
-sp = sam_parameters
 
 L = 20
 T = int(1e6)

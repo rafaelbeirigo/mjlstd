@@ -35,47 +35,49 @@ def get_Y(m, Fs, Ys, Theta, T, K, c, eta, lambda_par, epsilon):
     return Ys
 
 
-def get_sum_D(As, Bs, Cs, Ds, P, Fs, Ys, Theta, N, K, lambda_par, epsilon):
-    """Calculates the D sum."""
-
+def get_sum_D(m, Fs, Ys, Theta, K, lambda_par, epsilon):
+    """Calculates the D sum.
+    Args:
+        m (:obj:`MJLS`): the corresponding Markov Jump Linear System.
+    """
     sum_D = Ys.copy()
     Upsilons = Ys.copy()
-    for i in range(N):
+    for i in range(m.N):
         sum_D[i] *= 0
-        Upsilons[i] = np.eye(As.shape[1])
+        Upsilons[i] = np.eye(m.A.shape[1])
         for k in range(K-1):
-            Theta[i, k+1] = get_next_theta(Theta[i, k], P)
+            Theta[i, k+1] = get_next_theta(Theta[i, k], m.P)
 
             sum_D_old = sum_D[i].copy()
-            got_D = get_D(As, Bs, Cs, Ds, Fs, Ys, Upsilons, Theta, i, k)
+            got_D = get_D(m, Fs, Ys, Upsilons, Theta, i, k)
             sum_D[i] += pow(lambda_par, k) * got_D
 
             if abs(sum_D_old - sum_D[i]).max() < epsilon:
                 break
 
-            Upsilons[i] = get_Upsilon(As, Bs, Fs, Theta, Upsilons, i, k)
+            Upsilons[i] = get_Upsilon(m, Fs, Theta, Upsilons, i, k)
 
     return sum_D
 
 
-def get_D(As, Bs, Cs, Ds, Fs, Ys, Upsilons, Theta, i, k):
-    """Calculates each individual D for the sum."""
-
-    A = As[Theta[i, k+1]]
-    B = Bs[Theta[i, k+1]]
-    C = Cs[Theta[i, k+1]]
-    D = Ds[Theta[i, k+1]]
-    F = Fs[Theta[i, k+1]]
+def get_D(m, Fs, Ys, Upsilons, Theta, i, k):
+    """Calculates each individual D for the sum.
+    Args:
+        m (:obj:`MJLS`): the corresponding Markov Jump Linear System.
+    """
+    (A, B, C, D) = m.get_ABCD(Theta[i, k+1])
 
     C_ = C.conj().T
     D_ = D.conj().T
-    F_ = F.conj().T
 
-    U = Upsilons[i]
-    U_ = U.conj().T
+    F = Fs[Theta[i, k+1]]
+    F_ = F.conj().T
 
     Y1 = Ys[Theta[i, k]]
     Y2 = Ys[Theta[i, k+1]]
+
+    U = Upsilons[i]
+    U_ = U.conj().T
 
     B_cal = C_.dot(C) + F_.dot(D_.dot(D.dot(F)))
     C_cal = ((A + B.dot(F)).conj().T).dot(Y2.dot(A + B.dot(F))) - Y1
@@ -84,40 +86,48 @@ def get_D(As, Bs, Cs, Ds, Fs, Ys, Upsilons, Theta, i, k):
     return D_cal
 
 
-def get_Upsilon(As, Bs, Fs, Theta, Upsilons, i, k):
-    """Calculate current Upsilon"""
-    A = As[Theta[i, k]]
-    B = Bs[Theta[i, k]]
+def get_Upsilon(m, Fs, Theta, Upsilons, i, k):
+    """Calculate current Upsilon
+    Args:
+        m (:obj:`MJLS`): the corresponding Markov Jump Linear System.
+    """
+    (A, B, _, _) = m.get_ABCD(Theta[i, k])
+
     F = Fs[Theta[i, k]]
 
     return ((A + B.dot(F))).dot(Upsilons[i])
 
 
-def get_F(As, Bs, Ds, Fs, Ys, N):
-    """Calculate F."""
-    for i in range(N):
-        A = As[i]
-        B = Bs[i]
-        D = Ds[i]
-        S = Ys[i]
+def get_F(m, Fs, Ys):
+    """Calculate F.
+    Args:
+        m (:obj:`MJLS`): the corresponding Markov Jump Linear System.
+    """
+    for i in range(m.N):
+        (A, B, _, D) = m.get_ABCD(i)
 
         B_ = B.conj().T
         D_ = D.conj().T
 
-        Fs[i] = (-inv(B_.dot(S).dot(B) + D_.dot(D))).dot(B_).dot(S).dot(A)
+        Y = Ys[i]
+
+        Fs[i] = (-inv(B_.dot(Y).dot(B) + D_.dot(D))).dot(B_).dot(Y).dot(A)
 
     return Fs
 
 
-def mjlstd(lambda_par, J, T, K, epsilon, N, P, As, Bs, Cs,
-           Ds, Ys_par, Fs_par, seed, c, eta):
-    """Applies the TD(\lambda) method to solve a MJLS."""
+def mjlstd(m, lambda_par, J, T, K, epsilon, seed, c, eta):
+    """Applies the TD(\lambda) method to solve a MJLS.
+    Args:
+        m (:obj:`MJLS`): the corresponding Markov Jump Linear System.
+    """
+    if m.X is not None:
+        Ys = m.X.copy()
+    if m.F is not None:
+        Fs = m.F.copy()
 
-    Ys = Ys_par.copy()
-    Fs = Fs_par.copy()
-
-    Theta = np.zeros((N, K), dtype=int)
-    Theta[:, 0] = [i for i in range(N)]
+    Theta = np.zeros((m.N, K), dtype=int)
+    Theta[:, 0] = [i for i in range(m.N)]
 
     np.random.seed(seed)
 
@@ -127,18 +137,18 @@ def mjlstd(lambda_par, J, T, K, epsilon, N, P, As, Bs, Cs,
         Fs_old = Fs.copy()
 
         # Calculate updated Ys and Fs
-        Ys = get_Y(As, Bs, Cs, Ds, Fs, P, Ys, Theta, N, T,
-                   K, c, eta, lambda_par, epsilon)
-        Fs = get_F(As, Bs, Ds, Fs, Ys, N)
+        Ys = get_Y(m, Fs, Ys, Theta, T, K, c, eta, lambda_par, epsilon)
+        Fs = get_F(m, Fs, Ys)
 
         # Log
         err_Ys = abs(Ys_old - Ys).max()
         err_Fs = abs(Fs_old - Fs).max()
 
-        err_Ys_par = abs(Ys_par - Ys).max()
-        err_Fs_par = abs(Fs - Fs_par).max()
+        err_Ys_par = abs(Ys - m.X).max()
+        err_Fs_par = abs(Fs - m.F).max()
 
-        print('err_Ys: %3.1e\terr_Fs: %3.1e\terr_Ys_par: %e\terr_Fs_par: %e' %
-              (err_Ys, err_Fs, err_Ys_par, err_Fs_par))
+        print('err_Ys: {:5.3e}  err_Fs: {:5.3e}  err_Ys_par: {:5.3e}  '
+              'err_Fs_par: {:5.3e}'.format(err_Ys, err_Fs, err_Ys_par,
+                                           err_Fs_par))
 
     return (Fs, Ys)

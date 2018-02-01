@@ -27,7 +27,7 @@ m = MJLS(sc.As, sc.Bs, sc.Cs, sc.Ds,
 test_stability(m, lambda_)
 
 p = Parameters(L, T, K, lambda_, epsilon, c, eta, seed)
-# (Fs, Ys) = mjlstd(m, lambda_, J, T, K, epsilon, seed, c, eta)
+(Fs, Ys) = mjlstd(p, m)
 
-# print(Ys)
-# print(Fs)
+print(Ys)
+print(Fs)

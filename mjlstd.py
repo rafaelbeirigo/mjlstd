@@ -43,29 +43,33 @@ def log(t, sum_D):
     f.close()
 
 
-def get_Y(m, Fs, Ys, Theta, T, K, c, eta, lambda_par, epsilon):
+def get_Y(p, m, Fs, Ys, Theta):
     """Calculates Y.
     Args:
+        p (:obj:`Parameters`): parameters for the algorithm; for details on
+            each parameter, see the :obj:`Parameters` class.
         m (:obj:`MJLS`): the corresponding Markov Jump Linear System.
     """
-    for t in range(1, T+1):
+    for t in range(1, p.T + 1):
         Ys_old = Ys.copy()
 
-        sum_D = get_sum_D(m, Fs, Ys, Theta, K, lambda_par, epsilon)
+        sum_D = get_sum_D(p, m, Fs, Ys, Theta)
 
-        gamma = c * pow(t, -eta)
+        gamma = p.c * pow(t, -p.eta)
         Ys = Ys + gamma * sum_D
 
         err = abs(Ys_old - Ys).max()
-        if err < epsilon:
+        if err < p.epsilon:
             break
 
     return Ys
 
 
-def get_sum_D(m, Fs, Ys, Theta, K, lambda_par, epsilon):
+def get_sum_D(p, m, Fs, Ys, Theta):
     """Calculates the D sum.
     Args:
+        p (:obj:`Parameters`): parameters for the algorithm; for details on
+            each parameter, see the :obj:`Parameters` class.
         m (:obj:`MJLS`): the corresponding Markov Jump Linear System.
     """
     sum_D = Ys.copy()
@@ -73,14 +77,14 @@ def get_sum_D(m, Fs, Ys, Theta, K, lambda_par, epsilon):
     for i in range(m.N):
         sum_D[i] *= 0
         Upsilons[i] = np.eye(m.A.shape[1])
-        for k in range(K-1):
+        for k in range(p.K - 1):
             Theta[i, k+1] = get_next_theta(Theta[i, k], m.P)
 
             sum_D_old = sum_D[i].copy()
             got_D = get_D(m, Fs, Ys, Upsilons, Theta, i, k)
-            sum_D[i] += pow(lambda_par, k) * got_D
+            sum_D[i] += pow(p.lambda_, k) * got_D
 
-            if abs(sum_D_old - sum_D[i]).max() < epsilon:
+            if abs(sum_D_old - sum_D[i]).max() < p.epsilon:
                 break
 
             Upsilons[i] = get_Upsilon(m, Fs, Theta, Upsilons, i, k)
@@ -144,9 +148,11 @@ def get_F(m, Fs, Ys):
     return Fs
 
 
-def mjlstd(m, lambda_par, L, T, K, epsilon, seed, c, eta):
+def mjlstd(p, m):
     """Applies the TD(\lambda) method to solve a MJLS.
     Args:
+        p (:obj:`Parameters`): parameters for the algorithm; for details on
+            each parameter, see the :obj:`Parameters` class.
         m (:obj:`MJLS`): the corresponding Markov Jump Linear System.
     """
     if m.X is not None:
@@ -154,18 +160,18 @@ def mjlstd(m, lambda_par, L, T, K, epsilon, seed, c, eta):
     if m.F is not None:
         Fs = m.F.copy()
 
-    Theta = np.zeros((m.N, K), dtype=int)
+    Theta = np.zeros((m.N, p.K), dtype=int)
     Theta[:, 0] = [i for i in range(m.N)]
 
-    np.random.seed(seed)
+    np.random.seed(p.seed)
 
-    for _ in range(L):
+    for _ in range(p.L):
         # Log
         Ys_old = Ys.copy()
         Fs_old = Fs.copy()
 
         # Calculate updated Ys and Fs
-        Ys = get_Y(m, Fs, Ys, Theta, T, K, c, eta, lambda_par, epsilon)
+        Ys = get_Y(p, m, Fs, Ys, Theta)
         Fs = get_F(m, Fs, Ys)
 
         # Log

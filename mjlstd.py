@@ -102,14 +102,12 @@ def get_D(m, Fs, Ys, Upsilons, Theta, i, k):
     """
     (A, B, C, D) = m.get_ABCD(Theta[i, k+1])
 
-    C_ = C.conj().T
-    D_ = D.conj().T
+    C_, D_ = C.conj().T, D.conj().T
 
     F = Fs[Theta[i, k+1]]
     F_ = F.conj().T
 
-    Y1 = Ys[Theta[i, k]]
-    Y2 = Ys[Theta[i, k+1]]
+    Y1, Y2 = Ys[Theta[i, k]], Ys[Theta[i, k+1]]
 
     U = Upsilons[i]
     U_ = U.conj().T
@@ -141,8 +139,7 @@ def get_F(m, Fs, Ys):
     for i in range(m.N):
         (A, B, _, D) = m.get_ABCD(i)
 
-        B_ = B.conj().T
-        D_ = D.conj().T
+        B_, D_ = B.conj().T, D.conj().T
 
         Y = Ys[i]
 

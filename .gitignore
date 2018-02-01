@@ -12,3 +12,6 @@ TAGS
 
 # Python
 **/*.pyc
+
+# Log
+**/*.log

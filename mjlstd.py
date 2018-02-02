@@ -78,32 +78,42 @@ def get_sum_Ds(p, m, Fs, Ys):
     return sum_Ds
 
 
+def get_sum_D(p, m, Fs, Ys, i):
+    """Calculates each individual D sum.
+    Args:
+        p (:obj:`Parameters`): parameters for the algorithm; for details on
+            each parameter, see the :obj:`Parameters` class.
+        m (:obj:`MJLS`): the corresponding Markov Jump Linear System.
+    """
+    theta = [i, -1]
+    sum_D = 0 * Ys[0].copy()
+    Upsilon = np.eye(m.A.shape[1])
+    for k in range(p.K - 1):
+        theta[1] = get_next_theta(theta[0], m.P)
+        incr = pow(p.lambda_, k) * get_D(m, Fs, Ys, Upsilon, theta)
+        sum_D += incr
 
-            sum_D_old = sum_D[i].copy()
-            got_D = get_D(m, Fs, Ys, Upsilon, Theta, i, k)
-            sum_D[i] += pow(p.lambda_, k) * got_D
+        if abs(incr).max() < p.epsilon:
+            return sum_D
 
-            if abs(sum_D_old - sum_D[i]).max() < p.epsilon:
-                break
-
-            Upsilon = get_Upsilon(m, Fs, Theta, Upsilon, i, k)
+        Upsilon = get_Upsilon(m, Fs, theta, Upsilon)
 
     return sum_D
 
 
-def get_D(m, Fs, Ys, Upsilon, Theta, i, k):
+def get_D(m, Fs, Ys, Upsilon, theta):
     """Calculates each individual D for the sum.
     Args:
         m (:obj:`MJLS`): the corresponding Markov Jump Linear System.
     """
-    (A, B, C, D) = m.get_ABCD(Theta[i, k+1])
+    (A, B, C, D) = m.get_ABCD(theta[1])
 
     C_, D_ = C.conj().T, D.conj().T
 
-    F = Fs[Theta[i, k+1]]
+    F = Fs[theta[1]]
     F_ = F.conj().T
 
-    Y1, Y2 = Ys[Theta[i, k]], Ys[Theta[i, k+1]]
+    Y1, Y2 = Ys[theta[0]], Ys[theta[1]]
 
     U = Upsilon
     U_ = U.conj().T
@@ -115,14 +125,13 @@ def get_D(m, Fs, Ys, Upsilon, Theta, i, k):
     return D_cal
 
 
-def get_Upsilon(m, Fs, Theta, Upsilon, i, k):
+def get_Upsilon(m, Fs, theta, Upsilon):
     """Calculate current Upsilon
     Args:
         m (:obj:`MJLS`): the corresponding Markov Jump Linear System.
     """
-    (A, B, _, _) = m.get_ABCD(Theta[i, k])
-
-    F = Fs[Theta[i, k]]
+    (A, B, _, _) = m.get_ABCD(theta[0])
+    F = Fs[theta[0]]
 
     return ((A + B.dot(F))).dot(Upsilon)
 

@@ -55,8 +55,8 @@ def get_Y(p, m, Fs, Ys):
     """
     for t in range(1, p.T + 1):
         gamma = p.c * pow(t, -p.eta)
-        incr = gamma * get_sum_D(p, m, Fs, Ys)
         Ys = Ys + incr
+        incr = gamma * get_sum_Ds(p, m, Fs, Ys)
 
         if abs(incr).max() < p.epsilon:
             return Ys
@@ -64,22 +64,20 @@ def get_Y(p, m, Fs, Ys):
     return Ys
 
 
-def get_sum_D(p, m, Fs, Ys):
+def get_sum_Ds(p, m, Fs, Ys):
     """Calculates the D sum.
     Args:
         p (:obj:`Parameters`): parameters for the algorithm; for details on
             each parameter, see the :obj:`Parameters` class.
         m (:obj:`MJLS`): the corresponding Markov Jump Linear System.
     """
-    sum_D = Ys.copy()
-
-    Theta = np.zeros((m.N, p.K), dtype=int)
-    Theta[:, 0] = [i for i in range(m.N)]
+    sum_Ds = 0 * Ys.copy()
     for i in range(m.N):
-        sum_D[i] *= 0
-        Upsilon = np.eye(m.A.shape[1])
-        for k in range(p.K - 1):
-            Theta[i, k+1] = get_next_theta(Theta[i, k], m.P)
+        sum_Ds[i] = get_sum_D(p, m, Fs, Ys, i)
+
+    return sum_Ds
+
+
 
             sum_D_old = sum_D[i].copy()
             got_D = get_D(m, Fs, Ys, Upsilon, Theta, i, k)

@@ -172,24 +172,9 @@ def mjlstd(p, m):
     filename = ''.join((datetime.datetime.now().strftime("%Y%m%d%H%M%S"),
                         '.log'))
     for l in range(p.L):
-        # Log
-        Ys_old = Ys.copy()
-        Fs_old = Fs.copy()
-
-        # Calculate updated Ys and Fs
         Ys = get_Y(p, m, Fs, Ys)
         Fs = get_F(m, Fs, Ys)
 
-        # Log
-        err_Ys = abs(Ys_old - Ys).max()
-        err_Fs = abs(Fs_old - Fs).max()
-
-        err_Ys_par = abs(Ys - m.X).max()
-        err_Fs_par = abs(Fs - m.F).max()
-
-        print('err_Ys: {:5.3e}  err_Fs: {:5.3e}  err_Ys_par: {:5.3e}  '
-              'err_Fs_par: {:5.3e}'.format(err_Ys, err_Fs, err_Ys_par,
-                                           err_Fs_par))
         log(l, *(Ys - m.X).flatten(), filename=filename)
 
     return (Fs, Ys)

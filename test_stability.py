@@ -18,6 +18,8 @@ def test_stability(m, lambd):
         lambd (:obj:`float`): the $\lambda$ value to be tested.
 
     """
+    assert m.F is not None, "F must be provided"
+
     krs = []
     v_max = -math.inf
     for i in range(m.N):

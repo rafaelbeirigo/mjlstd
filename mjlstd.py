@@ -155,10 +155,12 @@ def mjlstd(p, m):
             each parameter, see the :obj:`Parameters` class.
         m (:obj:`MJLS`): the corresponding Markov Jump Linear System.
     """
-    if m.X is not None:
-        Ys = m.X.copy()
-    if m.F is not None:
-        Fs = m.F.copy()
+    if m.X is None:
+        m.X = 0 * m.A.copy()
+    if m.F is None:
+        m.F = np.array([0 * B.T for B in m.B])
+
+    Ys, Fs = m.X.copy(), m.F.copy()
 
     Theta = np.zeros((m.N, p.K), dtype=int)
     Theta[:, 0] = [i for i in range(m.N)]

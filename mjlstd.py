@@ -1,6 +1,7 @@
 import numpy as np
 from scipy.linalg import inv
 from sam_run_episode import get_next_theta
+import datetime
 
 
 class Parameters:
@@ -37,11 +38,9 @@ def log_D(k, got_D):
     f.close()
 
 
-def log(t, sum_D):
-    sdf = sum_D.flatten()
-    line = ''.join(('{: 6}', ' {: 6.1e}' * len(sdf), '\n')).format(t, *sdf)
-
-    f = open('sum_D.log', 'a')
+def log(t, *args, filename='log.log'):
+    line = ''.join(('{: 6}', ' {: 6.1e}' * len(args), '\n')).format(t, *args)
+    f = open(filename, 'a')
     f.write(line)
     f.close()
 
@@ -170,7 +169,9 @@ def mjlstd(p, m):
 
     np.random.seed(p.seed)
 
-    for _ in range(p.L):
+    filename = ''.join((datetime.datetime.now().strftime("%Y%m%d%H%M%S"),
+                        '.log'))
+    for l in range(p.L):
         # Log
         Ys_old = Ys.copy()
         Fs_old = Fs.copy()

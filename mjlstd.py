@@ -55,12 +55,12 @@ def get_Y(p, m, Fs, Ys):
     """
     for t in range(1, p.T + 1):
         gamma = p.c * pow(t, -p.eta)
-        sum_D = get_sum_D(p, m, Fs, Ys)
-        Ys_new = Ys + gamma * sum_D
+        incr = gamma * get_sum_D(p, m, Fs, Ys)
+        Ys = Ys + incr
 
-        if abs(Ys_new - Ys).max() < p.epsilon:
-            return Ys_new
-        Ys = Ys_new
+        if abs(incr).max() < p.epsilon:
+            return Ys
+
     return Ys
 
 

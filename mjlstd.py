@@ -54,17 +54,14 @@ def get_Y(p, m, Fs, Ys):
         m (:obj:`MJLS`): the corresponding Markov Jump Linear System.
     """
     for t in range(1, p.T + 1):
-        Ys_old = Ys.copy()
-
-        sum_D = get_sum_D(p, m, Fs, Ys)
-
         gamma = p.c * pow(t, -p.eta)
-        Ys = Ys + gamma * sum_D
+        sum_D = get_sum_D(p, m, Fs, Ys)
+        Ys_new = Ys + gamma * sum_D
 
-        err = abs(Ys_old - Ys).max()
+        err = abs(Ys_new - Ys).max()
         if err < p.epsilon:
-            break
-
+            return Ys_new
+        Ys = Ys_new
     return Ys
 
 
@@ -76,29 +73,28 @@ def get_sum_D(p, m, Fs, Ys):
         m (:obj:`MJLS`): the corresponding Markov Jump Linear System.
     """
     sum_D = Ys.copy()
-    Upsilons = Ys.copy()
 
     Theta = np.zeros((m.N, p.K), dtype=int)
     Theta[:, 0] = [i for i in range(m.N)]
     for i in range(m.N):
         sum_D[i] *= 0
-        Upsilons[i] = np.eye(m.A.shape[1])
+        Upsilon = np.eye(m.A.shape[1])
         for k in range(p.K - 1):
             Theta[i, k+1] = get_next_theta(Theta[i, k], m.P)
 
             sum_D_old = sum_D[i].copy()
-            got_D = get_D(m, Fs, Ys, Upsilons, Theta, i, k)
+            got_D = get_D(m, Fs, Ys, Upsilon, Theta, i, k)
             sum_D[i] += pow(p.lambda_, k) * got_D
 
             if abs(sum_D_old - sum_D[i]).max() < p.epsilon:
                 break
 
-            Upsilons[i] = get_Upsilon(m, Fs, Theta, Upsilons, i, k)
+            Upsilon = get_Upsilon(m, Fs, Theta, Upsilon, i, k)
 
     return sum_D
 
 
-def get_D(m, Fs, Ys, Upsilons, Theta, i, k):
+def get_D(m, Fs, Ys, Upsilon, Theta, i, k):
     """Calculates each individual D for the sum.
     Args:
         m (:obj:`MJLS`): the corresponding Markov Jump Linear System.
@@ -112,7 +108,7 @@ def get_D(m, Fs, Ys, Upsilons, Theta, i, k):
 
     Y1, Y2 = Ys[Theta[i, k]], Ys[Theta[i, k+1]]
 
-    U = Upsilons[i]
+    U = Upsilon
     U_ = U.conj().T
 
     B_cal = C_.dot(C) + F_.dot(D_.dot(D.dot(F)))
@@ -122,7 +118,7 @@ def get_D(m, Fs, Ys, Upsilons, Theta, i, k):
     return D_cal
 
 
-def get_Upsilon(m, Fs, Theta, Upsilons, i, k):
+def get_Upsilon(m, Fs, Theta, Upsilon, i, k):
     """Calculate current Upsilon
     Args:
         m (:obj:`MJLS`): the corresponding Markov Jump Linear System.
@@ -131,7 +127,7 @@ def get_Upsilon(m, Fs, Theta, Upsilons, i, k):
 
     F = Fs[Theta[i, k]]
 
-    return ((A + B.dot(F))).dot(Upsilons[i])
+    return ((A + B.dot(F))).dot(Upsilon)
 
 
 def get_F(m, Fs, Ys):

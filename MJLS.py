@@ -21,7 +21,6 @@ class MJLS:
                 the matrices.
         """
         if(i is not None):
-            return (self.A[i], self.B[i], self.C[i],
-                    self.D[i])
+            return (self.A[i], self.B[i], self.C[i], self.D[i])
         else:
             return (self.A, self.B, self.C, self.D)

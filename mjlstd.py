@@ -55,8 +55,8 @@ def get_Y(p, m, Fs, Ys):
     """
     for t in range(1, p.T + 1):
         gamma = p.c * pow(t, -p.eta)
-        Ys = Ys + incr
         incr = gamma * get_sum_Ds(p, m, Fs, Ys)
+        Ys += incr
 
         if abs(incr).max() < p.epsilon:
             return Ys

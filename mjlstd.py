@@ -58,8 +58,7 @@ def get_Y(p, m, Fs, Ys):
         sum_D = get_sum_D(p, m, Fs, Ys)
         Ys_new = Ys + gamma * sum_D
 
-        err = abs(Ys_new - Ys).max()
-        if err < p.epsilon:
+        if abs(Ys_new - Ys).max() < p.epsilon:
             return Ys_new
         Ys = Ys_new
     return Ys

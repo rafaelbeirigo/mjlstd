@@ -190,5 +190,6 @@ def mjlstd(p, m):
         print('err_Ys: {:5.3e}  err_Fs: {:5.3e}  err_Ys_par: {:5.3e}  '
               'err_Fs_par: {:5.3e}'.format(err_Ys, err_Fs, err_Ys_par,
                                            err_Fs_par))
+        log(l, *(Ys - m.X).flatten(), filename=filename)
 
     return (Fs, Ys)

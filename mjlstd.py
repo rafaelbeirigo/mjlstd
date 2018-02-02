@@ -85,7 +85,7 @@ def get_sum_D(p, m, Fs, Ys, i):
             each parameter, see the :obj:`Parameters` class.
         m (:obj:`MJLS`): the corresponding Markov Jump Linear System.
     """
-    theta = [i, -1]
+    theta = [i, 0]
     sum_D = 0 * Ys[0].copy()
     Upsilon = np.eye(m.A.shape[1])
     for k in range(p.K - 1):
@@ -97,6 +97,7 @@ def get_sum_D(p, m, Fs, Ys, i):
             return sum_D
 
         Upsilon = get_Upsilon(m, Fs, theta, Upsilon)
+        theta[0] = theta[1]
 
     return sum_D
 

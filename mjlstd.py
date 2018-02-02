@@ -46,7 +46,7 @@ def log(t, sum_D):
     f.close()
 
 
-def get_Y(p, m, Fs, Ys, Theta):
+def get_Y(p, m, Fs, Ys):
     """Calculates Y.
     Args:
         p (:obj:`Parameters`): parameters for the algorithm; for details on
@@ -56,7 +56,7 @@ def get_Y(p, m, Fs, Ys, Theta):
     for t in range(1, p.T + 1):
         Ys_old = Ys.copy()
 
-        sum_D = get_sum_D(p, m, Fs, Ys, Theta)
+        sum_D = get_sum_D(p, m, Fs, Ys)
 
         gamma = p.c * pow(t, -p.eta)
         Ys = Ys + gamma * sum_D
@@ -68,7 +68,7 @@ def get_Y(p, m, Fs, Ys, Theta):
     return Ys
 
 
-def get_sum_D(p, m, Fs, Ys, Theta):
+def get_sum_D(p, m, Fs, Ys):
     """Calculates the D sum.
     Args:
         p (:obj:`Parameters`): parameters for the algorithm; for details on
@@ -77,6 +77,9 @@ def get_sum_D(p, m, Fs, Ys, Theta):
     """
     sum_D = Ys.copy()
     Upsilons = Ys.copy()
+
+    Theta = np.zeros((m.N, p.K), dtype=int)
+    Theta[:, 0] = [i for i in range(m.N)]
     for i in range(m.N):
         sum_D[i] *= 0
         Upsilons[i] = np.eye(m.A.shape[1])
@@ -162,9 +165,6 @@ def mjlstd(p, m):
 
     Ys, Fs = m.X.copy(), m.F.copy()
 
-    Theta = np.zeros((m.N, p.K), dtype=int)
-    Theta[:, 0] = [i for i in range(m.N)]
-
     np.random.seed(p.seed)
 
     for _ in range(p.L):
@@ -173,7 +173,7 @@ def mjlstd(p, m):
         Fs_old = Fs.copy()
 
         # Calculate updated Ys and Fs
-        Ys = get_Y(p, m, Fs, Ys, Theta)
+        Ys = get_Y(p, m, Fs, Ys)
         Fs = get_F(m, Fs, Ys)
 
         # Log

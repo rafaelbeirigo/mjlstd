@@ -5,7 +5,7 @@ import scipy.linalg as la
 
 class MJLS:
     """A Markov Jump Linear System."""
-    def __init__(self, A, B, C, D, P=None, X=None, F=None):
+    def __init__(self, N, A, B, C, D, P=None, X=None, F=None):
         self.A = A
         self.B = B
         self.C = C
@@ -13,7 +13,7 @@ class MJLS:
         self.P = P
         self.X = X
         self.F = F
-        self.N = A.shape[0]
+        self.N = N
 
     def get_ABCD(self, i=None):
         """Returns :obj: `A`, `B', `C', and `D' matrices.

@@ -14,7 +14,7 @@ TAGS
 **/*.pyc
 
 # Log
-**/*.log
+log/
 
 # Scratch
 scratch/

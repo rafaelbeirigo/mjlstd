@@ -18,3 +18,6 @@ class Matrices:
         if M.shape[0] != N:
             raise MatricesNumberError("The number of"
                                       "matrices must be equal" " to `N'.")
+
+        self.N = N
+        self.M = M

@@ -9,7 +9,7 @@ print('wait...')
 seed = 0
 
 m = MJLS(sc.As, sc.Bs, sc.Cs, sc.Ds,
-         sc.P, sc.X_ric, sc.F_ric)
+         sc.P, sc.Xs_ric, sc.Fs_ric)
 
 p = Parameters(sp.L, sp.T, sp.K, sp.lambda_, sp.epsilon,
                sp.c, sp.eta, seed)

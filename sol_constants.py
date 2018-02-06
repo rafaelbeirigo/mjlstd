@@ -16,12 +16,12 @@ Cs = np.array([[np.sqrt(0.0355)],
 Ds = np.array([[1.0], [1.0]])
 
 # # Calculated by Riccati
-# X_ric = np.array([[0.1295], [0.3603]])
+# Xs_ric = np.array([[0.1295], [0.3603]])
 
-# # Calculated using X_ric above
-# F_ric = np.array([[0.1295], [0.3603]])
+# # Calculated using Xs_ric above
+# Fs_ric = np.array([[0.1295], [0.3603]])
 
 # # Some known suboptimal control gains
-# F_sub = np.array([[[2.4, -2.27340005]],
-#                   [[43.65507178, -44.40141795]],
-#                   [[-5.27993725, 6.05548422]]])
+# Fs_sub = np.array([[[2.4, -2.27340005]],
+#                    [[43.65507178, -44.40141795]],
+#                    [[-5.27993725, 6.05548422]]])

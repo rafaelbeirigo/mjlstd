@@ -6,14 +6,78 @@ import scipy.linalg as la
 class MJLS:
     """A Markov Jump Linear System."""
     def __init__(self, N, A, B, C, D, P=None, X=None, F=None):
-        self.A = A
-        self.B = B
-        self.C = C
-        self.D = D
-        self.P = P
-        self.X = X
-        self.F = F
-        self.N = N
+        self._N = N
+        self._A = A
+        self._B = B
+        self._C = C
+        self._D = D
+        self._P = P
+        self._X = X
+        self._F = F
+
+    @property
+    def N(self):
+        return self._N
+
+    @N.setter
+    def N(self, value):
+        self._N = value
+
+    @property
+    def A(self):
+        return self._A
+
+    @A.setter
+    def A(self, value):
+        self._A = value
+
+    @property
+    def B(self):
+        return self._B
+
+    @B.setter
+    def B(self, value):
+        self._B = value
+
+    @property
+    def C(self):
+        return self._C
+
+    @C.setter
+    def C(self, value):
+        self._C = value
+
+    @property
+    def D(self):
+        return self._D
+
+    @D.setter
+    def D(self, value):
+        self._D = value
+
+    @property
+    def P(self):
+        return self._P
+
+    @P.setter
+    def P(self, value):
+        self._P = value
+
+    @property
+    def X(self):
+        return self._X
+
+    @X.setter
+    def X(self, value):
+        self._X = value
+
+    @property
+    def F(self):
+        return self._F
+
+    @F.setter
+    def F(self, value):
+        self._F = value
 
     def get_ABCD(self, i=None):
         """Returns :obj: `A`, `B', `C', and `D' matrices.

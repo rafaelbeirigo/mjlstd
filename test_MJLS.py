@@ -1,6 +1,5 @@
 import sam_constants as sc
 import MJLS
-import numpy as np
 import unittest
 
 

@@ -35,7 +35,7 @@ class MJLS:
 
     @A.setter
     def A(self, value):
-        self._A = value
+        self._A = self.__get_matrices(self.N, value)
 
     @property
     def B(self):
@@ -43,7 +43,7 @@ class MJLS:
 
     @B.setter
     def B(self, value):
-        self._B = value
+        self._B = self.__get_matrices(self.N, value)
 
     @property
     def C(self):
@@ -51,7 +51,7 @@ class MJLS:
 
     @C.setter
     def C(self, value):
-        self._C = value
+        self._C = self.__get_matrices(self.N, value)
 
     @property
     def D(self):
@@ -59,7 +59,7 @@ class MJLS:
 
     @D.setter
     def D(self, value):
-        self._D = value
+        self._D = self.__get_matrices(self.N, value)
 
     @property
     def P(self):
@@ -75,7 +75,7 @@ class MJLS:
 
     @X.setter
     def X(self, value):
-        self._X = value
+        self._X = self.__get_matrices(self.N, value)
 
     @property
     def F(self):
@@ -83,7 +83,7 @@ class MJLS:
 
     @F.setter
     def F(self, value):
-        self._F = value
+        self._F = self.__get_matrices(self.N, value)
 
     def get_ABCD(self, i=None):
         """Returns :obj: `A`, `B', `C', and `D' matrices.

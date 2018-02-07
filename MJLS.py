@@ -95,7 +95,7 @@ class MJLS:
             return (self.A, self.B, self.C, self.D)
 
 
-def is_stable(m, lambd):
+def is_stable(m, lambda_):
     """Tests parameters for TD(\lambda) stability.
 
     Args:
@@ -130,6 +130,6 @@ def is_stable(m, lambd):
         print('test_stability: WARNING: F does not satisfy Lemma 3 '
               '(stabilizability)')
 
-    if not (pow(lambd, 2) < v_max):
+    if not (pow(lambda_, 2) < v_max):
         print('test_stability: WARNING: lambda does not satisfy Lemma 2 '
               '(convergence)')

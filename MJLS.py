@@ -1,7 +1,7 @@
 import math
 import numpy as np
 import scipy.linalg as la
-
+from Error import MatricesNumberError
 
 class MJLS:
     """A Markov Jump Linear System."""
@@ -14,6 +14,12 @@ class MJLS:
         self._P = P
         self._X = X
         self._F = F
+
+    def __get_matrices(self, N, M):
+        """Returns the first `N' matrices of `M'."""
+        if M.shape[0] != N:
+            raise MatricesNumberError("Each matrix (with the exception"
+                                      " of `P') must contain `N' matrices.")
 
     @property
     def N(self):

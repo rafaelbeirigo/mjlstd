@@ -6,8 +6,6 @@ import unittest
 
 class TestMJLS(unittest.TestCase):
     def setUp(self):
-        self.all_none = MJLS.MJLS(None, None, None, None,
-                                  None, None, None)
         self.good_boy = MJLS.MJLS(sc.As, sc.Bs, sc.Cs,
                                   sc.Ds, sc.P, sc.X_ric, sc.F_ric)
         self.good_boy = MJLS.MJLS(sc.N, sc.As, sc.Bs, sc.Cs,

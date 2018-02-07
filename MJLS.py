@@ -20,6 +20,7 @@ class MJLS:
         if M.shape[0] != N:
             raise MatricesNumberError("Each matrix (with the exception"
                                       " of `P') must contain `N' matrices.")
+        return M
 
     @property
     def N(self):

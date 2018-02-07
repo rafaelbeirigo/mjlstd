@@ -40,6 +40,13 @@ class TestMJLS(unittest.TestCase):
         self.assertIs(sc.Xs_ric, self.good_boy.X)
         self.assertIs(sc.Fs_ric, self.good_boy.F)
 
+    def test_get_bundle_ABCDFX(self):
+        ABCD = self.good_boy.get_ABCD()
+        self.assertIs(sc.As, ABCD[0])
+        self.assertIs(sc.Bs, ABCD[1])
+        self.assertIs(sc.Cs, ABCD[2])
+        self.assertIs(sc.Ds, ABCD[3])
+
     def test_get_individual_ABCDFX(self):
         for i in range(sc.N):
             ABCD = self.good_boy.get_ABCD(i)

@@ -95,7 +95,7 @@ class MJLS:
             return (self.A, self.B, self.C, self.D)
 
 
-def test_stability(m, lambd):
+def is_stable(m, lambd):
     """Tests parameters for TD(\lambda) stability.
 
     Based on the article:

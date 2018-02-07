@@ -5,8 +5,6 @@ import unittest
 
 class TestMJLS(unittest.TestCase):
     def setUp(self):
-        self.good_boy = MJLS.MJLS(sc.N, sc.As, sc.Bs, sc.Cs,
-                                  sc.Ds, sc.P, sc.Xs_ric, sc.Fs_ric)
 
     def tearDown(self):
         pass

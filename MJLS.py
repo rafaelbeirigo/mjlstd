@@ -6,14 +6,14 @@ from Error import MatricesNumberError
 class MJLS:
     """A Markov Jump Linear System."""
     def __init__(self, N, A, B, C, D, P=None, X=None, F=None):
-        self._N = N
-        self._A = A
-        self._B = B
-        self._C = C
-        self._D = D
-        self._P = P
-        self._X = X
-        self._F = F
+        self.N = N
+        self.A = A
+        self.B = B
+        self.C = C
+        self.D = D
+        self.P = P
+        self.X = X
+        self.F = F
 
     def __get_matrices(self, N, M):
         """Returns the first `N' matrices of `M'."""

@@ -3,6 +3,7 @@ import numpy as np
 import scipy.linalg as la
 from Error import MatricesNumberError
 
+
 class MJLS:
     """A Markov Jump Linear System."""
     def __init__(self, N, A, B, C, D, P=None, X=None, F=None):

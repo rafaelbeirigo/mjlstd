@@ -5,13 +5,29 @@ import unittest
 
 class TestMJLS(unittest.TestCase):
     def setUp(self):
+        args = {'N': sc.N,
+                'A': sc.As,
+                'B': sc.Bs,
+                'C': sc.Cs,
+                'D': sc.Ds,
+                'P': sc.P,
+                'X': sc.Xs_ric,
+                'F': sc.Fs_ric}
+        self.good_boy = MJLS.MJLS(**args)
 
     def tearDown(self):
         pass
 
-    def test_number_of_dimensions(self):
-        self.assertRaises(MatricesNumberError, MJLS.MJLS, 0, sc.As,
-                          sc.Bs, sc.Cs, sc.Ds, sc.P, sc.Xs_ric, sc.Fs_ric)
+    def test_N_matrices_per_matrix(self):
+        args = {'N': 0,
+                'A': sc.As,
+                'B': sc.Bs,
+                'C': sc.Cs,
+                'D': sc.Ds,
+                'P': sc.P,
+                'X': sc.Xs_ric,
+                'F': sc.Fs_ric}
+        self.assertRaises(MatricesNumberError, MJLS.MJLS, **args)
 
     def test_NABCDXF_have_their_set_and_get_working(self):
         self.assertIs(sc.N, self.good_boy.N)

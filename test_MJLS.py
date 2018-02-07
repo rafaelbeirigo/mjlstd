@@ -1,3 +1,4 @@
+from Error import MatricesNumberError
 import sam_constants as sc
 import MJLS
 import unittest

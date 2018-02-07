@@ -98,17 +98,16 @@ class MJLS:
 def is_stable(m, lambd):
     """Tests parameters for TD(\lambda) stability.
 
+    Args:
+        m (:obj:`MJLS`): the corresponding Markov Jump Linear System.
+        lambda_ (:obj:`float`): the $\lambda$ value to be tested.
+
     Based on the article:
 
     O. L. V. Costa and J. C. C. Aya, "Monte Carlo
     TD(\lambda)-methods for the optimal control of
     discrete-time Markovian jump linear systems",
     Automatica, vol. 38, pp. 217–225, 2002.
-
-    Args:
-        m (:obj:`MJLS`): the corresponding Markov Jump Linear System.
-        lambd (:obj:`float`): the $\lambda$ value to be tested.
-
     """
     assert m.F is not None, "F must be provided"
 

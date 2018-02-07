@@ -16,7 +16,7 @@ class MJLS:
         self.F = F
 
     def __get_matrices(self, N, M):
-        """Returns the first `N' matrices of `M'."""
+        """Returns the `N' matrices of `M' if and only if `N' is exact."""
         if M.shape[0] != N:
             raise MatricesNumberError("Each matrix (with the exception"
                                       " of `P') must contain `N' matrices.")

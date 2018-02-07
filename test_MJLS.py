@@ -13,7 +13,9 @@ class TestMJLS(unittest.TestCase):
         pass
 
     def test_number_of_dimensions(self):
-        pass
+        self.assertRaises(MatricesNumberError, MJLS.MJLS, 0, sc.As,
+                          sc.Bs, sc.Cs, sc.Ds, sc.P, sc.Xs_ric, sc.Fs_ric)
+
     def test_NABCDXF_have_their_set_and_get_working(self):
         self.assertIs(sc.N, self.good_boy.N)
         self.assertIs(sc.As, self.good_boy.A)

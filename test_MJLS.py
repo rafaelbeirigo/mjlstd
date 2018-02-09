@@ -35,7 +35,7 @@ class TestMJLS(unittest.TestCase):
                 'F': sc.Fs_ric}
         self.assertRaises(MatricesNumberError, MJLS.MJLS, **args)
 
-    def test_NABCDXF_have_their_set_and_get_working(self):
+    def test_get_and_set_methods(self):
         self.assertIs(sc.N, self.good_boy.N)
         self.assertEqual(sc.m, self.good_boy.m)
         self.assertEqual(sc.n, self.good_boy.n)

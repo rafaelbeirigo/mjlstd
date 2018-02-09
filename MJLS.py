@@ -137,9 +137,9 @@ def is_stable(m, lambda_):
     A_cal = C_cal.dot(N_cal)
 
     if not (max(abs(la.eig(A_cal)[0])) < 1):
-        print('test_stability: WARNING: F does not satisfy Lemma 3 '
-              '(stabilizability)')
+        return False
 
     if not (pow(lambda_, 2) < v_max):
-        print('test_stability: WARNING: lambda does not satisfy Lemma 2 '
-              '(convergence)')
+        return False
+
+    return True

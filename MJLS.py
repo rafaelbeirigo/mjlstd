@@ -1,7 +1,7 @@
 import math
 import numpy as np
 import scipy.linalg as la
-from Error import MatricesNumberError
+from Error import MatricesNumberError, DimensionError
 
 
 class MJLS:
@@ -55,6 +55,9 @@ class MJLS:
 
     @A.setter
     def A(self, value):
+        if (value.shape[1] != self.n) or (value.shape[2] != self.n):
+            raise DimensionError("`A' must have `n' rows and `n' columns.")
+
         self._A = self.__get_matrices_maybe(self.N, value)
 
     @property
@@ -63,6 +66,9 @@ class MJLS:
 
     @B.setter
     def B(self, value):
+        if (value.shape[1] != self.n) or (value.shape[2] != self.m):
+            raise DimensionError("`B' must have `n' rows and `m' columns.")
+
         self._B = self.__get_matrices_maybe(self.N, value)
 
     @property
@@ -71,6 +77,9 @@ class MJLS:
 
     @C.setter
     def C(self, value):
+        if (value.shape[2] != self.n):
+            raise DimensionError("`C' must have `n' columns.")
+
         self._C = self.__get_matrices_maybe(self.N, value)
 
     @property
@@ -79,6 +88,9 @@ class MJLS:
 
     @D.setter
     def D(self, value):
+        if (value.shape[2] != self.m):
+            raise DimensionError("`D' must have `m' columns.")
+
         self._D = self.__get_matrices_maybe(self.N, value)
 
     @property
@@ -95,6 +107,9 @@ class MJLS:
 
     @X.setter
     def X(self, value):
+        if (value.shape[1] != self.n) or (value.shape[2] != self.n):
+            raise DimensionError("`X' must have `n' rows and `n' columns.")
+
         self._X = self.__get_matrices_maybe(self.N, value)
 
     @property
@@ -103,6 +118,9 @@ class MJLS:
 
     @F.setter
     def F(self, value):
+        if (value.shape[1] != self.m) or (value.shape[2] != self.n):
+            raise DimensionError("`F' must have `m' rows and `n' columns.")
+
         self._F = self.__get_matrices_maybe(self.N, value)
 
     def get_ABCD(self, i=None):

@@ -1,4 +1,4 @@
-from Error import MatricesNumberError
+from Error import MatricesNumberError, DimensionError
 import sam_constants as sc
 import MJLS
 import unittest
@@ -67,6 +67,32 @@ class TestMJLS(unittest.TestCase):
 
     def test_lambda_1_makes_it_unstable(self):
         self.assertFalse(MJLS.is_stable(self.good_boy, 1))
+
+    def test_m_is_dimensionally_respected(self):
+        args = {'N': sc.N,
+                'm': sc.n,      # swapped
+                'n': sc.n,
+                'A': sc.As,
+                'B': sc.Bs,
+                'C': sc.Cs,
+                'D': sc.Ds,
+                'P': sc.P,
+                'X': sc.Xs_ric,
+                'F': sc.Fs_ric}
+        self.assertRaises(DimensionError, MJLS.MJLS, **args)
+
+    def test_n_is_dimensionally_respected(self):
+        args = {'N': sc.N,
+                'm': sc.m,
+                'n': sc.m,      # swapped
+                'A': sc.As,
+                'B': sc.Bs,
+                'C': sc.Cs,
+                'D': sc.Ds,
+                'P': sc.P,
+                'X': sc.Xs_ric,
+                'F': sc.Fs_ric}
+        self.assertRaises(DimensionError, MJLS.MJLS, **args)
 
 
 if __name__ == "__main__":

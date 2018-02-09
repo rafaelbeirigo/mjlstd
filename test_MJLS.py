@@ -63,10 +63,10 @@ class TestMJLS(unittest.TestCase):
             npt.assert_array_equal(sc.Ds[i], ABCD[3])
 
     def test_lambda_0_makes_it_stable(self):
-        self.assertTrue(MJLS.is_stable(self.good_boy, 0))
+        self.assertTrue(self.good_boy.is_stable(0))
 
     def test_lambda_1_makes_it_unstable(self):
-        self.assertFalse(MJLS.is_stable(self.good_boy, 1))
+        self.assertFalse(self.good_boy.is_stable(1))
 
     def test_m_is_dimensionally_respected(self):
         args = {'N': sc.N,

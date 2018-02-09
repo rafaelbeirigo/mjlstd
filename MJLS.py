@@ -138,54 +138,52 @@ class MJLS:
         else:
             return (self.A, self.B, self.C, self.D)
 
+    def is_stable(self, lambda_):
+        """Tests for TD(\lambda) stability.
 
-def is_stable(m, lambda_):
-    """Tests parameters for TD(\lambda) stability.
+        Args:
+            lambda_ (:obj:`float`): the $\lambda$ value to be tested.
 
-    Args:
-        m (:obj:`MJLS`): the corresponding Markov Jump Linear System.
-        lambda_ (:obj:`float`): the $\lambda$ value to be tested.
+        The lambda test is based on Lemma 2 from (1).
 
-    The lambda test is based on Lemma 2 from (1).
+        The "Fs" test is based on Equations 3.12b--d from (2).
 
-    The "Fs" test is based on Equations 3.12b--d from (2).
+        1. O. L. V. Costa and J. C. C. Aya, "Monte Carlo
+        TD(\lambda)-methods for the optimal control of
+        discrete-time Markovian jump linear systems",
+        Automatica, vol. 38, pp. 217–225, 2002.
 
-    1. O. L. V. Costa and J. C. C. Aya, "Monte Carlo
-    TD(\lambda)-methods for the optimal control of
-    discrete-time Markovian jump linear systems",
-    Automatica, vol. 38, pp. 217–225, 2002.
+        Implement it according to (1, p. 34, equations 3.12[b--d]).
 
-    Implement it according to (1, p. 34, equations 3.12[b--d]).
+        2. O. L. V. Costa, M. D. Fragoso, and R. P. Marques,
+        Discrete-Time Markov Jump Linear Systems, ser.
+        Probability and Its Applications. New York:
+        Springer-Verlag, 2005.
 
-    2. O. L. V. Costa, M. D. Fragoso, and R. P. Marques,
-    Discrete-Time Markov Jump Linear Systems, ser.
-    Probability and Its Applications. New York:
-    Springer-Verlag, 2005.
+        """
+        assert self.F is not None, "F must be provided"
 
-    """
-    assert m.F is not None, "F must be provided"
+        krs = []
+        v_max = -math.inf
+        for i in range(self.N):
+            G = self.A[i] + self.B[i].dot(self.F[i])
+            kr = np.kron(G, G)
+            krs.append(kr)
 
-    krs = []
-    v_max = -math.inf
-    for i in range(m.N):
-        G = m.A[i] + m.B[i].dot(m.F[i])
-        kr = np.kron(G, G)
-        krs.append(kr)
+            # lambda test
+            v = pow(la.norm(kr, ord=2), -1)
+            if v > v_max:
+                v_max = v
 
-        # lambda test
-        v = pow(la.norm(kr, ord=2), -1)
-        if v > v_max:
-            v_max = v
+        # Fs test
+        C_cal = np.kron(self.P.T, np.eye(self.n * self.n))
+        N_cal = la.block_diag(*krs)
+        A_cal = C_cal.dot(N_cal)
 
-    # Fs test
-    C_cal = np.kron(m.P.T, np.eye(m.n * m.n))
-    N_cal = la.block_diag(*krs)
-    A_cal = C_cal.dot(N_cal)
+        if not (max(abs(la.eig(A_cal)[0])) < 1):
+            return False
 
-    if not (max(abs(la.eig(A_cal)[0])) < 1):
-        return False
+        if not (pow(lambda_, 2) < v_max):
+            return False
 
-    if not (pow(lambda_, 2) < v_max):
-        return False
-
-    return True
+        return True

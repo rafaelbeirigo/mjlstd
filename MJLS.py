@@ -110,12 +110,22 @@ def is_stable(m, lambda_):
         m (:obj:`MJLS`): the corresponding Markov Jump Linear System.
         lambda_ (:obj:`float`): the $\lambda$ value to be tested.
 
-    Based on the article:
+    The lambda test is based on Lemma 2 from (1).
 
-    O. L. V. Costa and J. C. C. Aya, "Monte Carlo
+    The "Fs" test is based on Equations 3.12b--d from (2).
+
+    1. O. L. V. Costa and J. C. C. Aya, "Monte Carlo
     TD(\lambda)-methods for the optimal control of
     discrete-time Markovian jump linear systems",
     Automatica, vol. 38, pp. 217–225, 2002.
+
+    Implement it according to (1, p. 34, equations 3.12[b--d]).
+
+    2. O. L. V. Costa, M. D. Fragoso, and R. P. Marques,
+    Discrete-Time Markov Jump Linear Systems, ser.
+    Probability and Its Applications. New York:
+    Springer-Verlag, 2005.
+
     """
     assert m.F is not None, "F must be provided"
 

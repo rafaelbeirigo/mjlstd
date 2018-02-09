@@ -132,9 +132,9 @@ def is_stable(m, lambda_):
             v_max = v
 
     # Fs test
-    I_cal = la.block_diag(*krs)
+    N_cal = la.block_diag(*krs)
 
-    if not (max(abs(la.eig(I_cal)[0])) < 1):
+    if not (max(abs(la.eig(N_cal)[0])) < 1):
         print('test_stability: WARNING: F does not satisfy Lemma 3 '
               '(stabilizability)')
 

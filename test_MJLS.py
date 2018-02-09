@@ -62,6 +62,9 @@ class TestMJLS(unittest.TestCase):
             npt.assert_array_equal(sc.Cs[i], ABCD[2])
             npt.assert_array_equal(sc.Ds[i], ABCD[3])
 
+    def test_lambda_0_makes_it_stable(self):
+        self.assertTrue(MJLS.is_stable(self.good_boy, 0))
+
 
 if __name__ == "__main__":
     unittest.main()

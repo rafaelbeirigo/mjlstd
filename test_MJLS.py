@@ -65,6 +65,9 @@ class TestMJLS(unittest.TestCase):
     def test_lambda_0_makes_it_stable(self):
         self.assertTrue(MJLS.is_stable(self.good_boy, 0))
 
+    def test_lambda_1_makes_it_unstable(self):
+        self.assertFalse(MJLS.is_stable(self.good_boy, 1))
+
 
 if __name__ == "__main__":
     unittest.main()

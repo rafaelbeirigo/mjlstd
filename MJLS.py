@@ -178,7 +178,7 @@ def is_stable(m, lambda_):
             v_max = v
 
     # Fs test
-    C_cal = np.kron(m.P.T, np.eye(m.m * m.m))
+    C_cal = np.kron(m.P.T, np.eye(m.n * m.n))
     N_cal = la.block_diag(*krs)
     A_cal = C_cal.dot(N_cal)
 

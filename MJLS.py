@@ -6,8 +6,10 @@ from Error import MatricesNumberError
 
 class MJLS:
     """A Markov Jump Linear System."""
-    def __init__(self, N, A, B, C, D, P=None, X=None, F=None):
+    def __init__(self, N, m, n, A, B, C, D, P=None, X=None, F=None):
         self.N = N
+        self.m = m
+        self.n = n
         self.A = A
         self.B = B
         self.C = C
@@ -26,6 +28,22 @@ class MJLS:
     @property
     def N(self):
         return self._N
+
+    @property
+    def m(self):
+        return self._m
+
+    @m.setter
+    def m(self, value):
+        self._m = value
+
+    @property
+    def n(self):
+        return self._n
+
+    @n.setter
+    def n(self, value):
+        self._n = value
 
     @N.setter
     def N(self, value):
@@ -142,7 +160,7 @@ def is_stable(m, lambda_):
             v_max = v
 
     # Fs test
-    C_cal = np.kron(m.P.T, np.eye(m.N * m.N))
+    C_cal = np.kron(m.P.T, np.eye(m.m * m.m))
     N_cal = la.block_diag(*krs)
     A_cal = C_cal.dot(N_cal)
 

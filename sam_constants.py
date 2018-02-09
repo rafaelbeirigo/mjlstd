@@ -2,6 +2,12 @@ import numpy as np
 
 N = 3
 
+# Number of rows in the state array (or vector)
+m = 2
+
+# Number of columns in the state array (`1', if it is a vector)
+n = 1
+
 # Transition probabilities
 P = np.array([[0.67, 0.17, 0.16],
               [0.30, 0.47, 0.23],

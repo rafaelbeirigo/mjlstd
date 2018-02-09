@@ -8,6 +8,8 @@ import numpy.testing as npt
 class TestMJLS(unittest.TestCase):
     def setUp(self):
         args = {'N': sc.N,
+                'm': sc.m,
+                'n': sc.n,
                 'A': sc.As,
                 'B': sc.Bs,
                 'C': sc.Cs,
@@ -22,6 +24,8 @@ class TestMJLS(unittest.TestCase):
 
     def test_N_matrices_per_matrix(self):
         args = {'N': 0,
+                'm': sc.m,
+                'n': sc.n,
                 'A': sc.As,
                 'B': sc.Bs,
                 'C': sc.Cs,
@@ -33,6 +37,9 @@ class TestMJLS(unittest.TestCase):
 
     def test_NABCDXF_have_their_set_and_get_working(self):
         self.assertIs(sc.N, self.good_boy.N)
+        self.assertEqual(sc.m, self.good_boy.m)
+        self.assertEqual(sc.n, self.good_boy.n)
+
         self.assertIs(sc.As, self.good_boy.A)
         self.assertIs(sc.Bs, self.good_boy.B)
         self.assertIs(sc.Cs, self.good_boy.C)

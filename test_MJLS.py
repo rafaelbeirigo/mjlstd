@@ -94,6 +94,19 @@ class TestMJLS(unittest.TestCase):
                 'F': sc.Fs_ric}
         self.assertRaises(DimensionError, MJLS.MJLS, **args)
 
+    def test_correct_m_and_n_are_ok(self):
+        args = {'N': sc.N,
+                'm': sc.m,      # ok
+                'n': sc.n,      # ok
+                'A': sc.As,
+                'B': sc.Bs,
+                'C': sc.Cs,
+                'D': sc.Ds,
+                'P': sc.P,
+                'X': sc.Xs_ric,
+                'F': sc.Fs_ric}
+        self.assertIsNotNone(MJLS.MJLS(**args))
+
 
 if __name__ == "__main__":
     unittest.main()

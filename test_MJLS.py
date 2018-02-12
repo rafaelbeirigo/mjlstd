@@ -3,6 +3,7 @@ import sam_constants
 import MJLS
 import unittest
 import numpy.testing as npt
+import math
 
 
 class TestMJLS(unittest.TestCase):
@@ -25,7 +26,7 @@ class TestMJLS(unittest.TestCase):
         pass
 
     def test_N_matrices_per_matrix(self):
-        args = {'N': 1,
+        args = {'N': math.inf,
                 'm': self.cf.m,
                 'n': self.cf.n,
                 'A': self.cf.A,
@@ -72,7 +73,7 @@ class TestMJLS(unittest.TestCase):
 
     def test_m_is_dimensionally_respected(self):
         args = {'N': self.cf.N,
-                'm': self.cf.n,      # swapped
+                'm': math.inf,
                 'n': self.cf.n,
                 'A': self.cf.A,
                 'B': self.cf.B,
@@ -86,7 +87,7 @@ class TestMJLS(unittest.TestCase):
     def test_n_is_dimensionally_respected(self):
         args = {'N': self.cf.N,
                 'm': self.cf.m,
-                'n': self.cf.m,      # swapped
+                'n': math.inf,
                 'A': self.cf.A,
                 'B': self.cf.B,
                 'C': self.cf.C,

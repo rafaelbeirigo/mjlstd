@@ -31,6 +31,12 @@ class Parameters:
         self.eta = eta
         self.seed = seed
 
+    def positive_or_error(self, value, name):
+        """Raises an error if value is not positive."""
+
+        if value < 0:
+            raise ValueError(''.join((name, " must be positive.")))
+
     @property
     def L(self):
         return self._L

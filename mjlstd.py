@@ -52,6 +52,7 @@ class Parameters:
 
     @T.setter
     def T(self, value):
+        self.positive_or_error(value, "`T'")
         self._T = value
 
     @property
@@ -60,6 +61,7 @@ class Parameters:
 
     @K.setter
     def K(self, value):
+        self.positive_or_error(value, "`K'")
         self._K = value
 
     @property
@@ -68,6 +70,7 @@ class Parameters:
 
     @lambda_.setter
     def lambda_(self, value):
+        self.positive_or_error(value, "`lambda_'")
         self._lambda_ = value
 
     @property
@@ -76,6 +79,7 @@ class Parameters:
 
     @epsilon.setter
     def epsilon(self, value):
+        self.positive_or_error(value, "`epsilon'")
         self._epsilon = value
 
     @property
@@ -84,6 +88,7 @@ class Parameters:
 
     @c.setter
     def c(self, value):
+        self.positive_or_error(value, "`c'")
         self._c = value
 
     @property
@@ -92,6 +97,7 @@ class Parameters:
 
     @eta.setter
     def eta(self, value):
+        self.positive_or_error(value, "`eta'")
         self._eta = value
 
     @property
@@ -100,6 +106,7 @@ class Parameters:
 
     @seed.setter
     def seed(self, value):
+        self.positive_or_error(value, "`seed'")
         self._seed = value
 
 

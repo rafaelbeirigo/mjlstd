@@ -107,17 +107,19 @@ class TestMJLS(unittest.TestCase):
                 'F': sc.Fs_ric}
         self.assertIsNotNone(MJLS.MJLS(**args))
 
-    def test_Parameters_accept_only_reasonable_values(self):
+    def test_N_must_be_positive(self):
         args_N = {'N': -1, 'm': sc.m, 'n': sc.n, 'A': sc.As,
                   'B': sc.Bs, 'C': sc.Cs, 'D': sc.Ds, 'P':
                   sc.P, 'X': sc.Xs_ric, 'F': sc.Fs_ric}
         self.assertRaises(ValueError, MJLS.MJLS, **args_N)
 
+    def test_m_must_be_positive(self):
         args_m = {'N': sc.N, 'm': -1, 'n': sc.n, 'A': sc.As,
                   'B': sc.Bs, 'C': sc.Cs, 'D': sc.Ds, 'P': sc.P, 'X':
                   sc.Xs_ric, 'F': sc.Fs_ric}
         self.assertRaises(ValueError, MJLS.MJLS, **args_m)
 
+    def test_n_must_be_positive(self):
         args_n = {'N': sc.N, 'm': sc.m, 'n': -1, 'A': sc.As,
                   'B': sc.Bs, 'C': sc.Cs, 'D': sc.Ds, 'P': sc.P, 'X':
                   sc.Xs_ric, 'F': sc.Fs_ric}

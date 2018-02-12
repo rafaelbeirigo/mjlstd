@@ -43,6 +43,7 @@ class Parameters:
 
     @L.setter
     def L(self, value):
+        self.positive_or_error(value, "`L'")
         self._L = value
 
     @property

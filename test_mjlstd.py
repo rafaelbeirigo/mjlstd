@@ -10,3 +10,8 @@ class TestMjlstd(unittest.TestCase):
                   'B': sc.Bs, 'C': sc.Cs, 'D': sc.Ds, 'P':
                   sc.P, 'X': sc.Xs_ric, 'F': sc.Fs_ric}
         self.assertRaises(ValueError, MJLS.MJLS, **args_N)
+
+        args_m = {'N': sc.N, 'm': -1, 'n': sc.n, 'A': sc.As,
+                  'B': sc.Bs, 'C': sc.Cs, 'D': sc.Ds, 'P': sc.P, 'X':
+                  sc.Xs_ric, 'F': sc.Fs_ric}
+        self.assertRaises(ValueError, MJLS.MJLS, **args_m)

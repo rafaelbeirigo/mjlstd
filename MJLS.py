@@ -41,6 +41,8 @@ class MJLS:
 
     @m.setter
     def m(self, value):
+        if value <= 0:
+            raise ValueError("`m' must be positive.")
         self._m = value
 
     @property

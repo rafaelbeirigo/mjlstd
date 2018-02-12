@@ -29,6 +29,10 @@ class MJLS:
     def N(self):
         return self._N
 
+    @N.setter
+    def N(self, value):
+        self._N = value
+
     @property
     def m(self):
         return self._m
@@ -44,10 +48,6 @@ class MJLS:
     @n.setter
     def n(self, value):
         self._n = value
-
-    @N.setter
-    def N(self, value):
-        self._N = value
 
     @property
     def A(self):

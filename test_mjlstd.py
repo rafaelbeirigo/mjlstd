@@ -20,3 +20,9 @@ class TestMjlstd(unittest.TestCase):
                   'B': sc.Bs, 'C': sc.Cs, 'D': sc.Ds, 'P': sc.P, 'X':
                   sc.Xs_ric, 'F': sc.Fs_ric}
         self.assertRaises(ValueError, MJLS.MJLS, **args_n)
+
+    def test_P_has_only_non_negative_values(self):
+        args_P = {'N': sc.N, 'm': sc.m, 'n': sc.n, 'A':
+                  sc.As, 'B': sc.Bs, 'C': sc.Cs, 'D': sc.Ds, 'P':
+                  -sc.P, 'X': sc.Xs_ric, 'F': sc.Fs_ric}
+        self.assertRaises(ValueError, MJLS.MJLS, **args_P)

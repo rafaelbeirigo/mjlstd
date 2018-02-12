@@ -32,7 +32,7 @@ class MJLS:
     @N.setter
     def N(self, value):
         if value <= 0:
-            raise ValueError("N must be positive.")
+            raise ValueError("`N' must be positive.")
         self._N = value
 
     @property

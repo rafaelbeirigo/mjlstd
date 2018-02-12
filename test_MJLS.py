@@ -72,69 +72,69 @@ class TestMJLS(unittest.TestCase):
         args = {'N': sc.N,
                 'm': sc.n,      # swapped
                 'n': sc.n,
-                'A': sc.As,
-                'B': sc.Bs,
-                'C': sc.Cs,
-                'D': sc.Ds,
+                'A': sc.A,
+                'B': sc.B,
+                'C': sc.C,
+                'D': sc.D,
                 'P': sc.P,
-                'X': sc.Xs_ric,
-                'F': sc.Fs_ric}
+                'X': sc.X_ric,
+                'F': sc.F_ric}
         self.assertRaises(DimensionError, MJLS.MJLS, **args)
 
     def test_n_is_dimensionally_respected(self):
         args = {'N': sc.N,
                 'm': sc.m,
                 'n': sc.m,      # swapped
-                'A': sc.As,
-                'B': sc.Bs,
-                'C': sc.Cs,
-                'D': sc.Ds,
+                'A': sc.A,
+                'B': sc.B,
+                'C': sc.C,
+                'D': sc.D,
                 'P': sc.P,
-                'X': sc.Xs_ric,
-                'F': sc.Fs_ric}
+                'X': sc.X_ric,
+                'F': sc.F_ric}
         self.assertRaises(DimensionError, MJLS.MJLS, **args)
 
     def test_correct_m_and_n_are_ok(self):
         args = {'N': sc.N,
                 'm': sc.m,      # ok
                 'n': sc.n,      # ok
-                'A': sc.As,
-                'B': sc.Bs,
-                'C': sc.Cs,
-                'D': sc.Ds,
+                'A': sc.A,
+                'B': sc.B,
+                'C': sc.C,
+                'D': sc.D,
                 'P': sc.P,
-                'X': sc.Xs_ric,
-                'F': sc.Fs_ric}
+                'X': sc.X_ric,
+                'F': sc.F_ric}
         self.assertIsNotNone(MJLS.MJLS(**args))
 
     def test_N_must_be_positive(self):
-        args_N = {'N': -1, 'm': sc.m, 'n': sc.n, 'A': sc.As,
-                  'B': sc.Bs, 'C': sc.Cs, 'D': sc.Ds, 'P':
-                  sc.P, 'X': sc.Xs_ric, 'F': sc.Fs_ric}
+        args_N = {'N': -1, 'm': sc.m, 'n': sc.n, 'A': sc.A,
+                  'B': sc.B, 'C': sc.C, 'D': sc.D, 'P':
+                  sc.P, 'X': sc.X_ric, 'F': sc.F_ric}
         self.assertRaises(ValueError, MJLS.MJLS, **args_N)
 
     def test_m_must_be_positive(self):
-        args_m = {'N': sc.N, 'm': -1, 'n': sc.n, 'A': sc.As,
-                  'B': sc.Bs, 'C': sc.Cs, 'D': sc.Ds, 'P': sc.P, 'X':
-                  sc.Xs_ric, 'F': sc.Fs_ric}
+        args_m = {'N': sc.N, 'm': -1, 'n': sc.n, 'A': sc.A,
+                  'B': sc.B, 'C': sc.C, 'D': sc.D, 'P': sc.P, 'X':
+                  sc.X_ric, 'F': sc.F_ric}
         self.assertRaises(ValueError, MJLS.MJLS, **args_m)
 
     def test_n_must_be_positive(self):
-        args_n = {'N': sc.N, 'm': sc.m, 'n': -1, 'A': sc.As,
-                  'B': sc.Bs, 'C': sc.Cs, 'D': sc.Ds, 'P': sc.P, 'X':
-                  sc.Xs_ric, 'F': sc.Fs_ric}
+        args_n = {'N': sc.N, 'm': sc.m, 'n': -1, 'A': sc.A,
+                  'B': sc.B, 'C': sc.C, 'D': sc.D, 'P': sc.P, 'X':
+                  sc.X_ric, 'F': sc.F_ric}
         self.assertRaises(ValueError, MJLS.MJLS, **args_n)
 
     def test_P_has_only_non_negative_values(self):
         args_P = {'N': sc.N, 'm': sc.m, 'n': sc.n, 'A':
-                  sc.As, 'B': sc.Bs, 'C': sc.Cs, 'D': sc.Ds, 'P':
-                  -sc.P, 'X': sc.Xs_ric, 'F': sc.Fs_ric}
+                  sc.A, 'B': sc.B, 'C': sc.C, 'D': sc.D, 'P':
+                  -sc.P, 'X': sc.X_ric, 'F': sc.F_ric}
         self.assertRaises(ValueError, MJLS.MJLS, **args_P)
 
     def test_each_row_of_P_sum_to_1(self):
         args_P = {'N': sc.N, 'm': sc.m, 'n': sc.n, 'A':
-                  sc.As, 'B': sc.Bs, 'C': sc.Cs, 'D': sc.Ds, 'P': 0 *
-                  sc.P, 'X': sc.Xs_ric, 'F': sc.Fs_ric}
+                  sc.A, 'B': sc.B, 'C': sc.C, 'D': sc.D, 'P': 0 *
+                  sc.P, 'X': sc.X_ric, 'F': sc.F_ric}
         self.assertRaises(ValueError, MJLS.MJLS, **args_P)
 
 

@@ -10,13 +10,13 @@ class TestMJLS(unittest.TestCase):
         args = {'N': sc.N,
                 'm': sc.m,
                 'n': sc.n,
-                'A': sc.As,
-                'B': sc.Bs,
-                'C': sc.Cs,
-                'D': sc.Ds,
+                'A': sc.A,
+                'B': sc.B,
+                'C': sc.C,
+                'D': sc.D,
                 'P': sc.P,
-                'X': sc.Xs_ric,
-                'F': sc.Fs_ric}
+                'X': sc.X_ric,
+                'F': sc.F_ric}
         self.good_boy = MJLS.MJLS(**args)
 
     def tearDown(self):
@@ -26,13 +26,13 @@ class TestMJLS(unittest.TestCase):
         args = {'N': 1,
                 'm': sc.m,
                 'n': sc.n,
-                'A': sc.As,
-                'B': sc.Bs,
-                'C': sc.Cs,
-                'D': sc.Ds,
+                'A': sc.A,
+                'B': sc.B,
+                'C': sc.C,
+                'D': sc.D,
                 'P': sc.P,
-                'X': sc.Xs_ric,
-                'F': sc.Fs_ric}
+                'X': sc.X_ric,
+                'F': sc.F_ric}
         self.assertRaises(MatricesNumberError, MJLS.MJLS, **args)
 
     def test_get_and_set_methods(self):
@@ -40,27 +40,27 @@ class TestMJLS(unittest.TestCase):
         self.assertEqual(sc.m, self.good_boy.m)
         self.assertEqual(sc.n, self.good_boy.n)
 
-        self.assertIs(sc.As, self.good_boy.A)
-        self.assertIs(sc.Bs, self.good_boy.B)
-        self.assertIs(sc.Cs, self.good_boy.C)
-        self.assertIs(sc.Ds, self.good_boy.D)
-        self.assertIs(sc.Xs_ric, self.good_boy.X)
-        self.assertIs(sc.Fs_ric, self.good_boy.F)
+        self.assertIs(sc.A, self.good_boy.A)
+        self.assertIs(sc.B, self.good_boy.B)
+        self.assertIs(sc.C, self.good_boy.C)
+        self.assertIs(sc.D, self.good_boy.D)
+        self.assertIs(sc.X_ric, self.good_boy.X)
+        self.assertIs(sc.F_ric, self.good_boy.F)
 
     def test_get_bundle_ABCDFX(self):
         ABCD = self.good_boy.get_ABCD()
-        self.assertIs(sc.As, ABCD[0])
-        self.assertIs(sc.Bs, ABCD[1])
-        self.assertIs(sc.Cs, ABCD[2])
-        self.assertIs(sc.Ds, ABCD[3])
+        self.assertIs(sc.A, ABCD[0])
+        self.assertIs(sc.B, ABCD[1])
+        self.assertIs(sc.C, ABCD[2])
+        self.assertIs(sc.D, ABCD[3])
 
     def test_get_individual_ABCDFX(self):
         for i in range(sc.N):
             ABCD = self.good_boy.get_ABCD(i)
-            npt.assert_array_equal(sc.As[i], ABCD[0])
-            npt.assert_array_equal(sc.Bs[i], ABCD[1])
-            npt.assert_array_equal(sc.Cs[i], ABCD[2])
-            npt.assert_array_equal(sc.Ds[i], ABCD[3])
+            npt.assert_array_equal(sc.A[i], ABCD[0])
+            npt.assert_array_equal(sc.B[i], ABCD[1])
+            npt.assert_array_equal(sc.C[i], ABCD[2])
+            npt.assert_array_equal(sc.D[i], ABCD[3])
 
     def test_lambda_0_makes_it_stable(self):
         self.assertTrue(self.good_boy.is_stable(0))

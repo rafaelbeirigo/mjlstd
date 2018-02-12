@@ -26,3 +26,9 @@ class TestMjlstd(unittest.TestCase):
                   sc.As, 'B': sc.Bs, 'C': sc.Cs, 'D': sc.Ds, 'P':
                   -sc.P, 'X': sc.Xs_ric, 'F': sc.Fs_ric}
         self.assertRaises(ValueError, MJLS.MJLS, **args_P)
+
+    def test_each_row_of_P_sum_to_1(self):
+        args_P = {'N': sc.N, 'm': sc.m, 'n': sc.n, 'A':
+                  sc.As, 'B': sc.Bs, 'C': sc.Cs, 'D': sc.Ds, 'P': 0 *
+                  sc.P, 'X': sc.Xs_ric, 'F': sc.Fs_ric}
+        self.assertRaises(ValueError, MJLS.MJLS, **args_P)

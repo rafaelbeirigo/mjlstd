@@ -107,6 +107,12 @@ class MJLS:
     def P(self, value):
         if (value < 0).any():
             raise ValueError("P must contain only non-negative values.")
+
+        row_sum = value.cumsum(1)[:, -1]
+        ones = np.ones_like(row_sum)
+        if not (np.allclose(row_sum, ones)):
+            raise ValueError("Each row of P must sum to 1.")
+
         self._P = value
 
     @property

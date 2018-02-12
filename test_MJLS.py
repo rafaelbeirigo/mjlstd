@@ -19,8 +19,8 @@ class TestMJLS(unittest.TestCase):
                 'C': self.cf.C,
                 'D': self.cf.D,
                 'P': self.cf.P,
-                'X': self.cf.X_ric,
-                'F': self.cf.F_ric}
+                'X': self.cf.X,
+                'F': self.cf.F}
         self.mjls_obj = MJLS.MJLS(**args)
 
     def tearDown(self):
@@ -35,8 +35,8 @@ class TestMJLS(unittest.TestCase):
                 'C': self.cf.C,
                 'D': self.cf.D,
                 'P': self.cf.P,
-                'X': self.cf.X_ric,
-                'F': self.cf.F_ric}
+                'X': self.cf.X,
+                'F': self.cf.F}
         self.assertRaises(MatricesNumberError, MJLS.MJLS, **args)
 
     def test_get_and_set_methods(self):
@@ -48,8 +48,8 @@ class TestMJLS(unittest.TestCase):
         self.assertIs(self.cf.B, self.mjls_obj.B)
         self.assertIs(self.cf.C, self.mjls_obj.C)
         self.assertIs(self.cf.D, self.mjls_obj.D)
-        self.assertIs(self.cf.X_ric, self.mjls_obj.X)
-        self.assertIs(self.cf.F_ric, self.mjls_obj.F)
+        self.assertIs(self.cf.X, self.mjls_obj.X)
+        self.assertIs(self.cf.F, self.mjls_obj.F)
 
     def test_get_bundle_ABCDFX(self):
         ABCD = self.mjls_obj.get_ABCD()
@@ -81,8 +81,8 @@ class TestMJLS(unittest.TestCase):
                 'C': self.cf.C,
                 'D': self.cf.D,
                 'P': self.cf.P,
-                'X': self.cf.X_ric,
-                'F': self.cf.F_ric}
+                'X': self.cf.X,
+                'F': self.cf.F}
         self.assertRaises(DimensionError, MJLS.MJLS, **args)
 
     def test_n_is_dimensionally_respected(self):
@@ -94,8 +94,8 @@ class TestMJLS(unittest.TestCase):
                 'C': self.cf.C,
                 'D': self.cf.D,
                 'P': self.cf.P,
-                'X': self.cf.X_ric,
-                'F': self.cf.F_ric}
+                'X': self.cf.X,
+                'F': self.cf.F}
         self.assertRaises(DimensionError, MJLS.MJLS, **args)
 
     def test_correct_m_and_n_are_ok(self):
@@ -107,45 +107,45 @@ class TestMJLS(unittest.TestCase):
                 'C': self.cf.C,
                 'D': self.cf.D,
                 'P': self.cf.P,
-                'X': self.cf.X_ric,
-                'F': self.cf.F_ric}
+                'X': self.cf.X,
+                'F': self.cf.F}
         self.assertIsNotNone(MJLS.MJLS(**args))
 
     def test_N_must_be_positive(self):
         args_N = {'N': -1, 'm': self.cf.m, 'n': self.cf.n,
                   'A': self.cf.A, 'B': self.cf.B, 'C':
                   self.cf.C, 'D': self.cf.D, 'P': self.cf.P,
-                  'X': self.cf.X_ric, 'F': self.cf.F_ric}
+                  'X': self.cf.X, 'F': self.cf.F}
         self.assertRaises(ValueError, MJLS.MJLS, **args_N)
 
     def test_m_must_be_positive(self):
         args_m = {'N': self.cf.N, 'm': -1, 'n': self.cf.n,
                   'A': self.cf.A, 'B': self.cf.B, 'C':
                   self.cf.C, 'D': self.cf.D, 'P': self.cf.P,
-                  'X': self.cf.X_ric, 'F': self.cf.F_ric}
+                  'X': self.cf.X, 'F': self.cf.F}
         self.assertRaises(ValueError, MJLS.MJLS, **args_m)
 
     def test_n_must_be_positive(self):
         args_n = {'N': self.cf.N, 'm': self.cf.m, 'n': -1,
                   'A': self.cf.A, 'B': self.cf.B, 'C':
                   self.cf.C, 'D': self.cf.D, 'P': self.cf.P,
-                  'X': self.cf.X_ric, 'F': self.cf.F_ric}
+                  'X': self.cf.X, 'F': self.cf.F}
         self.assertRaises(ValueError, MJLS.MJLS, **args_n)
 
     def test_P_has_only_non_negative_values(self):
         args_P = {'N': self.cf.N, 'm': self.cf.m, 'n':
                   self.cf.n, 'A': self.cf.A, 'B': self.cf.B,
                   'C': self.cf.C, 'D': self.cf.D, 'P':
-                  -self.cf.P, 'X': self.cf.X_ric, 'F':
-                  self.cf.F_ric}
+                  -self.cf.P, 'X': self.cf.X, 'F':
+                  self.cf.F}
         self.assertRaises(ValueError, MJLS.MJLS, **args_P)
 
     def test_each_row_of_P_sum_to_1(self):
         args_P = {'N': self.cf.N, 'm': self.cf.m, 'n':
                   self.cf.n, 'A': self.cf.A, 'B': self.cf.B,
                   'C': self.cf.C, 'D': self.cf.D, 'P': 0 *
-                  self.cf.P, 'X': self.cf.X_ric, 'F':
-                  self.cf.F_ric}
+                  self.cf.P, 'X': self.cf.X, 'F':
+                  self.cf.F}
         self.assertRaises(ValueError, MJLS.MJLS, **args_P)
 
 

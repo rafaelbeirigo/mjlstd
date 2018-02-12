@@ -121,6 +121,10 @@ class MJLS:
 
     @X.setter
     def X(self, value):
+        if (value is None):
+            self._X = value
+            return
+
         if (value.shape[1] != self.n) or (value.shape[2] != self.n):
             raise DimensionError("`X' must have `n' rows and `n' columns.")
 
@@ -132,6 +136,10 @@ class MJLS:
 
     @F.setter
     def F(self, value):
+        if (value is None):
+            self._F = value
+            return
+
         if (value.shape[1] != self.m) or (value.shape[2] != self.n):
             raise DimensionError("`F' must have `m' rows and `n' columns.")
 

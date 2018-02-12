@@ -23,7 +23,7 @@ class TestMJLS(unittest.TestCase):
         pass
 
     def test_N_matrices_per_matrix(self):
-        args = {'N': 0,
+        args = {'N': 1,
                 'm': sc.m,
                 'n': sc.n,
                 'A': sc.As,

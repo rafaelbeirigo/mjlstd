@@ -66,12 +66,6 @@ class TestMJLS(unittest.TestCase):
             npt.assert_array_equal(self.cf.C[i], ABCD[2])
             npt.assert_array_equal(self.cf.D[i], ABCD[3])
 
-    def test_lambda_0_makes_it_stable(self):
-        self.assertTrue(self.mjls_obj.is_lambda_stable(0))
-
-    def test_lambda_1_makes_it_unstable(self):
-        self.assertFalse(self.mjls_obj.is_lambda_stable(1))
-
     def test_m_is_dimensionally_respected(self):
         args = {'N': self.cf.N,
                 'm': math.inf,
@@ -147,6 +141,32 @@ class TestMJLS(unittest.TestCase):
                   self.cf.P, 'X': self.cf.X, 'F':
                   self.cf.F}
         self.assertRaises(ValueError, MJLS.MJLS, **args_P)
+
+
+class TestMJLSFIsProvided(unittest.TestCase):
+    def setUp(self):
+        # The (c)onstants (f)ile
+        self.cf = sam_constants
+        args = {'N': self.cf.N,
+                'm': self.cf.m,
+                'n': self.cf.n,
+                'A': self.cf.A,
+                'B': self.cf.B,
+                'C': self.cf.C,
+                'D': self.cf.D,
+                'P': self.cf.P,
+                'X': self.cf.X,
+                'F': self.cf.F}
+        self.mjls_obj = MJLS.MJLS(**args)
+
+    def test_lambda_0_makes_it_stable(self):
+        self.assertTrue(self.mjls_obj.is_lambda_stable(0))
+
+    def test_lambda_1_makes_it_unstable(self):
+        self.assertFalse(self.mjls_obj.is_lambda_stable(1))
+
+    def test_F_stable(self):
+        self.assertTrue(self.mjls_obj.is_F_stable())
 
 
 if __name__ == "__main__":

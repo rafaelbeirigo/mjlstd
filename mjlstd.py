@@ -31,6 +31,70 @@ class Parameters:
         self.eta = eta
         self.seed = seed
 
+    @property
+    def L(self):
+        return self._L
+
+    @L.setter
+    def L(self, value):
+        self._L = value
+
+    @property
+    def T(self):
+        return self._T
+
+    @T.setter
+    def T(self, value):
+        self._T = value
+
+    @property
+    def K(self):
+        return self._K
+
+    @K.setter
+    def K(self, value):
+        self._K = value
+
+    @property
+    def lambda_(self):
+        return self._lambda_
+
+    @lambda_.setter
+    def lambda_(self, value):
+        self._lambda_ = value
+
+    @property
+    def epsilon(self):
+        return self._epsilon
+
+    @epsilon.setter
+    def epsilon(self, value):
+        self._epsilon = value
+
+    @property
+    def c(self):
+        return self._c
+
+    @c.setter
+    def c(self, value):
+        self._c = value
+
+    @property
+    def eta(self):
+        return self._eta
+
+    @eta.setter
+    def eta(self, value):
+        self._eta = value
+
+    @property
+    def seed(self):
+        return self._seed
+
+    @seed.setter
+    def seed(self, value):
+        self._seed = value
+
 
 def log_D(k, got_D):
     f = open('D.log', 'a')

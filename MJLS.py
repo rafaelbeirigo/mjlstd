@@ -152,24 +152,43 @@ class MJLS:
         else:
             return (self.A, self.B, self.C, self.D)
 
-    def is_stable(self, lambda_):
-        """Tests for TD(\lambda) stability.
+    def is_lambda_stable(self, lambda_):
+        """Test for stability of the MJLS based on the `lambda' parameter.
 
         Args:
             lambda_ (:obj:`float`): the $\lambda$ value to be tested.
 
-        The lambda test is based on Lemma 2 from (1).
-
-        The "Fs" test is based on Equations 3.12b--d from (2).
+        This test is based on Lemma 2 from (1).
 
         1. O. L. V. Costa and J. C. C. Aya, "Monte Carlo
         TD(\lambda)-methods for the optimal control of
         discrete-time Markovian jump linear systems",
         Automatica, vol. 38, pp. 217–225, 2002.
 
-        Implement it according to (1, p. 34, equations 3.12[b--d]).
+        """
+        assert self.F is not None, "F must be provided"
 
-        2. O. L. V. Costa, M. D. Fragoso, and R. P. Marques,
+        v_max = -math.inf
+        for i in range(self.N):
+            G = self.A[i] + self.B[i].dot(self.F[i])
+            kr = np.kron(G, G)
+
+            # lambda test
+            v = pow(la.norm(kr, ord=2), -1)
+            if v > v_max:
+                v_max = v
+
+        if not (pow(lambda_, 2) < v_max):
+            return False
+
+        return True
+
+    def is_F_stable(self):
+        """Tests for stability based on the control gains `F'.
+
+        The "Fs" test is based on Equations 3.12b--d from (1).
+
+        1. O. L. V. Costa, M. D. Fragoso, and R. P. Marques,
         Discrete-Time Markov Jump Linear Systems, ser.
         Probability and Its Applications. New York:
         Springer-Verlag, 2005.
@@ -178,26 +197,16 @@ class MJLS:
         assert self.F is not None, "F must be provided"
 
         krs = []
-        v_max = -math.inf
         for i in range(self.N):
             G = self.A[i] + self.B[i].dot(self.F[i])
             kr = np.kron(G, G)
             krs.append(kr)
 
-            # lambda test
-            v = pow(la.norm(kr, ord=2), -1)
-            if v > v_max:
-                v_max = v
-
-        # Fs test
         C_cal = np.kron(self.P.T, np.eye(self.n * self.n))
         N_cal = la.block_diag(*krs)
         A_cal = C_cal.dot(N_cal)
 
         if not (max(abs(la.eig(A_cal)[0])) < 1):
-            return False
-
-        if not (pow(lambda_, 2) < v_max):
             return False
 
         return True

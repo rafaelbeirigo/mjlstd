@@ -1,5 +1,6 @@
 from Error import MatricesNumberError, DimensionError
 import sam_constants
+import eye_one_constants
 import MJLS
 import unittest
 import numpy.testing as npt
@@ -9,7 +10,7 @@ import math
 class TestMJLS(unittest.TestCase):
     def setUp(self):
         # The (c)onstants (f)ile
-        self.cf = sam_constants
+        self.cf = eye_one_constants
         args = {'N': self.cf.N,
                 'm': self.cf.m,
                 'n': self.cf.n,
@@ -66,10 +67,10 @@ class TestMJLS(unittest.TestCase):
             npt.assert_array_equal(self.cf.D[i], ABCD[3])
 
     def test_lambda_0_makes_it_stable(self):
-        self.assertTrue(self.mjls_obj.is_stable(0))
+        self.assertTrue(self.mjls_obj.is_lambda_stable(0))
 
     def test_lambda_1_makes_it_unstable(self):
-        self.assertFalse(self.mjls_obj.is_stable(1))
+        self.assertFalse(self.mjls_obj.is_lambda_stable(1))
 
     def test_m_is_dimensionally_respected(self):
         args = {'N': self.cf.N,

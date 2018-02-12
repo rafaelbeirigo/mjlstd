@@ -17,7 +17,7 @@ class TestMJLS(unittest.TestCase):
                 'P': sc.P,
                 'X': sc.X_ric,
                 'F': sc.F_ric}
-        self.good_boy = MJLS.MJLS(**args)
+        self.mjls_obj = MJLS.MJLS(**args)
 
     def tearDown(self):
         pass
@@ -36,19 +36,19 @@ class TestMJLS(unittest.TestCase):
         self.assertRaises(MatricesNumberError, MJLS.MJLS, **args)
 
     def test_get_and_set_methods(self):
-        self.assertIs(sc.N, self.good_boy.N)
-        self.assertEqual(sc.m, self.good_boy.m)
-        self.assertEqual(sc.n, self.good_boy.n)
+        self.assertIs(sc.N, self.mjls_obj.N)
+        self.assertEqual(sc.m, self.mjls_obj.m)
+        self.assertEqual(sc.n, self.mjls_obj.n)
 
-        self.assertIs(sc.A, self.good_boy.A)
-        self.assertIs(sc.B, self.good_boy.B)
-        self.assertIs(sc.C, self.good_boy.C)
-        self.assertIs(sc.D, self.good_boy.D)
-        self.assertIs(sc.X_ric, self.good_boy.X)
-        self.assertIs(sc.F_ric, self.good_boy.F)
+        self.assertIs(sc.A, self.mjls_obj.A)
+        self.assertIs(sc.B, self.mjls_obj.B)
+        self.assertIs(sc.C, self.mjls_obj.C)
+        self.assertIs(sc.D, self.mjls_obj.D)
+        self.assertIs(sc.X_ric, self.mjls_obj.X)
+        self.assertIs(sc.F_ric, self.mjls_obj.F)
 
     def test_get_bundle_ABCDFX(self):
-        ABCD = self.good_boy.get_ABCD()
+        ABCD = self.mjls_obj.get_ABCD()
         self.assertIs(sc.A, ABCD[0])
         self.assertIs(sc.B, ABCD[1])
         self.assertIs(sc.C, ABCD[2])
@@ -56,17 +56,17 @@ class TestMJLS(unittest.TestCase):
 
     def test_get_individual_ABCDFX(self):
         for i in range(sc.N):
-            ABCD = self.good_boy.get_ABCD(i)
+            ABCD = self.mjls_obj.get_ABCD(i)
             npt.assert_array_equal(sc.A[i], ABCD[0])
             npt.assert_array_equal(sc.B[i], ABCD[1])
             npt.assert_array_equal(sc.C[i], ABCD[2])
             npt.assert_array_equal(sc.D[i], ABCD[3])
 
     def test_lambda_0_makes_it_stable(self):
-        self.assertTrue(self.good_boy.is_stable(0))
+        self.assertTrue(self.mjls_obj.is_stable(0))
 
     def test_lambda_1_makes_it_unstable(self):
-        self.assertFalse(self.good_boy.is_stable(1))
+        self.assertFalse(self.mjls_obj.is_stable(1))
 
     def test_m_is_dimensionally_respected(self):
         args = {'N': sc.N,

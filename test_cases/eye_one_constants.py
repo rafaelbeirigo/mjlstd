@@ -27,3 +27,9 @@ F_0 = np.array([[[-0.5]]])
 Upsilon_0 = np.array([[[1.]]])
 
 Upsilon_1 = np.array([[[0.5]]])
+
+D_cal_0 = np.array([[0.5]])
+
+i1 = 0
+
+i2 = 0

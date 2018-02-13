@@ -31,7 +31,6 @@ class TestMjlstd(unittest.TestCase):
 
 class TestMjlstdEyeTwo(TestMjlstd):
     def setUp(self):
-        # The (c)onstants (f)ile
         self.cf = eye_two_constants
         args = {'N': self.cf.N,
                 'm': self.cf.m,

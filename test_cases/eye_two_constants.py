@@ -32,3 +32,9 @@ Upsilon_0 = np.array([[[1., 0],
                        [0, 1.]]])
 
 Upsilon_1 = np.array([0.5 * np.eye(2) for i in range(2)])
+
+D_cal_0 = 0.5 * np.eye(2)
+
+i1 = 0
+
+i2 = 0

@@ -23,3 +23,5 @@ F = None
 X_0 = np.array([[[1.]]])
 
 F_0 = np.array([[[-0.5]]])
+
+Upsilon_1 = np.array([[[0.5]]])

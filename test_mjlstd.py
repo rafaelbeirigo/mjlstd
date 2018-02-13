@@ -4,7 +4,9 @@ import MJLS
 from test_cases import eye_one_constants
 from test_cases import eye_two_constants
 import sam_constants
+import numpy as np
 import numpy.testing as npt
+import math
 
 
 class TestMjlstd(unittest.TestCase):
@@ -29,6 +31,15 @@ class TestMjlstd(unittest.TestCase):
                                                    self.cf.X_0),
                                       self.cf.F_0)
 
+    def test_get_Upsilon(self):
+        Upsilon = math.inf * np.ones_like(self.cf.Upsilon_1)
+        for i in range(self.cf.N):
+            Upsilon[i] = mjlstd.get_Upsilon(self.mjls_obj,
+                                            self.cf.F_0,
+                                            np.eye(self.cf.m),
+                                            (0, 0))
+
+        npt.assert_array_equal(Upsilon, self.cf.Upsilon_1)
 
 class TestMjlstdEyeTwo(TestMjlstd):
     def setUp(self):

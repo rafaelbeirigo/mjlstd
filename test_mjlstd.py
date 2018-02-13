@@ -37,7 +37,7 @@ class TestMjlstd(unittest.TestCase):
             Upsilon[i] = mjlstd.get_Upsilon(m=self.mjls_obj,
                                             Fs=self.cf.F_0,
                                             Upsilon=self.cf.Upsilon_0[i],
-                                            i=self.cf.theta_0[0])
+                                            i=i)
 
         npt.assert_array_equal(Upsilon, self.cf.Upsilon_1)
 

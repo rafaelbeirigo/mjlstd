@@ -1,7 +1,7 @@
 from Error import MatricesNumberError, DimensionError
 import sam_constants
-import eye_one_constants
-import eye_two_constants
+from test_cases import eye_one_constants
+from test_cases import eye_two_constants
 import MJLS
 import unittest
 import numpy.testing as npt

@@ -39,7 +39,7 @@ class TestMjlstd(unittest.TestCase):
                                             Upsilon=self.cf.Upsilon_0[i],
                                             i=i)
 
-        npt.assert_array_equal(Upsilon, self.cf.Upsilon_1)
+        npt.assert_array_almost_equal(Upsilon, self.cf.Upsilon_1)
 
 
 class TestMjlstdEyeTwo(TestMjlstd):

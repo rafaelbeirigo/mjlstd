@@ -41,6 +41,16 @@ class TestMjlstd(unittest.TestCase):
 
         npt.assert_array_almost_equal(Upsilon, self.cf.Upsilon_1)
 
+    def test_get_D(self):
+        npt.assert_array_almost_equal(
+            mjlstd.get_D(m=self.mjls_obj,
+                         Fs=self.cf.F_0,
+                         Ys=self.cf.X_0,
+                         Upsilon=self.cf.Upsilon_0[self.cf.i1],
+                         i=self.cf.i1,
+                         j=self.cf.i2),
+            self.cf.D_cal_0)
+
 
 class TestMjlstdEyeTwo(TestMjlstd):
     def setUp(self):

@@ -19,3 +19,7 @@ D = np.array([[[1.]]])
 X = None
 
 F = None
+
+X_0 = np.array([[[1.]]])
+
+F_0 = np.array([[[-0.5]]])

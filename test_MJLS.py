@@ -1,6 +1,7 @@
 from Error import MatricesNumberError, DimensionError
 import sam_constants
 import eye_one_constants
+import eye_two_constants
 import MJLS
 import unittest
 import numpy.testing as npt
@@ -165,6 +166,21 @@ class TestMJLSFIsProvided(unittest.TestCase):
     def test_F_stable(self):
         self.assertTrue(self.mjls_obj.is_F_stable())
 
+
+class TestMJLSEyeTwo(TestMJLS):
+    def setUp(self):
+        self.cf = eye_two_constants
+        args = {'N': self.cf.N,
+                'm': self.cf.m,
+                'n': self.cf.n,
+                'A': self.cf.A,
+                'B': self.cf.B,
+                'C': self.cf.C,
+                'D': self.cf.D,
+                'P': self.cf.P,
+                'X': self.cf.X,
+                'F': self.cf.F}
+        self.mjls_obj = MJLS.MJLS(**args)
 
 if __name__ == "__main__":
     unittest.main()

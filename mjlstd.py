@@ -64,20 +64,20 @@ def get_sum_D(p, m, Fs, Ys, i):
         i: starting mode, i.e., the mode for the first time step in the
             current simulation.
     """
-    theta = [i, 0]
     sum_D = np.zeros_like(Ys[0])
     Upsilon = np.eye(m.m)
+    theta = i
     for k in range(p.K - 1):
-        theta[1] = get_next_theta(theta[0], m.P)
+        next_theta = get_next_theta(theta, m.P)
         incr = pow(p.lambda_, k) * get_D(m, Fs, Ys, Upsilon,
-                                         theta[0], theta[1])
+                                         theta, next_theta)
         sum_D += incr
 
         if abs(incr).max() < p.epsilon:
             return sum_D
 
         Upsilon = get_Upsilon(m, Fs, Upsilon, theta)
-        theta[0] = theta[1]
+        theta = next_theta
 
     return sum_D
 

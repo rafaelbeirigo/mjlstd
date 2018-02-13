@@ -69,7 +69,8 @@ def get_sum_D(p, m, Fs, Ys, i):
     Upsilon = np.eye(m.A.shape[1])
     for k in range(p.K - 1):
         theta[1] = get_next_theta(theta[0], m.P)
-        incr = pow(p.lambda_, k) * get_D(m, Fs, Ys, Upsilon, theta)
+        incr = pow(p.lambda_, k) * get_D(m, Fs, Ys, Upsilon,
+                                         theta[0], theta[1])
         sum_D += incr
 
         if abs(incr).max() < p.epsilon:
@@ -81,24 +82,24 @@ def get_sum_D(p, m, Fs, Ys, i):
     return sum_D
 
 
-def get_D(m, Fs, Ys, Upsilon, theta):
+def get_D(m, Fs, Ys, Upsilon, i, j):
     """Calculates each individual D for the sum.
     Args:
         m (:obj:`MJLS`): the corresponding Markov Jump Linear System.
         Fs: current approximation of the control gains.
         Ys: current approximation of the CARE solution.
         Upsilon: current value of `Upsilon'.
-        theta: sequence with two numbers, the first corresponding to the
-            current mode and the second to the next mode.
+        i: current mode.
+        j: next mode.
     """
-    (A, B, C, D) = m.get_ABCD(theta[1])
+    (A, B, C, D) = m.get_ABCD(j)
 
     C_, D_ = C.conj().T, D.conj().T
 
-    F = Fs[theta[1]]
+    F = Fs[j]
     F_ = F.conj().T
 
-    Y1, Y2 = Ys[theta[0]], Ys[theta[1]]
+    Y1, Y2 = Ys[i], Ys[j]
 
     U = Upsilon
     U_ = U.conj().T

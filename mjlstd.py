@@ -23,6 +23,8 @@ def get_Y(p, m, Fs, Ys):
         p (:obj:`Parameters`): parameters for the algorithm; for details on
             each parameter, see the :obj:`Parameters` class.
         m (:obj:`MJLS`): the corresponding Markov Jump Linear System.
+        Fs: current approximation of the control gains.
+        Ys: current approximation of the CARE solution.
     """
     for t in range(1, p.T + 1):
         gamma = p.c * pow(t, -p.eta)
@@ -41,6 +43,8 @@ def get_sum_Ds(p, m, Fs, Ys):
         p (:obj:`Parameters`): parameters for the algorithm; for details on
             each parameter, see the :obj:`Parameters` class.
         m (:obj:`MJLS`): the corresponding Markov Jump Linear System.
+        Fs: current approximation of the control gains.
+        Ys: current approximation of the CARE solution.
     """
     sum_Ds = 0 * Ys.copy()
     for i in range(m.N):
@@ -55,6 +59,10 @@ def get_sum_D(p, m, Fs, Ys, i):
         p (:obj:`Parameters`): parameters for the algorithm; for details on
             each parameter, see the :obj:`Parameters` class.
         m (:obj:`MJLS`): the corresponding Markov Jump Linear System.
+        Fs: current approximation of the control gains.
+        Ys: current approximation of the CARE solution.
+        i: starting mode, i.e., the mode for the first time step in the
+            current simulation.
     """
     theta = [i, 0]
     sum_D = 0 * Ys[0].copy()
@@ -77,6 +85,11 @@ def get_D(m, Fs, Ys, Upsilon, theta):
     """Calculates each individual D for the sum.
     Args:
         m (:obj:`MJLS`): the corresponding Markov Jump Linear System.
+        Fs: current approximation of the control gains.
+        Ys: current approximation of the CARE solution.
+        Upsilon: current value of `Upsilon'.
+        theta: sequence with two numbers, the first corresponding to the
+            current mode and the second to the next mode.
     """
     (A, B, C, D) = m.get_ABCD(theta[1])
 
@@ -101,6 +114,10 @@ def get_Upsilon(m, Fs, Upsilon, theta):
     """Calculate current Upsilon
     Args:
         m (:obj:`MJLS`): the corresponding Markov Jump Linear System.
+        Fs: current approximation of the control gains.
+        Upsilon: current value of `Upsilon'.
+        theta: sequence with two numbers, the first corresponding to the
+            current mode and the second to the next mode.
     """
     (A, B, _, _) = m.get_ABCD(theta[0])
     F = Fs[theta[0]]
@@ -112,6 +129,8 @@ def get_F(m, Fs, Ys):
     """Calculate F.
     Args:
         m (:obj:`MJLS`): the corresponding Markov Jump Linear System.
+        Fs: current approximation of the control gains.
+        Ys: current approximation of the CARE solution.
     """
     for i in range(m.N):
         (A, B, _, D) = m.get_ABCD(i)

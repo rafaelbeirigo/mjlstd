@@ -58,7 +58,7 @@ class TestMjlstdEyeTwo(TestMjlstd):
         self.mjls_obj = MJLS.MJLS(**args)
 
 
-class TestMjlstdEyeSam(TestMjlstd):
+class TestMjlstdSam(TestMjlstd):
     def setUp(self):
         self.cf = sam_constants
         args = {'N': self.cf.N,

@@ -67,7 +67,7 @@ def get_sum_D(p, m, Fs, Ys, i):
         if abs(incr).max() < p.epsilon:
             return sum_D
 
-        Upsilon = get_Upsilon(m, Fs, theta, Upsilon)
+        Upsilon = get_Upsilon(m, Fs, Upsilon, theta)
         theta[0] = theta[1]
 
     return sum_D
@@ -97,7 +97,7 @@ def get_D(m, Fs, Ys, Upsilon, theta):
     return D_cal
 
 
-def get_Upsilon(m, Fs, theta, Upsilon):
+def get_Upsilon(m, Fs, Upsilon, theta):
     """Calculate current Upsilon
     Args:
         m (:obj:`MJLS`): the corresponding Markov Jump Linear System.

@@ -23,9 +23,6 @@ class TestMJLS(unittest.TestCase):
                 'F': self.cf.F}
         self.mjls_obj = MJLS.MJLS(**args)
 
-    def tearDown(self):
-        pass
-
     def test_N_matrices_per_matrix(self):
         args = {'N': math.inf,
                 'm': self.cf.m,

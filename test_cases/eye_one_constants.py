@@ -9,12 +9,12 @@ n = 1
 m = 1
 
 # Transition probabilities
-P = np.eye(N)
+P = np.array([[1.]])
 
-A = np.array([np.eye(n) for i in range(N)])
-B = np.array([np.eye(n) for i in range(N)])
-C = np.array([np.eye(n) for i in range(N)])
-D = np.array([np.eye(n) for i in range(N)])
+A = np.array([[[1.]]])
+B = np.array([[[1.]]])
+C = np.array([[[1.]]])
+D = np.array([[[1.]]])
 
 X = None
 

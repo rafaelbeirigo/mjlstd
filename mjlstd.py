@@ -46,7 +46,7 @@ def get_sum_Ds(p, m, Fs, Ys):
         Fs: current approximation of the control gains.
         Ys: current approximation of the CARE solution.
     """
-    sum_Ds = 0 * Ys.copy()
+    sum_Ds = np.zeros_like(Ys)
     for i in range(m.N):
         sum_Ds[i] = get_sum_D(p, m, Fs, Ys, i)
 
@@ -65,8 +65,8 @@ def get_sum_D(p, m, Fs, Ys, i):
             current simulation.
     """
     theta = [i, 0]
-    sum_D = 0 * Ys[0].copy()
-    Upsilon = np.eye(m.A.shape[1])
+    sum_D = np.zeros_like(Ys[0])
+    Upsilon = np.eye(m.m)
     for k in range(p.K - 1):
         theta[1] = get_next_theta(theta[0], m.P)
         incr = pow(p.lambda_, k) * get_D(m, Fs, Ys, Upsilon,
@@ -152,9 +152,9 @@ def mjlstd(p, m):
         m (:obj:`MJLS`): the corresponding Markov Jump Linear System.
     """
     if m.X is None:
-        m.X = 0 * m.A.copy()
+        m.X = np.zeros_like(m.A)
     if m.F is None:
-        m.F = np.array([0 * B.T for B in m.B])
+        m.F = np.array([np.zeros_like(B.T) for B in m.B])
 
     Ys, Fs = m.X.copy(), m.F.copy()
 

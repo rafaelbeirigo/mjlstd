@@ -34,12 +34,13 @@ class TestMjlstd(unittest.TestCase):
     def test_get_Upsilon(self):
         Upsilon = math.inf * np.ones_like(self.cf.Upsilon_1)
         for i in range(self.cf.N):
-            Upsilon[i] = mjlstd.get_Upsilon(self.mjls_obj,
-                                            self.cf.F_0,
-                                            np.eye(self.cf.m),
-                                            (0, 0))
+            Upsilon[i] = mjlstd.get_Upsilon(m=self.mjls_obj,
+                                            Fs=self.cf.F_0,
+                                            Upsilon=self.cf.Upsilon_0[i],
+                                            i=self.cf.theta_0[0])
 
         npt.assert_array_equal(Upsilon, self.cf.Upsilon_1)
+
 
 class TestMjlstdEyeTwo(TestMjlstd):
     def setUp(self):

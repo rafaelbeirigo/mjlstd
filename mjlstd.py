@@ -110,17 +110,16 @@ def get_D(m, Fs, Ys, Upsilon, theta):
     return D_cal
 
 
-def get_Upsilon(m, Fs, Upsilon, theta):
+def get_Upsilon(m, Fs, Upsilon, i):
     """Calculate current Upsilon
     Args:
         m (:obj:`MJLS`): the corresponding Markov Jump Linear System.
         Fs: current approximation of the control gains.
         Upsilon: current value of `Upsilon'.
-        theta: sequence with two numbers, the first corresponding to the
-            current mode and the second to the next mode.
+        i: current mode.
     """
-    (A, B, _, _) = m.get_ABCD(theta[0])
-    F = Fs[theta[0]]
+    (A, B, _, _) = m.get_ABCD(i)
+    F = Fs[i]
 
     return ((A + B.dot(F))).dot(Upsilon)
 

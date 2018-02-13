@@ -104,9 +104,9 @@ def get_D(m, Fs, Ys, Upsilon, i, j):
     U = Upsilon
     U_ = U.conj().T
 
-    B_cal = C_.dot(C) + F_.dot(D_.dot(D.dot(F)))
-    C_cal = ((A + B.dot(F)).conj().T).dot(Y2.dot(A + B.dot(F))) - Y1
-    D_cal = U_.dot((B_cal + C_cal).dot(U))
+    B_cal = C_.dot(C) + F_.dot(D_).dot(D).dot(F)
+    C_cal = ((A + B.dot(F)).conj().T).dot(Y2).dot(A + B.dot(F)) - Y1
+    D_cal = U_.dot(B_cal + C_cal).dot(U)
 
     return D_cal
 

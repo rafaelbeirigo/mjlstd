@@ -3,6 +3,17 @@ from numpy import matmul
 
 
 def get_next_theta(theta, P):
+    if P.shape[0] != P.shape[1]:
+        raise ValueError("P must be a square matrix.")
+
+    if (P < 0).any():
+        raise ValueError("P must contain only non-negative values.")
+
+    row_sum = P.cumsum(1)[:, -1]
+    ones = np.ones_like(row_sum)
+    if not (np.allclose(row_sum, ones)):
+        raise ValueError("Each row of P must sum to 1.")
+
     d = np.cumsum(P, 1)[theta]
     r = np.random.random()
     return np.nonzero(d > r)[0][0]

@@ -105,6 +105,9 @@ class MJLS:
 
     @P.setter
     def P(self, value):
+        if value.shape[0] != value.shape[1]:
+            raise ValueError("P must be a square matrix.")
+
         if (value < 0).any():
             raise ValueError("P must contain only non-negative values.")
 

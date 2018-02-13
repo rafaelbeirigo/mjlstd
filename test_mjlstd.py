@@ -2,11 +2,13 @@ import mjlstd
 import unittest
 import MJLS
 from test_cases import eye_one_constants
+from test_cases import eye_one_parameters
 from test_cases import eye_two_constants
 import sam_constants
 import numpy as np
 import numpy.testing as npt
 import math
+import Parameters
 
 
 class TestMjlstd(unittest.TestCase):
@@ -24,6 +26,18 @@ class TestMjlstd(unittest.TestCase):
                 'X': self.cf.X,
                 'F': self.cf.F}
         self.mjls_obj = MJLS.MJLS(**args)
+
+        # The (p)arameters (f)ile
+        self.pf = eye_one_parameters
+        args_p = {'L': self.pf.L,
+                  'T': self.pf.T,
+                  'K': self.pf.K,
+                  'lambda_': self.pf.lambda_,
+                  'epsilon': self.pf.epsilon,
+                  'c': self.pf.c,
+                  'eta': self.pf.eta,
+                  'seed': self.pf.seed}
+        self.params_obj = Parameters.Parameters(**args_p)
 
     def test_get_F(self):
         npt.assert_array_almost_equal(mjlstd.get_F(self.mjls_obj,
@@ -50,6 +64,14 @@ class TestMjlstd(unittest.TestCase):
                          i=self.cf.i1,
                          j=self.cf.i2),
             self.cf.D_cal_0)
+
+    def test_get_sum_D(self):
+        npt.assert_array_almost_equal(mjlstd.get_sum_D(p=self.params_obj,
+                                                       m=self.mjls_obj,
+                                                       Fs=self.cf.F_get_sum_D,
+                                                       Ys=self.cf.X_get_sum_D,
+                                                       i=self.pf.i),
+                                      self.pf.sum_D)
 
 
 class TestMjlstdEyeTwo(TestMjlstd):

@@ -19,3 +19,7 @@ D = np.array([np.eye(2) for i in range(2)])
 X = None
 
 F = None
+
+X_0 = np.array([np.eye(2) for i in range(2)])
+
+F_0 = np.array([-0.5 * np.eye(2) for i in range(2)])

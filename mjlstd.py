@@ -1,3 +1,4 @@
+import os
 import numpy as np
 from scipy.linalg import inv
 from sam_run_episode import get_next_theta
@@ -160,8 +161,9 @@ def mjlstd(p, m):
 
     np.random.seed(p.seed)
 
-    filename = ''.join((datetime.datetime.now().strftime("%Y%m%d%H%M%S"),
-                        '.log'))
+    datetime_string = datetime.datetime.now().strftime("%Y%m%d_%H%M%S")
+    filename = os.path.join("log", ''.join((datetime_string, ".log")))
+
     for l in range(p.L):
         Ys = get_Y(p, m, Fs, Ys)
         Fs = get_F(m, Fs, Ys)

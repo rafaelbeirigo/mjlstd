@@ -23,3 +23,8 @@ F = np.array([[[1.]]])
 # `get_sum_D' tests
 X_get_sum_D = np.array([[[1.]]])
 F_get_sum_D = np.array([[[1.]]])
+
+# `get_Y' tests
+X_get_Y = np.array([[[1.]]])
+F_get_Y = np.array([[[1.]]])
+got_Y = np.array([[[23.]]])

@@ -134,6 +134,14 @@ class TestMjlstdWithParameters(unittest.TestCase):
                               Ys=self.cf.X_get_sum_D),
             self.pf.sum_Ds)
 
+    def test_get_Y(self):
+        npt.assert_array_almost_equal(
+            mjlstd.get_Y(p=self.params_obj,
+                         m=self.mjls_obj,
+                         Fs=self.cf.F_get_Y,
+                         Ys=self.cf.X_get_Y),
+            self.cf.got_Y)
+
 
 class TestMjlstdWithParametersBiggerK(TestMjlstdWithParameters):
     def setUp(self):

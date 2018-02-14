@@ -14,6 +14,8 @@ from test_cases import zero_two_constants
 from test_cases import zero_two_parameters
 from test_cases import eye_one_constants_mjlstd
 from test_cases import eye_one_parameters_mjlstd
+from test_cases import eye_two_constants_mjlstd
+from test_cases import eye_two_parameters_mjlstd
 import sam_constants
 import numpy as np
 import numpy.testing as npt
@@ -298,3 +300,32 @@ class TestMjlstdMjlstd(unittest.TestCase):
             mjlstd.mjlstd(p=self.params_obj,
                           m=self.mjls_obj),
             self.cf.mjlstd_F_Y)
+
+
+class TestMjlstdMjlstdEyeTwo(TestMjlstdMjlstd):
+    def setUp(self):
+        # The (c)onstants (f)ile
+        self.cf = eye_two_constants_mjlstd
+        args = {'N': self.cf.N,
+                'm': self.cf.m,
+                'n': self.cf.n,
+                'A': self.cf.A,
+                'B': self.cf.B,
+                'C': self.cf.C,
+                'D': self.cf.D,
+                'P': self.cf.P,
+                'X': self.cf.X,
+                'F': self.cf.F}
+        self.mjls_obj = MJLS.MJLS(**args)
+
+        # The (p)arameters (f)ile
+        self.pf = eye_two_parameters_mjlstd
+        args_p = {'L': self.pf.L,
+                  'T': self.pf.T,
+                  'K': self.pf.K,
+                  'lambda_': self.pf.lambda_,
+                  'epsilon': self.pf.epsilon,
+                  'c': self.pf.c,
+                  'eta': self.pf.eta,
+                  'seed': self.pf.seed}
+        self.params_obj = Parameters.Parameters(**args_p)

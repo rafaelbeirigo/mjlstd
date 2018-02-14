@@ -182,5 +182,6 @@ class TestMJLSEyeTwo(TestMJLS):
                 'F': self.cf.F}
         self.mjls_obj = MJLS.MJLS(**args)
 
+
 if __name__ == "__main__":
     unittest.main()

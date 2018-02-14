@@ -17,6 +17,8 @@ epsilon = 1e-6
 
 sum_D = np.array([[22.]])
 
+sum_Ds = np.array([[[22.]]])
+
 seed = 0
 
 i = 0

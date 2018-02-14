@@ -35,5 +35,5 @@ i1 = 0
 i2 = 0
 
 # `get_sum_D' tests
-X_get_sum_D = np.array([[[1]]])
-F_get_sum_D = np.array([[[1]]])
+X_get_sum_D = np.array([[[1.]]])
+F_get_sum_D = np.array([[[1.]]])

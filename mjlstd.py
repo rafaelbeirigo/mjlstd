@@ -67,7 +67,7 @@ def get_sum_D(p, m, Fs, Ys, i):
     sum_D = np.zeros_like(Ys[0])
     Upsilon = np.eye(m.m)
     theta = i
-    for k in range(p.K - 1):
+    for k in range(p.K + 1):
         next_theta = get_next_theta(theta, m.P)
         incr = pow(p.lambda_, k) * get_D(m, Fs, Ys, Upsilon,
                                          theta, next_theta)

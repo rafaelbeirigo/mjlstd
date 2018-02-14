@@ -2,7 +2,9 @@ import mjlstd
 import unittest
 import MJLS
 from test_cases import eye_one_constants
+from test_cases import eye_one_constants_F_eye
 from test_cases import eye_one_parameters
+from test_cases import eye_one_parameters_bigger_K
 from test_cases import eye_two_constants
 import sam_constants
 import numpy as np
@@ -121,3 +123,32 @@ class TestMjlstdWithParameters(unittest.TestCase):
                                                        Ys=self.cf.X_get_sum_D,
                                                        i=self.pf.i),
                                       self.pf.sum_D)
+
+
+class TestMjlstdWithParametersBiggerK(TestMjlstdWithParameters):
+    def setUp(self):
+        # The (c)onstants (f)ile
+        self.cf = eye_one_constants_F_eye
+        args = {'N': self.cf.N,
+                'm': self.cf.m,
+                'n': self.cf.n,
+                'A': self.cf.A,
+                'B': self.cf.B,
+                'C': self.cf.C,
+                'D': self.cf.D,
+                'P': self.cf.P,
+                'X': self.cf.X,
+                'F': self.cf.F}
+        self.mjls_obj = MJLS.MJLS(**args)
+
+        # The (p)arameters (f)ile
+        self.pf = eye_one_parameters_bigger_K
+        args_p = {'L': self.pf.L,
+                  'T': self.pf.T,
+                  'K': self.pf.K,
+                  'lambda_': self.pf.lambda_,
+                  'epsilon': self.pf.epsilon,
+                  'c': self.pf.c,
+                  'eta': self.pf.eta,
+                  'seed': self.pf.seed}
+        self.params_obj = Parameters.Parameters(**args_p)

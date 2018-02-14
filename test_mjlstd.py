@@ -8,6 +8,8 @@ from test_cases import eye_one_parameters_bigger_K
 from test_cases import eye_two_constants
 from test_cases import eye_two_constants_F_eye
 from test_cases import eye_two_parameters_bigger_K
+from test_cases import zero_one_constants
+from test_cases import zero_one_parameters
 import sam_constants
 import numpy as np
 import numpy.testing as npt
@@ -141,6 +143,35 @@ class TestMjlstdWithParameters(unittest.TestCase):
                          Fs=self.cf.F_get_Y,
                          Ys=self.cf.X_get_Y),
             self.cf.got_Y)
+
+
+class TestMjlstdWithParametersAllZeroOneD(TestMjlstdWithParameters):
+    def setUp(self):
+        # The (c)onstants (f)ile
+        self.cf = zero_one_constants
+        args = {'N': self.cf.N,
+                'm': self.cf.m,
+                'n': self.cf.n,
+                'A': self.cf.A,
+                'B': self.cf.B,
+                'C': self.cf.C,
+                'D': self.cf.D,
+                'P': self.cf.P,
+                'X': self.cf.X,
+                'F': self.cf.F}
+        self.mjls_obj = MJLS.MJLS(**args)
+
+        # The (p)arameters (f)ile
+        self.pf = zero_one_parameters
+        args_p = {'L': self.pf.L,
+                  'T': self.pf.T,
+                  'K': self.pf.K,
+                  'lambda_': self.pf.lambda_,
+                  'epsilon': self.pf.epsilon,
+                  'c': self.pf.c,
+                  'eta': self.pf.eta,
+                  'seed': self.pf.seed}
+        self.params_obj = Parameters.Parameters(**args_p)
 
 
 class TestMjlstdWithParametersBiggerK(TestMjlstdWithParameters):

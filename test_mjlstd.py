@@ -27,18 +27,6 @@ class TestMjlstd(unittest.TestCase):
                 'F': self.cf.F}
         self.mjls_obj = MJLS.MJLS(**args)
 
-        # The (p)arameters (f)ile
-        self.pf = eye_one_parameters
-        args_p = {'L': self.pf.L,
-                  'T': self.pf.T,
-                  'K': self.pf.K,
-                  'lambda_': self.pf.lambda_,
-                  'epsilon': self.pf.epsilon,
-                  'c': self.pf.c,
-                  'eta': self.pf.eta,
-                  'seed': self.pf.seed}
-        self.params_obj = Parameters.Parameters(**args_p)
-
     def test_get_F(self):
         npt.assert_array_almost_equal(mjlstd.get_F(self.mjls_obj,
                                                    self.cf.F_0.copy(),
@@ -64,14 +52,6 @@ class TestMjlstd(unittest.TestCase):
                          i=self.cf.i1,
                          j=self.cf.i2),
             self.cf.D_cal_0)
-
-    def test_get_sum_D(self):
-        npt.assert_array_almost_equal(mjlstd.get_sum_D(p=self.params_obj,
-                                                       m=self.mjls_obj,
-                                                       Fs=self.cf.F_get_sum_D,
-                                                       Ys=self.cf.X_get_sum_D,
-                                                       i=self.pf.i),
-                                      self.pf.sum_D)
 
 
 class TestMjlstdEyeTwo(TestMjlstd):
@@ -104,3 +84,40 @@ class TestMjlstdSam(TestMjlstd):
                 'X': self.cf.X,
                 'F': self.cf.F}
         self.mjls_obj = MJLS.MJLS(**args)
+
+
+class TestMjlstdWithParameters(unittest.TestCase):
+    def setUp(self):
+        # The (c)onstants (f)ile
+        self.cf = eye_one_constants
+        args = {'N': self.cf.N,
+                'm': self.cf.m,
+                'n': self.cf.n,
+                'A': self.cf.A,
+                'B': self.cf.B,
+                'C': self.cf.C,
+                'D': self.cf.D,
+                'P': self.cf.P,
+                'X': self.cf.X,
+                'F': self.cf.F}
+        self.mjls_obj = MJLS.MJLS(**args)
+
+        # The (p)arameters (f)ile
+        self.pf = eye_one_parameters
+        args_p = {'L': self.pf.L,
+                  'T': self.pf.T,
+                  'K': self.pf.K,
+                  'lambda_': self.pf.lambda_,
+                  'epsilon': self.pf.epsilon,
+                  'c': self.pf.c,
+                  'eta': self.pf.eta,
+                  'seed': self.pf.seed}
+        self.params_obj = Parameters.Parameters(**args_p)
+
+    def test_get_sum_D(self):
+        npt.assert_array_almost_equal(mjlstd.get_sum_D(p=self.params_obj,
+                                                       m=self.mjls_obj,
+                                                       Fs=self.cf.F_get_sum_D,
+                                                       Ys=self.cf.X_get_sum_D,
+                                                       i=self.pf.i),
+                                      self.pf.sum_D)

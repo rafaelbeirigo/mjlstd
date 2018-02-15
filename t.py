@@ -2,7 +2,9 @@ import sam_constants as sc
 import sam_parameters as sp
 from Parameters import Parameters
 from MJLS import MJLS
-from mjlstd import mjlstd
+from mjlstd import mjlstd, get_F
+from numpy import zeros_like
+import matplotlib.pyplot as plt
 
 print('wait for it...')
 
@@ -36,5 +38,7 @@ m = MJLS(**args)
 
 (Fs, Ys, Ys_H) = mjlstd(p, m)
 
-print(Ys)
-print(Fs)
+Ys_H_error = [(y - sc.X).flatten() for y in Ys_H]
+
+plt.plot(Ys_H_error)
+plt.show()

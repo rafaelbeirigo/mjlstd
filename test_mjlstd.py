@@ -379,6 +379,36 @@ class TestMjlstdMjlstdYsHist(unittest.TestCase):
         self.assertEqual(len(Ys_hist), self.cf.Ys_hist_len)
 
 
+class TestMjlstdMjlstdYsHist2(TestMjlstdMjlstdYsHist):
+    def setUp(self):
+        from test_cases import eye_one_constants_mjlstd_Ys_hist2 as cf
+        from test_cases import eye_one_parameters_mjlstd_Ys_hist2 as pf
+
+        self.cf = cf
+        # The (c)onstants (f)ile
+        args = {'N': self.cf.N,
+                'm': self.cf.m,
+                'n': self.cf.n,
+                'A': self.cf.A,
+                'B': self.cf.B,
+                'C': self.cf.C,
+                'D': self.cf.D,
+                'P': self.cf.P,
+                'X': self.cf.X,
+                'F': self.cf.F}
+        self.mjls_obj = MJLS.MJLS(**args)
+
+        # The (p)arameters (f)ile
+        self.pf = pf
+        args_p = {'L': self.pf.L,
+                  'T': self.pf.T,
+                  'K': self.pf.K,
+                  'lambda_': self.pf.lambda_,
+                  'epsilon': self.pf.epsilon,
+                  'c': self.pf.c,
+                  'eta': self.pf.eta,
+                  'seed': self.pf.seed}
+        self.params_obj = Parameters.Parameters(**args_p)
 class TestMjlstdMjlstdEyeTwo(TestMjlstdMjlstd):
     def setUp(self):
         # The (c)onstants (f)ile

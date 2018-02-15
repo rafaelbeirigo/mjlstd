@@ -337,10 +337,8 @@ class TestMjlstdMjlstd(unittest.TestCase):
         self.params_obj = Parameters.Parameters(**args_p)
 
     def test_mjlstd(self):
-        npt.assert_array_almost_equal(
-            mjlstd.mjlstd(p=self.params_obj,
-                          m=self.mjls_obj),
-            self.cf.mjlstd_F_Y)
+        (F, Y, _) = mjlstd.mjlstd(p=self.params_obj, m=self.mjls_obj)
+        npt.assert_array_almost_equal((F, Y), self.cf.mjlstd_F_Y)
 
 
 class TestMjlstdMjlstdYsHist(unittest.TestCase):

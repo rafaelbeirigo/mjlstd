@@ -468,3 +468,7 @@ class TestMjlstdMjlstdEyeTwo(TestMjlstdMjlstd):
                   'eta': self.pf.eta,
                   'seed': self.pf.seed}
         self.params_obj = Parameters.Parameters(**args_p)
+
+
+if __name__ == "__main__":
+    unittest.main()

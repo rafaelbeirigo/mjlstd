@@ -151,6 +151,15 @@ class TestMjlstdWithParameters(unittest.TestCase):
                          Ys_hist=[])[0],
             self.cf.got_Y)
 
+    def test_get_Y_Ys_history(self):
+        self.assertEqual(
+            len(mjlstd.get_Y(p=self.params_obj,
+                             m=self.mjls_obj,
+                             Fs=self.cf.F_get_Y,
+                             Ys=self.cf.X_get_Y,
+                             Ys_hist=[])[1]),
+            self.cf.Ys_hist_len)
+
 
 class TestMjlstdWithParametersAllZeroOneD(TestMjlstdWithParameters):
     def setUp(self):

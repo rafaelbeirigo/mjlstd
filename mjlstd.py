@@ -161,7 +161,7 @@ def mjlstd(p, m):
     if m.F is None:
         m.F = np.array([np.zeros_like(B.T) for B in m.B])
 
-    Ys, Fs, Ys_hist = m.X.copy(), m.F.copy(), []
+    Ys, Fs, Ys_H = m.X.copy(), m.F.copy(), []
 
     np.random.seed(p.seed)
 
@@ -169,7 +169,7 @@ def mjlstd(p, m):
     filename = os.path.join("log", ''.join((datetime_string, ".log")))
 
     for l in range(p.L):
-        (Ys, Ys_hist) = get_Y(p, m, Fs, Ys, Ys_hist)
+        (Ys, Ys_h) = get_Y(p, m, Fs, Ys, [])
         Fs = get_F(m, Fs, Ys)
 
         log(l, *(Ys - m.X).flatten(), filename=filename)

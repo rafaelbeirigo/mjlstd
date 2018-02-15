@@ -22,3 +22,6 @@ F = np.array([[[1.]]])
 
 mjlstd_F_Y = (np.array([[[-0.428571]]]),
               np.array([[[3.]]]))
+
+# `get_Y_Ys_hist' tests
+Ys_hist_len = 1

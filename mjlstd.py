@@ -18,7 +18,7 @@ def log(t, *args, filename='log.log'):
     f.close()
 
 
-def get_Y(p, m, Fs, Ys):
+def get_Y(p, m, Fs, Ys, Ys_hist):
     """Calculates Y.
     Args:
         p (:obj:`Parameters`): parameters for the algorithm; for details on
@@ -26,16 +26,20 @@ def get_Y(p, m, Fs, Ys):
         m (:obj:`MJLS`): the corresponding Markov Jump Linear System.
         Fs: current approximation of the control gains.
         Ys: current approximation of the CARE solution.
+        Ys_hist: the `Ys' history (i.e., a sequence with the `Ys' calculated
+             so far.)
     """
     for t in range(1, p.T + 1):
         gamma = p.c * pow(t, -p.eta)
         incr = gamma * get_sum_Ds(p, m, Fs, Ys)
         Ys += incr
 
-        if abs(incr).max() < p.epsilon:
-            return Ys
+        Ys_hist.append(Ys)
 
-    return Ys
+        if abs(incr).max() < p.epsilon:
+            break
+
+    return (Ys, Ys_hist)
 
 
 def get_sum_Ds(p, m, Fs, Ys):
@@ -157,7 +161,7 @@ def mjlstd(p, m):
     if m.F is None:
         m.F = np.array([np.zeros_like(B.T) for B in m.B])
 
-    Ys, Fs = m.X.copy(), m.F.copy()
+    Ys, Fs, Ys_hist = m.X.copy(), m.F.copy(), []
 
     np.random.seed(p.seed)
 
@@ -165,7 +169,7 @@ def mjlstd(p, m):
     filename = os.path.join("log", ''.join((datetime_string, ".log")))
 
     for l in range(p.L):
-        Ys = get_Y(p, m, Fs, Ys)
+        (Ys, Ys_hist) = get_Y(p, m, Fs, Ys, Ys_hist)
         Fs = get_F(m, Fs, Ys)
 
         log(l, *(Ys - m.X).flatten(), filename=filename)

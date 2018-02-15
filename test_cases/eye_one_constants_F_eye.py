@@ -28,3 +28,6 @@ F_get_sum_D = np.array([[[1.]]])
 X_get_Y = np.array([[[1.]]])
 F_get_Y = np.array([[[1.]]])
 got_Y = np.array([[[23.]]])
+
+# `get_Y_Ys_hist' tests
+Ys_hist_len = 1

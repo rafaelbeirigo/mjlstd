@@ -147,7 +147,8 @@ class TestMjlstdWithParameters(unittest.TestCase):
             mjlstd.get_Y(p=self.params_obj,
                          m=self.mjls_obj,
                          Fs=self.cf.F_get_Y,
-                         Ys=self.cf.X_get_Y),
+                         Ys=self.cf.X_get_Y,
+                         Ys_hist=[])[0],
             self.cf.got_Y)
 
 

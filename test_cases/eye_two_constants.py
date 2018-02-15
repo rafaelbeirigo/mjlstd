@@ -38,3 +38,6 @@ D_cal_0 = 0.5 * np.eye(2)
 i1 = 0
 
 i2 = 0
+
+# `get_Y_Ys_hist' tests
+Ys_hist_len = 1

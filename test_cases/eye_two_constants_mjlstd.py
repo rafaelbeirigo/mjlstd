@@ -22,3 +22,6 @@ F = np.array([np.eye(2) for i in range(2)])
 
 mjlstd_F_Y = (np.array([-0.428571 * np.eye(2) for i in range(2)]),
               np.array([3.0 * np.eye(2) for i in range(2)]))
+
+# `get_Y_Ys_hist' tests
+Ys_hist_len = 1

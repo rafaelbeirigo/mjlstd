@@ -33,8 +33,6 @@ args = {
 }
 m = MJLS(**args)
 
-test_stability(m, p.lambda_)
-
 (Fs, Ys) = mjlstd(p, m)
 
 print(Ys)

@@ -8,8 +8,19 @@ print('wait for it...')
 
 seed = 0
 
-m = MJLS(sc.As, sc.Bs, sc.Cs, sc.Ds,
-         sc.P, sc.Xs_ric, sc.Fs_ric)
+args = {
+    'N': sc.N,
+    'm': sc.m,
+    'n': sc.n,
+    'A': sc.A,
+    'B': sc.B,
+    'C': sc.C,
+    'D': sc.D,
+    'P': sc.P,
+    'X': sc.X,
+    'F': sc.F,
+}
+m = MJLS(**args)
 
 p = Parameters(sp.L, sp.T, sp.K, sp.lambda_, sp.epsilon,
                sp.c, sp.eta, seed)

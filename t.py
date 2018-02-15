@@ -22,8 +22,17 @@ args = {
 }
 m = MJLS(**args)
 
-p = Parameters(sp.L, sp.T, sp.K, sp.lambda_, sp.epsilon,
-               sp.c, sp.eta, seed)
+seed = 0
+args = {
+    'L': sp.L,
+    'T': sp.T,
+    'K': sp.K,
+    'lambda_': sp.lambda_,
+    'epsilon': sp.epsilon,
+    'c': sp.c,
+    'eta': sp.eta,
+}
+p = Parameters(**args)
 
 test_stability(m, p.lambda_)
 

@@ -12,7 +12,7 @@ def log_D(k, got_D):
 
 
 def log(t, *args, filename='log.log'):
-    line = ''.join(('{: 6}', ' {: 6.1e}' * len(args), '\n')).format(t, *args)
+    line = ''.join(('{: 6}', ' {: 11.6e}' * len(args), '\n')).format(t, *args)
     f = open(filename, 'a')
     f.write(line)
     f.close()

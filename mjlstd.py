@@ -66,7 +66,7 @@ def get_sum_D(p, m, Fs, Ys, i):
             current simulation.
     """
     sum_D = np.zeros_like(Ys[0])
-    Upsilon = np.eye(m.m)
+    Upsilon = np.eye(m.n)
     theta = i
     for k in range(p.K + 1):
         next_theta = get_next_theta(theta, m.P)

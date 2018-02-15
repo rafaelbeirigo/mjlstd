@@ -16,6 +16,7 @@ args = {
     'epsilon': sp.epsilon,
     'c': sp.c,
     'eta': sp.eta,
+    'seed': seed,
 }
 p = Parameters(**args)
 

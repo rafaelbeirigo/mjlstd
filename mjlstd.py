@@ -34,7 +34,7 @@ def get_Y(p, m, Fs, Ys, Ys_hist):
         incr = gamma * get_sum_Ds(p, m, Fs, Ys)
         Ys += incr
 
-        Ys_hist.append(Ys)
+        Ys_hist.append(Ys.copy())
 
         if abs(incr).max() < p.epsilon:
             break

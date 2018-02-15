@@ -16,6 +16,8 @@ from test_cases import eye_one_constants_mjlstd
 from test_cases import eye_one_parameters_mjlstd
 from test_cases import eye_two_constants_mjlstd
 from test_cases import eye_two_parameters_mjlstd
+from test_cases import eye_one_constants_T_2
+from test_cases import eye_one_parameters_T_2
 import sam_constants
 import numpy as np
 import numpy.testing as npt

@@ -34,7 +34,7 @@ args = {
 }
 m = MJLS(**args)
 
-(Fs, Ys) = mjlstd(p, m)
+(Fs, Ys, Ys_H) = mjlstd(p, m)
 
 print(Ys)
 print(Fs)

@@ -22,7 +22,6 @@ args = {
 }
 m = MJLS(**args)
 
-seed = 0
 args = {
     'L': sp.L,
     'T': sp.T,

@@ -4,7 +4,7 @@ from Parameters import Parameters
 from MJLS import MJLS
 from mjlstd import mjlstd
 
-print('wait...')
+print('wait for it...')
 
 seed = 0
 

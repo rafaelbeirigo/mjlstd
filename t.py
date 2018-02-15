@@ -9,6 +9,17 @@ print('wait for it...')
 seed = 0
 
 args = {
+    'L': sp.L,
+    'T': sp.T,
+    'K': sp.K,
+    'lambda_': sp.lambda_,
+    'epsilon': sp.epsilon,
+    'c': sp.c,
+    'eta': sp.eta,
+}
+p = Parameters(**args)
+
+args = {
     'N': sc.N,
     'm': sc.m,
     'n': sc.n,
@@ -21,17 +32,6 @@ args = {
     'F': sc.F,
 }
 m = MJLS(**args)
-
-args = {
-    'L': sp.L,
-    'T': sp.T,
-    'K': sp.K,
-    'lambda_': sp.lambda_,
-    'epsilon': sp.epsilon,
-    'c': sp.c,
-    'eta': sp.eta,
-}
-p = Parameters(**args)
 
 test_stability(m, p.lambda_)
 

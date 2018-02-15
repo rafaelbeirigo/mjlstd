@@ -165,14 +165,10 @@ def mjlstd(p, m):
 
     np.random.seed(p.seed)
 
-    datetime_string = datetime.datetime.now().strftime("%Y%m%d_%H%M%S")
-    filename = os.path.join("log", ''.join((datetime_string, ".log")))
-
     for l in range(p.L):
         (Ys, Ys_h) = get_Y(p, m, Fs, Ys, [])
         Fs = get_F(m, Fs, Ys)
 
         Ys_H.extend(Ys_h)
-        log(l, *(Ys - m.X).flatten(), filename=filename)
 
     return (Fs, Ys, Ys_H)

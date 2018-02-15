@@ -172,6 +172,7 @@ def mjlstd(p, m):
         (Ys, Ys_h) = get_Y(p, m, Fs, Ys, [])
         Fs = get_F(m, Fs, Ys)
 
+        Ys_H.extend(Ys_h)
         log(l, *(Ys - m.X).flatten(), filename=filename)
 
-    return (Fs, Ys)
+    return (Fs, Ys, Ys_H)

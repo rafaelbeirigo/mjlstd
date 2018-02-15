@@ -2,8 +2,8 @@ import mjlstd
 import unittest
 import MJLS
 from test_cases import eye_one_constants
-from test_cases import eye_one_constants_F_eye
 from test_cases import eye_one_parameters
+from test_cases import eye_one_constants_F_eye
 from test_cases import eye_one_parameters_bigger_K
 from test_cases import eye_two_constants
 from test_cases import eye_two_constants_F_eye

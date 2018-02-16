@@ -1,3 +1,4 @@
+from riccati import riccati
 import sam_constants as sc
 import sam_parameters as sp
 from Parameters import Parameters
@@ -43,8 +44,20 @@ for y in Ys_H:
     f = get_F(m, zeros_like(m.F), y).copy()
     Fs_H.append(f)
 
-Ys_H_error = [(y - sc.X).flatten() for y in Ys_H]
-Fs_H_error = [(f - sc.F).flatten() for f in Fs_H]
+args = {
+    'T': int(1e6),
+    'N': sc.N,
+    'A': sc.A,
+    'B': sc.B,
+    'C': sc.C,
+    'D': sc.D,
+    'R': sc.P,
+    'epsilon': sp.epsilon,
+}
+[F_ric, X_ric] = riccati(**args)
+
+Ys_H_error = [(y - X_ric).flatten() for y in Ys_H]
+Fs_H_error = [(f - F_ric).flatten() for f in Fs_H]
 
 plt.figure(1)
 

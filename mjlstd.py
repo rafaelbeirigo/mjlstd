@@ -166,8 +166,8 @@ def mjlstd(p, m):
     np.random.seed(p.seed)
 
     for l in range(p.L):
-        (Ys, Ys_h) = get_Y(p, m, Fs, Ys, [])
-        Fs = get_F(m, Fs, Ys)
+        (Ys, Ys_h) = get_Y(p, m, Fs.copy(), Ys.copy(), [])
+        Fs = get_F(m, Fs.copy(), Ys.copy())
 
         Ys_H.extend(Ys_h)
 

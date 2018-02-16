@@ -38,7 +38,24 @@ m = MJLS(**args)
 
 (Fs, Ys, Ys_H) = mjlstd(p, m)
 
-Ys_H_error = [(y - sc.X).flatten() for y in Ys_H]
+Fs_H = [get_F(m, zeros_like(m.F), y).copy() for y in Ys_H]
 
+Ys_H_error = [(y - sc.X).flatten() for y in Ys_H]
+Fs_H_error = [(f - sc.F).flatten() for f in Fs_H]
+
+plt.figure(1)
+
+plt.subplot(211)
 plt.plot(Ys_H_error)
+plt.grid(True)
+plt.title("Initializing with \"Riccati\" data")
+plt.ylabel("Y(t) - X_ric")
+plt.xlabel("t")
+
+plt.subplot(212)
+plt.plot(Fs_H_error)
+plt.grid(True)
+plt.ylabel("F(t) - F_ric")
+plt.xlabel("t")
+
 plt.show()

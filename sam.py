@@ -23,7 +23,11 @@ args = {
 }
 p = Parameters(**args)
 
-for factor in arange(100., 110., 10.):
+factors = []
+factors.extend(arange(0.1, 2.1, 0.1))
+factors.extend(arange(3., 11., 1.))
+factors.extend(arange(20., 110., 10.))
+for factor in factors:
     args = {
         'T': int(1e6),
         'N': sc.N,
@@ -63,7 +67,7 @@ for factor in arange(100., 110., 10.):
     plt.figure()
 
     plt.subplot(211)
-    plt.title('k starting in 0; D * {:05.2f}'.format(factor))
+    plt.title('k starting in 1; D * {:05.2f}'.format(factor))
 
     plt.plot(Ys_H_error)
     plt.grid(True)
@@ -75,5 +79,5 @@ for factor in arange(100., 110., 10.):
     plt.ylabel("F(t) - F_ric")
     plt.xlabel("t")
 
-    plt.savefig('k_0_D_{:05.2f}.png'.format(factor),
+    plt.savefig('k_1_D_{:06.2f}.png'.format(factor),
                 bbox_inches='tight')

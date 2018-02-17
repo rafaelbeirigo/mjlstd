@@ -56,18 +56,23 @@ args = {
 }
 [F_ric, X_ric] = riccati(**args)
 
+Ys_H_flattened = [y.flatten() for y in Ys_H]
 Ys_H_error = [(y - X_ric).flatten() for y in Ys_H]
 Fs_H_error = [(f - F_ric).flatten() for f in Fs_H]
 
 plt.figure(1)
 
-plt.subplot(211)
+plt.subplot(311)
+plt.plot(Ys_H_flattened)
+plt.grid(True)
+plt.ylabel("Y(t)")
+
+plt.subplot(312)
 plt.plot(Ys_H_error)
 plt.grid(True)
-plt.title("Initializing with \"Riccati\" data")
 plt.ylabel("Y(t) - X_ric")
 
-plt.subplot(212)
+plt.subplot(313)
 plt.plot(Fs_H_error)
 plt.grid(True)
 plt.ylabel("F(t) - F_ric")

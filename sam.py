@@ -4,7 +4,7 @@ import sam_parameters as sp
 from Parameters import Parameters
 from MJLS import MJLS
 from mjlstd import mjlstd, get_F
-from numpy import zeros_like
+from numpy import zeros_like, arange
 import matplotlib.pyplot as plt
 
 print('wait for it...')
@@ -23,53 +23,57 @@ args = {
 }
 p = Parameters(**args)
 
-args = {
-    'N': sc.N,
-    'm': sc.m,
-    'n': sc.n,
-    'A': sc.A,
-    'B': sc.B,
-    'C': sc.C,
-    'D': sc.D,
-    'P': sc.P,
-    'X': 0. * sc.X,
-    'F': sc.F,
-}
-m = MJLS(**args)
+for factor in arange(100., 110., 10.):
+    args = {
+        'T': int(1e6),
+        'N': sc.N,
+        'A': sc.A,
+        'B': sc.B,
+        'C': sc.C,
+        'D': factor * sc.D,
+        'R': sc.P,
+        'epsilon': sp.epsilon,
+    }
+    [F_ric, X_ric] = riccati(**args)
 
-(Fs, Ys, Ys_H) = mjlstd(p, m)
+    args = {
+        'N': sc.N,
+        'm': sc.m,
+        'n': sc.n,
+        'A': sc.A,
+        'B': sc.B,
+        'C': sc.C,
+        'D': sc.D,
+        'P': sc.P,
+        'X': 0. * sc.X,
+        'F': F_ric,
+    }
+    m = MJLS(**args)
 
-Fs_H = []
-for y in Ys_H:
-    f = get_F(m, zeros_like(m.F), y).copy()
-    Fs_H.append(f)
+    (Fs, Ys, Ys_H) = mjlstd(p, m)
 
-args = {
-    'T': int(1e6),
-    'N': sc.N,
-    'A': sc.A,
-    'B': sc.B,
-    'C': sc.C,
-    'D': sc.D,
-    'R': sc.P,
-    'epsilon': sp.epsilon,
-}
-[F_ric, X_ric] = riccati(**args)
+    Fs_H = []
+    for y in Ys_H:
+        f = get_F(m, zeros_like(m.F), y).copy()
+        Fs_H.append(f)
 
-Ys_H_error = [(y - X_ric).flatten() for y in Ys_H]
-Fs_H_error = [(f - F_ric).flatten() for f in Fs_H]
+    Ys_H_error = [(y - X_ric).flatten() for y in Ys_H]
+    Fs_H_error = [(f - F_ric).flatten() for f in Fs_H]
 
-plt.figure(1)
+    plt.figure()
 
-plt.subplot(211)
-plt.plot(Ys_H_error)
-plt.grid(True)
-plt.ylabel("Y(t) - X_ric")
+    plt.subplot(211)
+    plt.title('k starting in 0; D * {:05.2f}'.format(factor))
 
-plt.subplot(212)
-plt.plot(Fs_H_error)
-plt.grid(True)
-plt.ylabel("F(t) - F_ric")
-plt.xlabel("t")
+    plt.plot(Ys_H_error)
+    plt.grid(True)
+    plt.ylabel("Y(t) - X_ric")
 
-plt.show()
+    plt.subplot(212)
+    plt.plot(Fs_H_error)
+    plt.grid(True)
+    plt.ylabel("F(t) - F_ric")
+    plt.xlabel("t")
+
+    plt.savefig('k_0_D_{:05.2f}.png'.format(factor),
+                bbox_inches='tight')

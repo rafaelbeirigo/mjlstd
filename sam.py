@@ -67,7 +67,7 @@ for factor in factors:
     plt.figure()
 
     plt.subplot(211)
-    plt.title('k starting in 1; D * {:05.2f}'.format(factor))
+    plt.title('k starting in 0; D * {:05.2f}; c = 0.1'.format(factor))
 
     plt.plot(Ys_H_error)
     plt.grid(True)
@@ -79,5 +79,5 @@ for factor in factors:
     plt.ylabel("F(t) - F_ric")
     plt.xlabel("t")
 
-    plt.savefig('k_1_D_{:06.2f}.png'.format(factor),
+    plt.savefig('k_0_D_{:06.2f}_c_0.1.png'.format(factor),
                 bbox_inches='tight')

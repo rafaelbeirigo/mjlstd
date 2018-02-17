@@ -1,8 +1,6 @@
 close all;
 clear all;
 
-graphics_toolkit('gnuplot');
-
 sam_constants;
 sam_parameters;
 

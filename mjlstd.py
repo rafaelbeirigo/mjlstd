@@ -1,8 +1,6 @@
-import os
 import numpy as np
 from scipy.linalg import inv
 from sam_run_episode import get_next_theta
-import datetime
 
 
 def log_D(k, got_D):

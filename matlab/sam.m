@@ -10,7 +10,7 @@ Fe=zeros(N,J,R);
 Fee=zeros(J*T,[3,1],R);
 Ys=zeros(2,2,3,10,25);
 Ys=zeros(2,2,3,10,25);
-Fs=F_subopt;
+Fs=F_opt;
 
 test_stability(lambda,Fs,As,Bs,P,N);
 

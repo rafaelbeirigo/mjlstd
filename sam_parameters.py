@@ -9,7 +9,7 @@ L = 25                           # Max iterations for global Y convergence
 T = 100                         # Max iterations for individual Y convergence
 K = 1000                         # Max iterations for calculating the sum
 
-lambda_ = 9e-1
+lambda_ = 1e-1
 c = 1
 eta = 1
 

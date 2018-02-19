@@ -201,14 +201,16 @@ def main():
             }
             m = MJLS(**args)
 
-            (Fs, Ys, Ys_H) = mjlstd(p, m)
+            (Fs, Ys, Fs_H, Ys_H) = mjlstd(p, m)
 
-            data = (F_ric, X_ric, m, Fs, Ys, Ys_H)
-            save(data, filename)
+            data = (m, F_ric, X_ric, Fs, Ys, Fs_H, Ys_H)
+            # save(data, filename)
 
-        (F_ric, X_ric, m, Fs, Ys, Ys_H) = data
+        (m, F_ric, X_ric, Fs, Ys, Fs_H, Ys_H) = data
+
         plot_Y_H(m, Ys_H, X_ric, F_ric, factor)
-        plot_F_H(m, Ys_H, X_ric, F_ric, factor)
+        plot_F_H(m, Fs_H, X_ric, F_ric, factor)
+        plot_Delta_H(m, Fs_H, X_ric, F_ric, factor)
 
 
 if __name__ == '__main__':

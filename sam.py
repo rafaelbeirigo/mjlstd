@@ -84,3 +84,7 @@ def main():
 
         plt.savefig('k_0_D_{:06.2f}_c_0.1.png'.format(factor),
                     bbox_inches='tight')
+
+
+if __name__ == '__main__':
+    main()

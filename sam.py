@@ -67,8 +67,8 @@ def plot_Y_H(m, Ys_H, X_ric, F_ric, factor):
     plt.close()
 
 
-def plot_F_H(m, Ys_H, X_ric, F_ric, factor):
-    F_H = [get_F(m, zeros_like(m.F), y) for y in Ys_H]
+def plot_F_H(m, Fs_H, X_ric, F_ric, factor):
+    F_H = Fs_H
 
     plt.figure()
 

@@ -94,8 +94,8 @@ def plot_F_H(m, Fs_H, X_ric, F_ric, factor):
         F_ric_plot = [F_ric[i][j][k] for f in F_H]
 
         # Create the suplot
-        plt.subplot(3, 3, p[1])
-        plt.plot(F_plot, 'blue')
+        plt.subplot(3, 2, p[1])
+        plt.step(range(len(F_plot)), F_plot, 'blue')
         plt.plot(F_ric_plot, 'red')
         # Configure plot
         plt.ylabel(r'$F_{}({}, {})$'.format(i + 1, j + 1, k + 1))

@@ -3,8 +3,8 @@ import sam_constants as sc
 import sam_parameters as sp
 from Parameters import Parameters
 from MJLS import MJLS
-from mjlstd_online import mjlstd_online, get_F
-from numpy import zeros_like, arange
+from mjlstd import mjlstd
+from mjlstd_online import mjlstd_online
 import matplotlib.pyplot as plt
 import pickle
 
@@ -198,7 +198,8 @@ def main():
             }
             m = MJLS(**args)
 
-            (Fs, Ys, Fs_H, Ys_H) = mjlstd_online(p, m)
+            (Fs, Ys, Fs_H, Ys_H) = mjlstd(p, m)
+            (Fs_on, Ys_on, Fs_on_H, Ys_on_H) = mjlstd_online(p, m)
 
             data = (m, F_ric, X_ric, Fs, Ys, Fs_H, Ys_H)
             # save(data, filename)

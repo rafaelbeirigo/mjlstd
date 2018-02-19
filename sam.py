@@ -177,7 +177,7 @@ def main():
 
     factors = [1.]
     for factor in factors:
-        filename = 'k_0_D_{:06.2f}_c_0.1.pickle'.format(factor)
+        filename = 'k_0_D_{:06.2f}_c_0.1_online.pickle'.format(factor)
         data = load(filename)
         if data is None:
             args = {

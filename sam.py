@@ -24,11 +24,11 @@ def save(data, filename):
         pickle.dump(data, f, pickle.HIGHEST_PROTOCOL)
 
 
-def plot_Y_H(m, Ys_H, X_ric, F_ric, factor):
+def plot_Y_H(m, Ys_H, Ys_on_H, X_ric, F_ric, factor):
     plt.figure()
 
-    plt.suptitle('Entries of Y at each t,el-step (blue) '
-                 'vs true Riccati solution (red)')
+    plt.suptitle('Entries of Y at each t,el-step for online (blue) '
+                 'and offline (red) vs true Riccati solution (black)')
 
     # Pairs (("indexes on X"), ("index on the plot function"))
     plot = [
@@ -49,31 +49,33 @@ def plot_Y_H(m, Ys_H, X_ric, F_ric, factor):
 
         # Get the actual values to plot
         Ys_plot = [y[i][j][k] for y in Ys_H]
+        Ys_on_plot = [y[i][j][k] for y in Ys_on_H]
         X_plot = [X_ric[i][j][k] for y in Ys_H]
 
         # Create the suplot
         plt.subplot(3, 3, p[1])
-        plt.plot(Ys_plot, 'blue')
-        plt.plot(X_plot, 'red')
+        plt.plot(Ys_on_plot, 'blue')
+        plt.plot(Ys_plot, 'red')
+        plt.plot(X_plot, 'black')
         # Configure plot
         plt.ylabel(r'$Y_{}({}, {})$'.format(i + 1, j + 1, k + 1))
         plt.xlabel('(t,el)-step')
         plt.grid(True)
         plt.tight_layout(h_pad=0., w_pad=0., pad=2)
 
-    plt.savefig('Y_k_0_D_{:06.2f}_c_0.1.png'.format(factor),
+    plt.savefig('Y_k_0_D_{:06.2f}_c_0.1_online.png'.format(factor),
                 bbox_inches='tight')
     plt.show()
     plt.close()
 
 
-def plot_F_H(m, Fs_H, X_ric, F_ric, factor):
-    F_H = Fs_H
+def plot_F_H(m, Fs_H, Fs_on_H, X_ric, F_ric, factor):
+    F_H, F_on_H = Fs_H, Fs_on_H
 
     plt.figure()
 
-    plt.suptitle('Entries of F at each el-step (blue) '
-                 'vs true optimal gain (red)')
+    plt.suptitle('Entries of F at each el-step for online (blue) '
+                 'and offline (red) vs true optimal gain (black)')
 
     # Pairs (("indexes on X"), ("index on the plot function"))
     plot = [
@@ -91,31 +93,35 @@ def plot_F_H(m, Fs_H, X_ric, F_ric, factor):
 
         # Get the actual values to plot
         F_plot = [f[i][j][k] for f in F_H]
+        F_on_plot = [f[i][j][k] for f in F_on_H]
         F_ric_plot = [F_ric[i][j][k] for f in F_H]
 
         # Create the suplot
         plt.subplot(3, 2, p[1])
-        plt.step(range(len(F_plot)), F_plot, 'blue')
-        plt.plot(F_ric_plot, 'red')
+        plt.step(range(len(F_on_plot)), F_on_plot, 'blue')
+        plt.step(range(len(F_plot)), F_plot, 'red')
+        plt.plot(F_ric_plot, 'black')
         # Configure plot
         plt.ylabel(r'$F_{}({}, {})$'.format(i + 1, j + 1, k + 1))
         plt.xlabel('el-step')
         plt.grid(True)
         plt.tight_layout(h_pad=0., w_pad=0., pad=2)
 
-    plt.savefig('F_k_0_D_{:06.2f}_c_0.1.png'.format(factor),
+    plt.savefig('F_k_0_D_{:06.2f}_c_0.1_online.png'.format(factor),
                 bbox_inches='tight')
     plt.show()
     plt.close()
 
 
-def plot_Delta_H(m, Fs_H, X_ric, F_ric, factor):
-    F_H = Fs_H
+def plot_Delta_H(m, Fs_H, Fs_on_H, X_ric, F_ric, factor):
+    F_H, F_on_H = Fs_H, Fs_on_H
     Delta_H = [100. * abs((F_ric - f)/F_ric) for f in F_H]
+    Delta_on_H = [100. * abs((F_ric - f)/F_ric) for f in F_on_H]
 
     plt.figure()
 
-    plt.suptitle(r'Entries of $\Delta$ at each el-step')
+    plt.suptitle(r'Entries of $\Delta$ for online (blue) and offline (red) '
+                 ' variants at each el-step')
 
     # Pairs (("indexes on X"), ("index on the plot function"))
     plot = [
@@ -133,17 +139,19 @@ def plot_Delta_H(m, Fs_H, X_ric, F_ric, factor):
 
         # Get the actual values to plot
         Delta_plot = [f[i][j][k] for f in Delta_H]
+        Delta_on_plot = [f[i][j][k] for f in Delta_on_H]
 
         # Create the suplot
         plt.subplot(3, 2, p[1])
-        plt.step(range(len(Delta_plot)), Delta_plot, 'blue')
+        plt.step(range(len(Delta_on_plot)), Delta_on_plot, 'blue')
+        plt.step(range(len(Delta_plot)), Delta_plot, 'red')
         # Configure plot
         plt.ylabel(r'$\Delta_{}({}, {})$'.format(i + 1, j + 1, k + 1))
         plt.xlabel('el-step')
         plt.grid(True)
         plt.tight_layout(h_pad=0., w_pad=0., pad=2)
 
-    plt.savefig('Delta_k_0_D_{:06.2f}_c_0.1.png'.format(factor),
+    plt.savefig('Delta_k_0_D_{:06.2f}_c_0.1_online.png'.format(factor),
                 bbox_inches='tight')
     plt.show()
     plt.close()
@@ -208,9 +216,9 @@ def main():
         (m, F_ric, X_ric, Fs, Ys, Fs_H, Ys_H, Fs_on, Ys_on, Fs_on_H,
          Ys_on_H) = data
 
-        plot_Y_H(m, Ys_H, X_ric, F_ric, factor)
-        plot_F_H(m, Fs_H, X_ric, F_ric, factor)
-        plot_Delta_H(m, Fs_H, X_ric, F_ric, factor)
+        plot_Y_H(m, Ys_H, Ys_on_H, X_ric, F_ric, factor)
+        plot_F_H(m, Fs_H, Fs_on_H, X_ric, F_ric, factor)
+        plot_Delta_H(m, Fs_H, Fs_on_H, X_ric, F_ric, factor)
 
 
 if __name__ == '__main__':

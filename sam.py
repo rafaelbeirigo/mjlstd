@@ -6,6 +6,22 @@ from MJLS import MJLS
 from mjlstd import mjlstd, get_F
 from numpy import zeros_like, arange
 import matplotlib.pyplot as plt
+import pickle
+
+
+def load(filename):
+    """Loads persisted data."""
+    try:
+        with open(filename, 'rb') as f:
+            return pickle.load(f)
+    except Exception:
+        return None
+
+
+def save(data, filename):
+    """Persists data."""
+    with open(filename, 'wb') as f:
+        pickle.dump(data, f, pickle.HIGHEST_PROTOCOL)
 
 
 def main():

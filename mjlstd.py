@@ -169,6 +169,6 @@ def mjlstd(p, m):
         Fs = get_F(m, Fs.copy(), Ys.copy())
 
         Ys_H.extend(Ys_h)
-        Fs_H.extend(Fs)
+        Fs_H.append(Fs)
 
     return (Fs, Ys, Fs_H, Ys_H)

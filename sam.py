@@ -201,10 +201,12 @@ def main():
             (Fs, Ys, Fs_H, Ys_H) = mjlstd(p, m)
             (Fs_on, Ys_on, Fs_on_H, Ys_on_H) = mjlstd_online(p, m)
 
-            data = (m, F_ric, X_ric, Fs, Ys, Fs_H, Ys_H)
+            data = (m, F_ric, X_ric, Fs, Ys, Fs_H, Ys_H, Fs_on, Ys_on,
+                    Fs_on_H, Ys_on_H)
             # save(data, filename)
 
-        (m, F_ric, X_ric, Fs, Ys, Fs_H, Ys_H) = data
+        (m, F_ric, X_ric, Fs, Ys, Fs_H, Ys_H, Fs_on, Ys_on, Fs_on_H,
+         Ys_on_H) = data
 
         plot_Y_H(m, Ys_H, X_ric, F_ric, factor)
         plot_F_H(m, Fs_H, X_ric, F_ric, factor)

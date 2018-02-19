@@ -67,6 +67,46 @@ def plot_Y_H(m, Ys_H, X_ric, F_ric, factor):
     plt.close()
 
 
+def plot_F_H(m, Ys_H, X_ric, F_ric, factor):
+    F_H = [get_F(m, zeros_like(m.F), y) for y in Ys_H]
+
+    plt.figure()
+
+    plt.suptitle('Entries of F at each t,el-step (blue) '
+                 'vs true optimal gain (red)')
+
+    # Pairs (("indexes on X"), ("index on the plot function"))
+    plot = [
+        ((0, 0, 0), (1)),
+        ((0, 0, 1), (2)),
+        ((1, 0, 0), (3)),
+        ((1, 0, 1), (4)),
+        ((2, 0, 0), (5)),
+        ((2, 0, 1), (6)),
+    ]
+
+    for p in plot:
+        # Get the F indexes
+        i, j, k = p[0][0], p[0][1], p[0][2]
+
+        # Get the actual values to plot
+        F_plot = [f[i][j][k] for f in F_H]
+        F_ric_plot = [F_ric[i][j][k] for f in F_H]
+
+        # Create the suplot
+        plt.subplot(3, 3, p[1])
+        plt.plot(F_plot, 'blue')
+        plt.plot(F_ric_plot, 'red')
+        # Configure plot
+        plt.ylabel(r'$F_{}({}, {})$'.format(i +1, j + 1, k + 1))
+        plt.xlabel('el-step')
+        plt.grid(True)
+        plt.tight_layout(h_pad=0.,w_pad=0.,pad=2)
+
+    plt.show()
+    plt.close()
+
+
 def main():
     """Runs the TD(\lambda) algorithm for the Samuelson problem."""
     print('wait for it...')
@@ -126,6 +166,7 @@ def main():
 
         (F_ric, X_ric, m, Fs, Ys, Ys_H) = data
         plot_Y_H(m, Ys_H, X_ric, F_ric, factor)
+        plot_F_H(m, Ys_H, X_ric, F_ric, factor)
 
 
 if __name__ == '__main__':

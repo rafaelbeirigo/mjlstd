@@ -3,7 +3,7 @@ import numpy as np
 x_0 = np.array([[1], [1]])
 theta_0 = 1
 
-R = 1                           # Number of repetitions of the experiment
+R = 1                            # Number of repetitions of the experiment
 
 L = 5                            # Max iterations for global Y convergence
 T = 1000                         # Max iterations for individual Y convergence

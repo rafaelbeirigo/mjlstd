@@ -90,59 +90,42 @@ def main():
     factors.extend(arange(3., 11., 1.))
     factors.extend(arange(20., 110., 10.))
     for factor in factors:
-        args = {
-            'T': int(1e6),
-            'N': sc.N,
-            'A': sc.A,
-            'B': sc.B,
-            'C': sc.C,
-            'D': factor * sc.D,
-            'R': sc.P,
-            'epsilon': sp.epsilon,
-        }
-        [F_ric, X_ric] = riccati(**args)
+        filename = 'k_0_D_{:06.2f}_c_0.1.pickle'.format(factor)
+        data = load(filename)
+        if data is None:
+            args = {
+                'T': int(1e6),
+                'N': sc.N,
+                'A': sc.A,
+                'B': sc.B,
+                'C': sc.C,
+                'D': factor * sc.D,
+                'R': sc.P,
+                'epsilon': sp.epsilon,
+            }
+            [F_ric, X_ric] = riccati(**args)
 
-        args = {
-            'N': sc.N,
-            'm': sc.m,
-            'n': sc.n,
-            'A': sc.A,
-            'B': sc.B,
-            'C': sc.C,
-            'D': sc.D,
-            'P': sc.P,
-            'X': 0. * sc.X,
-            'F': F_ric,
-        }
-        m = MJLS(**args)
+            args = {
+                'N': sc.N,
+                'm': sc.m,
+                'n': sc.n,
+                'A': sc.A,
+                'B': sc.B,
+                'C': sc.C,
+                'D': sc.D,
+                'P': sc.P,
+                'X': 0. * sc.X,
+                'F': F_ric,
+            }
+            m = MJLS(**args)
 
-        (Fs, Ys, Ys_H) = mjlstd(p, m)
+            (Fs, Ys, Ys_H) = mjlstd(p, m)
 
-        Fs_H = []
-        for y in Ys_H:
-            f = get_F(m, zeros_like(m.F), y).copy()
-            Fs_H.append(f)
+            data = (F_ric, X_ric, m, Fs, Ys, Ys_H)
+            save(data, filename)
 
-        Ys_H_error = [(y - X_ric).flatten() for y in Ys_H]
-        Fs_H_error = [(f - F_ric).flatten() for f in Fs_H]
-
-        plt.figure()
-
-        plt.subplot(211)
-        plt.title('k starting in 0; D * {:05.2f}; c = 0.1'.format(factor))
-
-        plt.plot(Ys_H_error)
-        plt.grid(True)
-        plt.ylabel("Y(t) - X_ric")
-
-        plt.subplot(212)
-        plt.plot(Fs_H_error)
-        plt.grid(True)
-        plt.ylabel("F(t) - F_ric")
-        plt.xlabel("t")
-
-        plt.savefig('k_0_D_{:06.2f}_c_0.1.png'.format(factor),
-                    bbox_inches='tight')
+        (F_ric, X_ric, m, Fs, Ys, Ys_H) = data
+        plot_Y_H(m, Ys_H, X_ric, F_ric, factor)
 
 
 if __name__ == '__main__':

@@ -10,7 +10,7 @@ T = 1000                         # Max iterations for individual Y convergence
 K = 50                           # Max iterations for calculating the sum
 
 lambda_ = 1e-1
-c = 1.
+c = 1e-1
 eta = 1.
 
 epsilon = 1e-4

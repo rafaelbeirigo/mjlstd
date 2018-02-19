@@ -72,7 +72,7 @@ def plot_F_H(m, Ys_H, X_ric, F_ric, factor):
 
     plt.figure()
 
-    plt.suptitle('Entries of F at each t,el-step (blue) '
+    plt.suptitle('Entries of F at each el-step (blue) '
                  'vs true optimal gain (red)')
 
     # Pairs (("indexes on X"), ("index on the plot function"))

@@ -167,10 +167,7 @@ def main():
     }
     p = Parameters(**args)
 
-    factors = []
-    factors.extend(arange(0.1, 2.1, 0.1))
-    factors.extend(arange(3., 11., 1.))
-    factors.extend(arange(20., 110., 10.))
+    factors = [1.]
     for factor in factors:
         filename = 'k_0_D_{:06.2f}_c_0.1.pickle'.format(factor)
         data = load(filename)

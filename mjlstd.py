@@ -159,7 +159,8 @@ def mjlstd(p, m):
     if m.F is None:
         m.F = np.array([np.zeros_like(B.T) for B in m.B])
 
-    Ys, Fs, Ys_H, Fs_H = m.X.copy(), m.F.copy(), [], []
+    Ys, Fs = m.X.copy(), m.F.copy()
+    Ys_H, Fs_H = [Ys], [Fs]
 
     np.random.seed(p.seed)
 

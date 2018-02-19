@@ -109,6 +109,46 @@ def plot_F_H(m, Ys_H, X_ric, F_ric, factor):
     plt.close()
 
 
+def plot_Delta_H(m, Fs_H, X_ric, F_ric, factor):
+    F_H = Fs_H
+    Delta_H = [100. * abs((F_ric - f)/F_ric) for f in F_H]
+
+    plt.figure()
+
+    plt.suptitle(r'Entries of $\Delta$ at each el-step')
+
+    # Pairs (("indexes on X"), ("index on the plot function"))
+    plot = [
+        ((0, 0, 0), (1)),
+        ((0, 0, 1), (2)),
+        ((1, 0, 0), (3)),
+        ((1, 0, 1), (4)),
+        ((2, 0, 0), (5)),
+        ((2, 0, 1), (6)),
+    ]
+
+    for p in plot:
+        # Get the Delta indexes
+        i, j, k = p[0][0], p[0][1], p[0][2]
+
+        # Get the actual values to plot
+        Delta_plot = [f[i][j][k] for f in Delta_H]
+
+        # Create the suplot
+        plt.subplot(3, 2, p[1])
+        plt.step(range(len(Delta_plot)), Delta_plot, 'blue')
+        # Configure plot
+        plt.ylabel(r'$\Delta_{}({}, {})$'.format(i + 1, j + 1, k + 1))
+        plt.xlabel('el-step')
+        plt.grid(True)
+        plt.tight_layout(h_pad=0., w_pad=0., pad=2)
+
+    plt.savefig('Delta_k_0_D_{:06.2f}_c_0.1.png'.format(factor),
+                bbox_inches='tight')
+    plt.show()
+    plt.close()
+
+
 def main():
     """Runs the TD(\lambda) algorithm for the Samuelson problem."""
     print('wait for it...')

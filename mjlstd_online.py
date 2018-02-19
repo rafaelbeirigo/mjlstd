@@ -27,21 +27,21 @@ def get_Y(p, m, Fs, Ys, Ys_hist):
         Ys_hist: the `Ys' history (i.e., a sequence with the `Ys' calculated
              so far.)
     """
-    gamma = 1.
-    theta_0 = 0
-    theta = theta_0
-    thetas = [theta]
-    Upsilon = np.eye(m.n)
-    for k in range(1, p.K):
-        next_theta = get_next_theta(theta, m.P)
+    gamma = 0.1
+    for _ in range(1, p.T + 1):
+        for i in range(m.N):
+            theta_0 = i
+            theta = theta_0
+            thetas = [theta]
+            Upsilon = np.eye(m.n)
+            for k in range(1, p.K):
+                thetas.append(get_next_theta(thetas[k - 1], m.P))
 
-        D_k = get_D(m, Fs, Ys, Upsilon, theta, next_theta)
-        for j in range(len(thetas)) - 1:
-            Ys[thetas[j]] += gamma * pow(p.lambda_, k - 1) * D_k
+                D_k = get_D(m, Fs, Ys, Upsilon, thetas[k - 1], thetas[k])
+                for j in range(len(thetas) - 1):
+                    Ys[thetas[j]] += gamma * pow(p.lambda_, k - 1) * D_k
 
-        Upsilon = get_Upsilon(m, Fs, Upsilon, theta)
-        theta = next_theta
-        thetas.append(theta)
+                Upsilon = get_Upsilon(m, Fs, Upsilon, theta)
 
         Ys_hist.append(Ys.copy())
 

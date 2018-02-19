@@ -56,10 +56,10 @@ def plot_Y_H(m, Ys_H, X_ric, F_ric, factor):
         plt.plot(Ys_plot, 'blue')
         plt.plot(X_plot, 'red')
         # Configure plot
-        plt.ylabel(r'$Y_{}({}, {})$'.format(i +1, j + 1, k + 1))
+        plt.ylabel(r'$Y_{}({}, {})$'.format(i + 1, j + 1, k + 1))
         plt.xlabel('(t,el)-step')
         plt.grid(True)
-        plt.tight_layout(h_pad=0.,w_pad=0.,pad=2)
+        plt.tight_layout(h_pad=0., w_pad=0., pad=2)
 
     plt.savefig('Y_k_0_D_{:06.2f}_c_0.1.png'.format(factor),
                 bbox_inches='tight')
@@ -98,10 +98,10 @@ def plot_F_H(m, Ys_H, X_ric, F_ric, factor):
         plt.plot(F_plot, 'blue')
         plt.plot(F_ric_plot, 'red')
         # Configure plot
-        plt.ylabel(r'$F_{}({}, {})$'.format(i +1, j + 1, k + 1))
+        plt.ylabel(r'$F_{}({}, {})$'.format(i + 1, j + 1, k + 1))
         plt.xlabel('el-step')
         plt.grid(True)
-        plt.tight_layout(h_pad=0.,w_pad=0.,pad=2)
+        plt.tight_layout(h_pad=0., w_pad=0., pad=2)
 
     plt.savefig('F_k_0_D_{:06.2f}_c_0.1.png'.format(factor),
                 bbox_inches='tight')

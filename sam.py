@@ -62,7 +62,7 @@ def plot_Y_H(m, Ys_H, X_ric, F_ric, factor):
         plt.tight_layout(h_pad=0.,w_pad=0.,pad=2)
 
     plt.show()
-    plt.savefig('k_0_D_{:06.2f}_c_0.1.png'.format(factor),
+    plt.savefig('Y_k_0_D_{:06.2f}_c_0.1.png'.format(factor),
                 bbox_inches='tight')
     plt.close()
 
@@ -104,6 +104,8 @@ def plot_F_H(m, Ys_H, X_ric, F_ric, factor):
         plt.tight_layout(h_pad=0.,w_pad=0.,pad=2)
 
     plt.show()
+    plt.savefig('F_k_0_D_{:06.2f}_c_0.1.png'.format(factor),
+                bbox_inches='tight')
     plt.close()
 
 

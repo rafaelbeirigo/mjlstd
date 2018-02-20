@@ -25,11 +25,11 @@ def save(data, filename):
         pickle.dump(data, f, pickle.HIGHEST_PROTOCOL)
 
 
-def get_E_cal_X(m):
-    E_cal_X = np.zeros_like(m.X)
+def get_E_cal_X(m, X):
+    E_cal_X = np.zeros_like(X)
     for i in range(m.N):
         for j in range(m.N):
-            E_cal_X[i] += m.P[i][j] * m.X[j]
+            E_cal_X[i] += m.P[i][j] * X[j]
 
 
 def plot_Y_H(m, Ys_H, Ys_on_H, X_ric, F_ric, factor):

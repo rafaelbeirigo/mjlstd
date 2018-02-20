@@ -7,6 +7,7 @@ from mjlstd import mjlstd
 from mjlstd_online import mjlstd_online
 import matplotlib.pyplot as plt
 import pickle
+import numpy as np
 
 
 def load(filename):
@@ -22,6 +23,13 @@ def save(data, filename):
     """Persists data."""
     with open(filename, 'wb') as f:
         pickle.dump(data, f, pickle.HIGHEST_PROTOCOL)
+
+
+def get_E_cal_X(m):
+    E_cal_X = np.zeros_like(m.X)
+    for i in range(m.N):
+        for j in range(m.N):
+            E_cal_X[i] += m.P[i][j] * m.X[j]
 
 
 def plot_Y_H(m, Ys_H, Ys_on_H, X_ric, F_ric, factor):

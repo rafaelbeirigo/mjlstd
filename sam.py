@@ -38,7 +38,8 @@ def plot_Y_H(m, Ys_H, Ys_on_H, X_ric, F_ric, factor):
     plt.figure()
 
     plt.suptitle('Entries of Y at each t,el-step for online (blue) '
-                 'and offline (red) vs true Riccati solution (black)')
+                 'and offline (red) vs entries of X (purple) and '
+                 'true Riccati solution (black)')
 
     # Pairs (("indexes on X"), ("index on the plot function"))
     plot = [

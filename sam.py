@@ -31,6 +31,8 @@ def get_E_cal_X(m, X):
         for j in range(m.N):
             E_cal_X[i] += m.P[i][j] * X[j]
 
+    return E_cal_X
+
 
 def plot_Y_H(m, Ys_H, Ys_on_H, X_ric, F_ric, factor):
     plt.figure()

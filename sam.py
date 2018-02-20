@@ -54,6 +54,8 @@ def plot_Y_H(m, Ys_H, Ys_on_H, X_ric, F_ric, factor):
         ((2, 1, 1), (9)),
     ]
 
+    E_cal_X = get_E_cal_X(m, X_ric)
+
     for p in plot:
         # Get the Ys indexes
         i, j, k = p[0][0], p[0][1], p[0][2]
@@ -62,12 +64,14 @@ def plot_Y_H(m, Ys_H, Ys_on_H, X_ric, F_ric, factor):
         Ys_plot = [y[i][j][k] for y in Ys_H]
         Ys_on_plot = [y[i][j][k] for y in Ys_on_H]
         X_plot = [X_ric[i][j][k] for y in Ys_H]
+        E_cal_X_plot = [E_cal_X[i][j][k] for y in Ys_H]
 
         # Create the suplot
         plt.subplot(3, 3, p[1])
         plt.plot(Ys_on_plot, 'blue')
         plt.plot(Ys_plot, 'red')
-        plt.plot(X_plot, 'black')
+        plt.plot(X_plot, 'purple')
+        plt.plot(E_cal_X_plot, 'black')
         # Configure plot
         plt.ylabel(r'$Y_{}({}, {})$'.format(i + 1, j + 1, k + 1))
         plt.xlabel('(t,el)-step')

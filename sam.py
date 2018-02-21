@@ -134,15 +134,18 @@ def plot_F(m, F_off, F_on, F_el, X_ric, F_ric, factor):
     plt.close()
 
 
-def plot_Delta_H(m, Fs_H, Fs_on_H, X_ric, F_ric, factor):
-    F_H, F_on_H = Fs_H, Fs_on_H
-    Delta_H = [100. * abs((F_ric - f)/F_ric) for f in F_H]
-    Delta_on_H = [100. * abs((F_ric - f)/F_ric) for f in F_on_H]
+def plot_Delta(m, F_off, F_on, F_el, X_ric, F_ric, factor):
+    Delta_off = [100. * abs((F_ric - f)/F_ric) for f in F_off]
+    Delta_on = [100. * abs((F_ric - f)/F_ric) for f in F_on]
+    Delta_el = [100. * abs((F_ric - f)/F_ric) for f in F_el]
 
     plt.figure()
 
-    plt.suptitle(r'Entries of $\Delta$ for online (blue) and offline (red) '
-                 ' variants at each el-step')
+    plt.suptitle(r'Entries of $\Delta$ for '
+                 'eligibility traces (blue), '
+                 'online (purple), and '
+                 'offline (red) '
+                 'variants at each el-step')
 
     # Pairs (("indexes on X"), ("index on the plot function"))
     plot = [
@@ -159,20 +162,22 @@ def plot_Delta_H(m, Fs_H, Fs_on_H, X_ric, F_ric, factor):
         i, j, k = p[0][0], p[0][1], p[0][2]
 
         # Get the actual values to plot
-        Delta_plot = [f[i][j][k] for f in Delta_H]
-        Delta_on_plot = [f[i][j][k] for f in Delta_on_H]
+        Delta_off_plot = [f[i][j][k] for f in Delta_off]
+        Delta_on_plot = [f[i][j][k] for f in Delta_on]
+        Delta_el_plot = [f[i][j][k] for f in Delta_el]
 
         # Create the suplot
         plt.subplot(3, 2, p[1])
-        plt.step(range(len(Delta_on_plot)), Delta_on_plot, 'blue')
-        plt.step(range(len(Delta_plot)), Delta_plot, 'red')
+        plt.step(range(len(Delta_el_plot)), Delta_el_plot, 'blue')
+        plt.step(range(len(Delta_on_plot)), Delta_on_plot, 'purple')
+        plt.step(range(len(Delta_off_plot)), Delta_off_plot, 'red')
         # Configure plot
         plt.ylabel(r'$\Delta_{}({}, {})$'.format(i + 1, j + 1, k + 1))
         plt.xlabel('el-step')
         plt.grid(True)
         plt.tight_layout(h_pad=0., w_pad=0., pad=2)
 
-    plt.savefig('Delta_k_0_D_{:06.2f}_c_0.1_online.png'.format(factor),
+    plt.savefig('Delta_k_0_D_{:06.2f}_c_0.1_eligibility.png'.format(factor),
                 bbox_inches='tight')
     plt.show()
     plt.close()

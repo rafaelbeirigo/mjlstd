@@ -5,8 +5,8 @@ theta_0 = 1
 
 R = 1                            # Number of repetitions of the experiment
 
-L = 100                          # Max iterations for global Y convergence
-T = 25                           # Max iterations for individual Y convergence
+L = 10                           # Max iterations for global Y convergence
+T = 100                          # Max iterations for individual Y convergence
 K = 10                           # Max iterations for calculating the sum
 
 lambda_ = 1e-1

@@ -27,7 +27,7 @@ def get_Y(p, m, Fs, Ys, Ys_hist):
         Ys_hist: the `Ys' history (i.e., a sequence with the `Ys' calculated
              so far.)
     """
-    alpha = 0.1       # TODO: parametrize
+    alpha = 0.05      # TODO: parametrize
     gamma = 1.0       # TODO: do we really want it constant?
     lambda_ = 0.1     # TODO: do we really want it constant?
 

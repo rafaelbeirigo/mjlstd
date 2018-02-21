@@ -243,9 +243,9 @@ def main():
         (m, F_ric, X_ric, Fs, Ys, Fs_H, Ys_H, Fs_on, Ys_on, Fs_on_H,
          Ys_on_H) = data
 
-        plot_Y_H(m, Ys_H, Ys_on_H, Ys_el_H, X_ric, F_ric, factor)
-        plot_F_H(m, Fs_H, Fs_on_H, Fs_el_H, X_ric, F_ric, factor)
-        plot_Delta_H(m, Fs_H, Fs_on_H, Fs_el_H, X_ric, F_ric, factor)
+        plot_Y(m, Ys_H, Ys_on_H, Ys_el_H, X_ric, F_ric, factor)
+        plot_F(m, Fs_H, Fs_on_H, Fs_el_H, X_ric, F_ric, factor)
+        plot_Delta(m, Fs_H, Fs_on_H, Fs_el_H, X_ric, F_ric, factor)
 
 
 if __name__ == '__main__':

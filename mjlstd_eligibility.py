@@ -1,7 +1,7 @@
 import numpy as np
 from scipy.linalg import inv
 from sam_run_episode import get_next_theta
-
+import random
 
 def log_D(k, got_D):
     f = open('D.log', 'a')
@@ -27,8 +27,6 @@ def get_Y(p, m, Fs, Ys, Ys_hist):
         Ys_hist: the `Ys' history (i.e., a sequence with the `Ys' calculated
              so far.)
     """
-    Upsilon = np.eye(m.n)
-
     alpha = 0.1       # TODO: parametrize
 
     gamma = 0.1       # TODO: do we really want it constant?
@@ -37,24 +35,28 @@ def get_Y(p, m, Fs, Ys, Ys_hist):
 
     e = np.zeros(m.N)
 
-    theta = 0                   # TODO: parametrize
+    for t in range(1, p.T + 1):
+        Upsilon = np.eye(m.n)
 
-    for k in range(1, p.K):
-        next_theta = get_next_theta(theta, m.P)
+        # TODO: parametrize
+        theta = random.randint(0, m.N - 1)
 
-        delta = get_delta(m, Fs, Ys, Upsilon, gamma, theta, next_theta)
+        for k in range(1, p.K):
+            next_theta = get_next_theta(theta, m.P)
 
-        e[theta] += 1
+            delta = get_delta(m, Fs, Ys, Upsilon, gamma, theta, next_theta)
 
-        for i in range(m.N):
-            Ys[i] += alpha * e[i] * delta
-            e[i] *= gamma * lambda_
+            e[theta] += 1
 
-        Upsilon = get_Upsilon(m, Fs, Upsilon, theta)
+            for i in range(m.N):
+                Ys[i] += alpha * e[i] * delta
+                e[i] *= gamma * lambda_
+
+            Upsilon = get_Upsilon(m, Fs, Upsilon, theta)
+
+            theta = next_theta
 
         Ys_hist.append(Ys.copy())
-
-        theta = next_theta
 
     return (Ys, Ys_hist)
 

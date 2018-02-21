@@ -35,12 +35,11 @@ def get_E_cal_X(m, X):
     return E_cal_X
 
 
-def plot_Y(m, Y_off, Y_on, Y_el, X_ric, F_ric, factor):
+def plot_Y(m, Y_off, Y_el, X_ric, F_ric, factor):
     plt.figure()
 
     plt.suptitle('Entries of Y at each t,el-step for '
                  'eligibility traces (blue), '
-                 'online (purple), '
                  'offline (red), '
                  'vs E_cal(X) (black) ')
 
@@ -65,14 +64,12 @@ def plot_Y(m, Y_off, Y_on, Y_el, X_ric, F_ric, factor):
 
         # Get the actual values to plot
         Y_off_plot = [y[i][j][k] for y in Y_off]
-        Y_on_plot = [y[i][j][k] for y in Y_on]
         Y_el_plot = [y[i][j][k] for y in Y_el]
         E_cal_X_plot = [E_cal_X[i][j][k] for y in Y_off]
 
         # Create the suplot
         plt.subplot(3, 3, p[1])
         plt.plot(Y_el_plot, 'blue')
-        plt.plot(Y_on_plot, 'purple')
         plt.plot(Y_off_plot, 'red')
         plt.plot(E_cal_X_plot, 'black')
         # Configure plot
@@ -87,12 +84,11 @@ def plot_Y(m, Y_off, Y_on, Y_el, X_ric, F_ric, factor):
     plt.close()
 
 
-def plot_F(m, F_off, F_on, F_el, X_ric, F_ric, factor):
+def plot_F(m, F_off, F_el, X_ric, F_ric, factor):
     plt.figure()
 
     plt.suptitle('Entries of F at each el-step for '
                  'eligibility traces (blue), '
-                 'online (purple), '
                  'offline (red), '
                  'vs true optimal gain (black)')
 
@@ -112,14 +108,12 @@ def plot_F(m, F_off, F_on, F_el, X_ric, F_ric, factor):
 
         # Get the actual values to plot
         F_off_plot = [f[i][j][k] for f in F_off]
-        F_on_plot = [f[i][j][k] for f in F_on]
         F_el_plot = [f[i][j][k] for f in F_el]
         F_ric_plot = [F_ric[i][j][k] for f in F_off]
 
         # Create the suplot
         plt.subplot(3, 2, p[1])
         plt.step(range(len(F_el_plot)), F_el_plot, 'blue')
-        plt.step(range(len(F_on_plot)), F_on_plot, 'purple')
         plt.step(range(len(F_off_plot)), F_off_plot, 'red')
         plt.plot(F_ric_plot, 'black')
         # Configure plot
@@ -134,16 +128,14 @@ def plot_F(m, F_off, F_on, F_el, X_ric, F_ric, factor):
     plt.close()
 
 
-def plot_Delta(m, F_off, F_on, F_el, X_ric, F_ric, factor):
+def plot_Delta(m, F_off, F_el, X_ric, F_ric, factor):
     Delta_off = [100. * abs((F_ric - f)/F_ric) for f in F_off]
-    Delta_on = [100. * abs((F_ric - f)/F_ric) for f in F_on]
     Delta_el = [100. * abs((F_ric - f)/F_ric) for f in F_el]
 
     plt.figure()
 
     plt.suptitle(r'Entries of $\Delta$ for '
                  'eligibility traces (blue), '
-                 'online (purple), and '
                  'offline (red) '
                  'variants at each el-step')
 
@@ -163,13 +155,11 @@ def plot_Delta(m, F_off, F_on, F_el, X_ric, F_ric, factor):
 
         # Get the actual values to plot
         Delta_off_plot = [f[i][j][k] for f in Delta_off]
-        Delta_on_plot = [f[i][j][k] for f in Delta_on]
         Delta_el_plot = [f[i][j][k] for f in Delta_el]
 
         # Create the suplot
         plt.subplot(3, 2, p[1])
         plt.step(range(len(Delta_el_plot)), Delta_el_plot, 'blue')
-        plt.step(range(len(Delta_on_plot)), Delta_on_plot, 'purple')
         plt.step(range(len(Delta_off_plot)), Delta_off_plot, 'red')
         # Configure plot
         plt.ylabel(r'$\Delta_{}({}, {})$'.format(i + 1, j + 1, k + 1))
@@ -243,9 +233,9 @@ def main():
         (m, F_ric, X_ric, Fs, Ys, Fs_H, Ys_H, Fs_on, Ys_on, Fs_on_H,
          Ys_on_H) = data
 
-        plot_Y(m, Ys_H, Ys_on_H, Ys_el_H, X_ric, F_ric, factor)
-        plot_F(m, Fs_H, Fs_on_H, Fs_el_H, X_ric, F_ric, factor)
-        plot_Delta(m, Fs_H, Fs_on_H, Fs_el_H, X_ric, F_ric, factor)
+        plot_Y(m, Ys_H, Ys_el_H, X_ric, F_ric, factor)
+        plot_F(m, Fs_H, Fs_el_H, X_ric, F_ric, factor)
+        plot_Delta(m, Fs_H, Fs_el_H, X_ric, F_ric, factor)
 
 
 if __name__ == '__main__':

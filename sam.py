@@ -35,7 +35,7 @@ def get_E_cal_X(m, X):
     return E_cal_X
 
 
-def plot_Y(m, Ys, Ys_on, Ys_el, X_ric, F_ric, factor):
+def plot_Y(m, Y_off, Y_on, Y_el, X_ric, F_ric, factor):
     plt.figure()
 
     plt.suptitle('Entries of Y at each t,el-step for '
@@ -64,16 +64,16 @@ def plot_Y(m, Ys, Ys_on, Ys_el, X_ric, F_ric, factor):
         i, j, k = p[0][0], p[0][1], p[0][2]
 
         # Get the actual values to plot
-        Ys_on_plot = [y[i][j][k] for y in Ys_on]
-        Ys_plot = [y[i][j][k] for y in Ys]
-        X_plot = [X_ric[i][j][k] for y in Ys]
-        E_cal_X_plot = [E_cal_X[i][j][k] for y in Ys]
+        Y_off_plot = [y[i][j][k] for y in Y_off]
+        Y_on_plot = [y[i][j][k] for y in Y_on]
+        Y_el_plot = [y[i][j][k] for y in Y_el]
+        E_cal_X_plot = [E_cal_X[i][j][k] for y in Y_off]
 
         # Create the suplot
         plt.subplot(3, 3, p[1])
-        plt.plot(Ys_on_plot, 'blue')
-        plt.plot(Ys_plot, 'red')
-        plt.plot(X_plot, 'purple')
+        plt.plot(Y_el_plot, 'blue')
+        plt.plot(Y_on_plot, 'purple')
+        plt.plot(Y_off_plot, 'red')
         plt.plot(E_cal_X_plot, 'black')
         # Configure plot
         plt.ylabel(r'$Y_{}({}, {})$'.format(i + 1, j + 1, k + 1))
@@ -81,7 +81,7 @@ def plot_Y(m, Ys, Ys_on, Ys_el, X_ric, F_ric, factor):
         plt.grid(True)
         plt.tight_layout(h_pad=0., w_pad=0., pad=2)
 
-    plt.savefig('Y_k_0_D_{:06.2f}_c_0.1_online.png'.format(factor),
+    plt.savefig('Y_k_0_D_{:06.2f}_c_0.1_eligibility.png'.format(factor),
                 bbox_inches='tight')
     plt.show()
     plt.close()

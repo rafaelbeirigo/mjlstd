@@ -93,13 +93,14 @@ def get_sum_D(p, m, Fs, Ys, i):
     return sum_D
 
 
-def get_D(m, Fs, Ys, Upsilon, i, j):
-    """Calculates each individual D for the sum.
+def get_delta(m, Fs, Ys, Upsilon, gamma, i, j):
+    """Calculates the temporal difference `delta'.
     Args:
         m (:obj:`MJLS`): the corresponding Markov Jump Linear System.
         Fs: current approximation of the control gains.
         Ys: current approximation of the CARE solution.
         Upsilon: current value of `Upsilon'.
+        gamma: discount rate.
         i: current mode.
         j: next mode.
     """
@@ -115,11 +116,13 @@ def get_D(m, Fs, Ys, Upsilon, i, j):
     U = Upsilon
     U_ = U.conj().T
 
-    B_cal = C_.dot(C) + F_.dot(D_).dot(D).dot(F)
-    C_cal = ((A + B.dot(F)).conj().T).dot(Y2).dot(A + B.dot(F)) - Y1
-    D_cal = U_.dot(B_cal + C_cal).dot(U)
+    r = C_.dot(C) + F_.dot(D_).dot(D).dot(F)
+    V1 = Y1
+    V2 = ((A + B.dot(F)).conj().T).dot(Y2).dot(A + B.dot(F))
 
-    return D_cal
+    delta = U_.dot(r + gamma * V2 - V1).dot(U)
+
+    return delta
 
 
 def get_Upsilon(m, Fs, Upsilon, i):

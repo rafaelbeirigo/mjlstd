@@ -27,70 +27,36 @@ def get_Y(p, m, Fs, Ys, Ys_hist):
         Ys_hist: the `Ys' history (i.e., a sequence with the `Ys' calculated
              so far.)
     """
-    gamma = 0.1
-    for _ in range(1, p.T + 1):
+    Upsilon = np.eye(m.n)
+
+    alpha = 0.1       # TODO: parametrize
+
+    gamma = 0.1       # TODO: do we really want it constant?
+
+    lambda_ = 0.1     # TODO: do we really want it constant?
+
+    e = np.zeros(m.N)
+
+    theta = 0                   # TODO: parametrize
+
+    for k in range(1, p.K):
+        next_theta = get_next_theta(theta, m.P)
+
+        delta = get_delta(m, Fs, Ys, Upsilon, gamma, theta, next_theta)
+
+        e[theta] += 1
+
         for i in range(m.N):
-            theta_0 = i
-            theta = theta_0
-            thetas = [theta]
-            Upsilon = np.eye(m.n)
-            for k in range(1, p.K):
-                thetas.append(get_next_theta(thetas[k - 1], m.P))
+            Ys[i] += alpha * e[i] * delta
+            e[i] *= gamma * lambda_
 
-                D_k = get_D(m, Fs, Ys, Upsilon, thetas[k - 1], thetas[k])
-                for j in range(len(thetas) - 1):
-                    Ys[thetas[j]] += gamma * pow(p.lambda_, k - 1) * D_k
-
-                Upsilon = get_Upsilon(m, Fs, Upsilon, theta)
+        Upsilon = get_Upsilon(m, Fs, Upsilon, theta)
 
         Ys_hist.append(Ys.copy())
 
-    return (Ys, Ys_hist)
-
-
-def get_sum_Ds(p, m, Fs, Ys):
-    """Calculates the D sum.
-    Args:
-        p (:obj:`Parameters`): parameters for the algorithm; for details on
-            each parameter, see the :obj:`Parameters` class.
-        m (:obj:`MJLS`): the corresponding Markov Jump Linear System.
-        Fs: current approximation of the control gains.
-        Ys: current approximation of the CARE solution.
-    """
-    sum_Ds = np.zeros_like(Ys)
-    for i in range(m.N):
-        sum_Ds[i] = get_sum_D(p, m, Fs, Ys, i)
-
-    return sum_Ds
-
-
-def get_sum_D(p, m, Fs, Ys, i):
-    """Calculates each individual D sum.
-    Args:
-        p (:obj:`Parameters`): parameters for the algorithm; for details on
-            each parameter, see the :obj:`Parameters` class.
-        m (:obj:`MJLS`): the corresponding Markov Jump Linear System.
-        Fs: current approximation of the control gains.
-        Ys: current approximation of the CARE solution.
-        i: starting mode, i.e., the mode for the first time step in the
-            current simulation.
-    """
-    sum_D = np.zeros_like(Ys[0])
-    Upsilon = np.eye(m.n)
-    theta = i
-    for k in range(0, p.K + 1):
-        next_theta = get_next_theta(theta, m.P)
-        incr = pow(p.lambda_, k) * get_D(m, Fs, Ys, Upsilon,
-                                         theta, next_theta)
-        sum_D += incr
-
-        if abs(incr).max() < p.epsilon:
-            return sum_D
-
-        Upsilon = get_Upsilon(m, Fs, Upsilon, theta)
         theta = next_theta
 
-    return sum_D
+    return (Ys, Ys_hist)
 
 
 def get_delta(m, Fs, Ys, Upsilon, gamma, i, j):

@@ -223,7 +223,6 @@ def main():
             m = MJLS(**args)
 
             (Fs, Ys, Fs_H, Ys_H) = mjlstd(p, m)
-            (Fs_on, Ys_on, Fs_on_H, Ys_on_H) = mjlstd_online(p, m)
             (Fs_el, Ys_el, Fs_el_H, Ys_el_H) = mjlstd_eligibility(p, m)
 
             data = (m, F_ric, X_ric, Fs, Ys, Fs_H, Ys_H, Fs_on, Ys_on,

@@ -28,9 +28,7 @@ def get_Y(p, m, Fs, Ys, Ys_hist):
              so far.)
     """
     alpha = 0.1       # TODO: parametrize
-
-    gamma = 0.1       # TODO: do we really want it constant?
-
+    gamma = 1.0       # TODO: do we really want it constant?
     lambda_ = 0.1     # TODO: do we really want it constant?
 
     e = np.zeros(m.N)

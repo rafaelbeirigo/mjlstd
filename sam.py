@@ -78,7 +78,7 @@ def plot_Y(m, Y_off, Y_el, X_ric, F_ric, factor):
         plt.grid(True)
         plt.tight_layout(h_pad=0., w_pad=0., pad=2)
 
-    plt.savefig('Y_k_0_D_{:06.2f}_c_0.1_eligibility.png'.format(factor),
+    plt.savefig('Y_k_0_D_{:06.2f}_c_0.1_eligibility.pdf'.format(factor),
                 bbox_inches='tight')
     plt.show()
     plt.close()
@@ -122,7 +122,7 @@ def plot_F(m, F_off, F_el, X_ric, F_ric, factor):
         plt.grid(True)
         plt.tight_layout(h_pad=0., w_pad=0., pad=2)
 
-    plt.savefig('F_k_0_D_{:06.2f}_c_0.1_eligibility.png'.format(factor),
+    plt.savefig('F_k_0_D_{:06.2f}_c_0.1_eligibility.pdf'.format(factor),
                 bbox_inches='tight')
     plt.show()
     plt.close()
@@ -167,7 +167,7 @@ def plot_Delta(m, F_off, F_el, X_ric, F_ric, factor):
         plt.grid(True)
         plt.tight_layout(h_pad=0., w_pad=0., pad=2)
 
-    plt.savefig('Delta_k_0_D_{:06.2f}_c_0.1_eligibility.png'.format(factor),
+    plt.savefig('Delta_k_0_D_{:06.2f}_c_0.1_eligibility.pdf'.format(factor),
                 bbox_inches='tight')
     plt.show()
     plt.close()

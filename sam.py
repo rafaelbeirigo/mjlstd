@@ -5,6 +5,7 @@ from Parameters import Parameters
 from MJLS import MJLS
 from mjlstd import mjlstd
 from mjlstd_online import mjlstd_online
+from mjlstd_eligibility import mjlstd_eligibility
 import matplotlib.pyplot as plt
 import pickle
 import numpy as np
@@ -34,12 +35,14 @@ def get_E_cal_X(m, X):
     return E_cal_X
 
 
-def plot_Y_H(m, Ys_H, Ys_on_H, X_ric, F_ric, factor):
+def plot_Y(m, Ys, Ys_on, Ys_el, X_ric, F_ric, factor):
     plt.figure()
 
-    plt.suptitle('Entries of Y at each t,el-step for online (blue) '
-                 'and offline (red) vs entries of X (purple) and '
-                 'true Riccati solution (black)')
+    plt.suptitle('Entries of Y at each t,el-step for '
+                 'eligibility traces (blue), '
+                 'online (purple), '
+                 'offline (red), '
+                 'vs E_cal(X) (black) ')
 
     # Pairs (("indexes on X"), ("index on the plot function"))
     plot = [
@@ -61,10 +64,10 @@ def plot_Y_H(m, Ys_H, Ys_on_H, X_ric, F_ric, factor):
         i, j, k = p[0][0], p[0][1], p[0][2]
 
         # Get the actual values to plot
-        Ys_plot = [y[i][j][k] for y in Ys_H]
-        Ys_on_plot = [y[i][j][k] for y in Ys_on_H]
-        X_plot = [X_ric[i][j][k] for y in Ys_H]
-        E_cal_X_plot = [E_cal_X[i][j][k] for y in Ys_H]
+        Ys_on_plot = [y[i][j][k] for y in Ys_on]
+        Ys_plot = [y[i][j][k] for y in Ys]
+        X_plot = [X_ric[i][j][k] for y in Ys]
+        E_cal_X_plot = [E_cal_X[i][j][k] for y in Ys]
 
         # Create the suplot
         plt.subplot(3, 3, p[1])
@@ -223,6 +226,7 @@ def main():
 
             (Fs, Ys, Fs_H, Ys_H) = mjlstd(p, m)
             (Fs_on, Ys_on, Fs_on_H, Ys_on_H) = mjlstd_online(p, m)
+            (Fs_el, Ys_el, Fs_el_H, Ys_el_H) = mjlstd_eligibility(p, m)
 
             data = (m, F_ric, X_ric, Fs, Ys, Fs_H, Ys_H, Fs_on, Ys_on,
                     Fs_on_H, Ys_on_H)
@@ -231,9 +235,9 @@ def main():
         (m, F_ric, X_ric, Fs, Ys, Fs_H, Ys_H, Fs_on, Ys_on, Fs_on_H,
          Ys_on_H) = data
 
-        plot_Y_H(m, Ys_H, Ys_on_H, X_ric, F_ric, factor)
-        plot_F_H(m, Fs_H, Fs_on_H, X_ric, F_ric, factor)
-        plot_Delta_H(m, Fs_H, Fs_on_H, X_ric, F_ric, factor)
+        plot_Y_H(m, Ys_H, Ys_on_H, Ys_el_H, X_ric, F_ric, factor)
+        plot_F_H(m, Fs_H, Fs_on_H, Fs_el_H, X_ric, F_ric, factor)
+        plot_Delta_H(m, Fs_H, Fs_on_H, Fs_el_H, X_ric, F_ric, factor)
 
 
 if __name__ == '__main__':

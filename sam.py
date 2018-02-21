@@ -225,13 +225,6 @@ def main():
             (Fs, Ys, Fs_H, Ys_H) = mjlstd(p, m)
             (Fs_el, Ys_el, Fs_el_H, Ys_el_H) = mjlstd_eligibility(p, m)
 
-            data = (m, F_ric, X_ric, Fs, Ys, Fs_H, Ys_H, Fs_on, Ys_on,
-                    Fs_on_H, Ys_on_H)
-            # save(data, filename)
-
-        (m, F_ric, X_ric, Fs, Ys, Fs_H, Ys_H, Fs_on, Ys_on, Fs_on_H,
-         Ys_on_H) = data
-
         plot_Y(m, Ys_H, Ys_el_H, X_ric, F_ric, factor)
         plot_F(m, Fs_H, Fs_el_H, X_ric, F_ric, factor)
         plot_Delta(m, Fs_H, Fs_el_H, X_ric, F_ric, factor)

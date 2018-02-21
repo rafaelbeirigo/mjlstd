@@ -87,13 +87,14 @@ def plot_Y(m, Y_off, Y_on, Y_el, X_ric, F_ric, factor):
     plt.close()
 
 
-def plot_F_H(m, Fs_H, Fs_on_H, X_ric, F_ric, factor):
-    F_H, F_on_H = Fs_H, Fs_on_H
-
+def plot_F(m, F_off, F_on, F_el, X_ric, F_ric, factor):
     plt.figure()
 
-    plt.suptitle('Entries of F at each el-step for online (blue) '
-                 'and offline (red) vs true optimal gain (black)')
+    plt.suptitle('Entries of F at each el-step for '
+                 'eligibility traces (blue), '
+                 'online (purple), '
+                 'offline (red), '
+                 'vs true optimal gain (black)')
 
     # Pairs (("indexes on X"), ("index on the plot function"))
     plot = [
@@ -110,14 +111,16 @@ def plot_F_H(m, Fs_H, Fs_on_H, X_ric, F_ric, factor):
         i, j, k = p[0][0], p[0][1], p[0][2]
 
         # Get the actual values to plot
-        F_plot = [f[i][j][k] for f in F_H]
-        F_on_plot = [f[i][j][k] for f in F_on_H]
-        F_ric_plot = [F_ric[i][j][k] for f in F_H]
+        F_off_plot = [f[i][j][k] for f in F_off]
+        F_on_plot = [f[i][j][k] for f in F_on]
+        F_el_plot = [f[i][j][k] for f in F_el]
+        F_ric_plot = [F_ric[i][j][k] for f in F_off]
 
         # Create the suplot
         plt.subplot(3, 2, p[1])
-        plt.step(range(len(F_on_plot)), F_on_plot, 'blue')
-        plt.step(range(len(F_plot)), F_plot, 'red')
+        plt.step(range(len(F_el_plot)), F_el_plot, 'blue')
+        plt.step(range(len(F_on_plot)), F_on_plot, 'purple')
+        plt.step(range(len(F_off_plot)), F_off_plot, 'red')
         plt.plot(F_ric_plot, 'black')
         # Configure plot
         plt.ylabel(r'$F_{}({}, {})$'.format(i + 1, j + 1, k + 1))
@@ -125,7 +128,7 @@ def plot_F_H(m, Fs_H, Fs_on_H, X_ric, F_ric, factor):
         plt.grid(True)
         plt.tight_layout(h_pad=0., w_pad=0., pad=2)
 
-    plt.savefig('F_k_0_D_{:06.2f}_c_0.1_online.png'.format(factor),
+    plt.savefig('F_k_0_D_{:06.2f}_c_0.1_eligibility.png'.format(factor),
                 bbox_inches='tight')
     plt.show()
     plt.close()

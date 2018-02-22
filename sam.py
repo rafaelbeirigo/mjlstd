@@ -297,7 +297,7 @@ def main():
 
     factors = [1.]
     for factor in factors:
-        filename = 'k_0_D_{:06.2f}_c_0.1_online.pickle'.format(factor)
+        filename = 'factor_{:06.2f}.pickle'.format(factor)
         data = load(filename)
         if data is None:
             args = {
@@ -328,6 +328,15 @@ def main():
 
             (Fs, Ys, Fs_H, Ys_H) = mjlstd(p, m)
             (Fs_el, Ys_el, Fs_el_H, Ys_el_H) = mjlstd_eligibility(p, m)
+
+            data = (m, F_ric, X_ric,
+                    Fs, Ys, Fs_H, Ys_H,
+                    Fs_el, Ys_el, Fs_el_H, Ys_el_H)
+            save(data, filename)
+
+        (m, F_ric, X_ric,
+         Fs, Ys, Fs_H, Ys_H,
+         Fs_el, Ys_el, Fs_el_H, Ys_el_H) = data
 
         plot_Y(m, Ys_H, Ys_el_H, X_ric, F_ric, factor)
         plot_F(m, Fs_H, Fs_el_H, X_ric, F_ric, factor)

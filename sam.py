@@ -224,8 +224,11 @@ def plot_Delta_Y_sum(m, Y_off, Y_el, X_ric, F_ric, factor):
 
     plt.figure()
 
-    plt.step(range(len(Delta_el)), Delta_el, 'blue')
-    plt.step(range(len(Delta_off)), Delta_off, 'red')
+    plt.step(range(len(Delta_off)), Delta_off, 'red',
+             label=r'Offline')
+    plt.step(range(len(Delta_el)), Delta_el, 'blue',
+             label=r'Online')
+    plt.legend(loc=1)
 
     # Configure plot
     plt.ylabel(r'$\sum \Delta Y$')
@@ -246,8 +249,11 @@ def plot_Delta_F_sum(m, F_off, F_el, F_ric, factor):
 
     plt.figure()
 
-    plt.step(range(len(Delta_el)), Delta_el, 'blue')
-    plt.step(range(len(Delta_off)), Delta_off, 'red')
+    plt.step(range(len(Delta_off)), Delta_off, 'red',
+             label=r'Offline')
+    plt.step(range(len(Delta_el)), Delta_el, 'blue',
+             label=r'Online')
+    plt.legend(loc=1)
 
     # Configure plot
     plt.ylabel(r'$\sum \Delta F$')

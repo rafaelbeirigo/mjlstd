@@ -38,7 +38,7 @@ def get_E_cal_X(m, X):
 def plot_Y(m, Y_off, Y_el, X_ric, F_ric, factor):
     plt.figure()
 
-    plt.suptitle('Entries of Y at each t,el-step for '
+    plt.suptitle(r'Entries of Y at each $t,\ell$-step for '
                  'eligibility traces (blue), '
                  'offline (red), '
                  'vs E_cal(X) (black) ')
@@ -87,7 +87,7 @@ def plot_Y(m, Y_off, Y_el, X_ric, F_ric, factor):
 def plot_F(m, F_off, F_el, X_ric, F_ric, factor):
     plt.figure()
 
-    plt.suptitle('Entries of F at each el-step for '
+    plt.suptitle(r'Entries of F at each $\ell$-step for '
                  'eligibility traces (blue), '
                  'offline (red), '
                  'vs true optimal gain (black)')
@@ -118,7 +118,7 @@ def plot_F(m, F_off, F_el, X_ric, F_ric, factor):
         plt.plot(F_ric_plot, 'black')
         # Configure plot
         plt.ylabel(r'$F_{}({}, {})$'.format(i + 1, j + 1, k + 1))
-        plt.xlabel('el-step')
+        plt.xlabel(r'$\ell$-step')
         plt.grid(True)
         plt.tight_layout(h_pad=0., w_pad=0., pad=2)
 
@@ -137,7 +137,7 @@ def plot_Delta(m, F_off, F_el, X_ric, F_ric, factor):
     plt.suptitle(r'Entries of $\Delta$ for '
                  'eligibility traces (blue), '
                  'offline (red) '
-                 'variants at each el-step')
+                 'variants at each $\ell$-step')
 
     # Pairs (("indexes on X"), ("index on the plot function"))
     plot = [
@@ -163,7 +163,7 @@ def plot_Delta(m, F_off, F_el, X_ric, F_ric, factor):
         plt.step(range(len(Delta_off_plot)), Delta_off_plot, 'red')
         # Configure plot
         plt.ylabel(r'$\Delta_{}({}, {})$'.format(i + 1, j + 1, k + 1))
-        plt.xlabel('el-step')
+        plt.xlabel(r'$\ell$-step')
         plt.grid(True)
         plt.tight_layout(h_pad=0., w_pad=0., pad=2)
 
@@ -182,7 +182,7 @@ def plot_Delta_Y(m, Y_off, Y_el, X_ric, F_ric, factor):
     plt.suptitle(r'Entries of $\Delta Y$ for '
                  'eligibility traces (blue), '
                  'offline (red) '
-                 'variants at each t,el-step')
+                 'variants at each $t,\ell$-step')
 
     # Pairs (("indexes on X"), ("index on the plot function"))
     plot = [
@@ -208,7 +208,7 @@ def plot_Delta_Y(m, Y_off, Y_el, X_ric, F_ric, factor):
         plt.step(range(len(Delta_off_plot)), Delta_off_plot, 'red')
         # Configure plot
         plt.ylabel(r'$\Delta_{}({}, {})$'.format(i + 1, j + 1, k + 1))
-        plt.xlabel('el-step')
+        plt.xlabel(r'$\ell$-step')
         plt.grid(True)
         plt.tight_layout(h_pad=0., w_pad=0., pad=2)
 
@@ -232,7 +232,7 @@ def plot_Delta_Y_sum(m, Y_off, Y_el, X_ric, F_ric, factor):
 
     # Configure plot
     plt.ylabel(r'$\sum \Delta Y$')
-    plt.xlabel('el-step')
+    plt.xlabel(r'$\ell$-step')
     plt.grid(True)
     plt.tight_layout(h_pad=0., w_pad=0., pad=2)
 
@@ -257,7 +257,7 @@ def plot_Delta_F_sum(m, F_off, F_el, F_ric, factor):
 
     # Configure plot
     plt.ylabel(r'$\sum \Delta F$')
-    plt.xlabel('el-step')
+    plt.xlabel(r'$\ell$-step')
     plt.grid(True)
     plt.tight_layout(h_pad=0., w_pad=0., pad=2)
 

@@ -27,7 +27,6 @@ def get_Y(p, m, Fs, Ys, Ys_hist):
         Ys_hist: the `Ys' history (i.e., a sequence with the `Ys' calculated
              so far.)
     """
-    alpha = 0.05      # TODO: parametrize
     gamma = 1.0       # TODO: do we really want it constant?
     lambda_ = 0.1     # TODO: do we really want it constant?
 
@@ -40,6 +39,8 @@ def get_Y(p, m, Fs, Ys, Ys_hist):
         theta = random.randint(0, m.N - 1)
 
         for k in range(1, p.K):
+            alpha = 0.1 / k
+
             next_theta = get_next_theta(theta, m.P)
 
             delta = get_delta(m, Fs, Ys, Upsilon, gamma, theta, next_theta)

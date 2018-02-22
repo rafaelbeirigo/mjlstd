@@ -218,6 +218,28 @@ def plot_Delta_Y(m, Y_off, Y_el, X_ric, F_ric, factor):
     plt.close()
 
 
+def plot_Delta_Y_sum(m, Y_off, Y_el, X_ric, F_ric, factor):
+    Delta_off = [sum(sum(sum(abs((X_ric - f)/X_ric)))) / 12. for f in Y_off]
+    Delta_el = [sum(sum(sum(abs((X_ric - f)/X_ric)))) / 12. for f in Y_el]
+
+    plt.figure()
+
+    plt.step(range(len(Delta_el)), Delta_el, 'blue')
+    plt.step(range(len(Delta_off)), Delta_off, 'red')
+
+    # Configure plot
+    plt.ylabel(r'$\sum \Delta Y$')
+    plt.xlabel('el-step')
+    plt.grid(True)
+    plt.tight_layout(h_pad=0., w_pad=0., pad=2)
+
+    plt.savefig('Delta_Y_sum_k_0_D_{:06.2f}_c_0.1_'
+                'eligibility.pdf'.format(factor), bbox_inches='tight')
+
+    plt.show()
+    plt.close()
+
+
 def main():
     """Runs the TD(\lambda) algorithm for the Samuelson problem."""
     print('wait for it...')
@@ -274,6 +296,7 @@ def main():
         plot_F(m, Fs_H, Fs_el_H, X_ric, F_ric, factor)
         plot_Delta(m, Fs_H, Fs_el_H, X_ric, F_ric, factor)
         plot_Delta_Y(m, Ys_H, Ys_el_H, X_ric, F_ric, factor)
+        plot_Delta_Y_sum(m, Ys_H, Ys_el_H, X_ric, F_ric, factor)
 
 
 if __name__ == '__main__':

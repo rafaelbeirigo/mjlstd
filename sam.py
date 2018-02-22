@@ -173,6 +173,51 @@ def plot_Delta(m, F_off, F_el, X_ric, F_ric, factor):
     plt.close()
 
 
+def plot_Delta_Y(m, Y_off, Y_el, X_ric, F_ric, factor):
+    Delta_off = [abs((X_ric - f)/X_ric) for f in Y_off]
+    Delta_el = [abs((X_ric - f)/X_ric) for f in Y_el]
+
+    plt.figure()
+
+    plt.suptitle(r'Entries of $\Delta Y$ for '
+                 'eligibility traces (blue), '
+                 'offline (red) '
+                 'variants at each t,el-step')
+
+    # Pairs (("indexes on X"), ("index on the plot function"))
+    plot = [
+        ((0, 0, 0), (1)),
+        ((0, 0, 1), (2)),
+        ((1, 0, 0), (3)),
+        ((1, 0, 1), (4)),
+        ((2, 0, 0), (5)),
+        ((2, 0, 1), (6)),
+    ]
+
+    for p in plot:
+        # Get the Delta indexes
+        i, j, k = p[0][0], p[0][1], p[0][2]
+
+        # Get the actual values to plot
+        Delta_off_plot = [f[i][j][k] for f in Delta_off]
+        Delta_el_plot = [f[i][j][k] for f in Delta_el]
+
+        # Create the suplot
+        plt.subplot(3, 2, p[1])
+        plt.step(range(len(Delta_el_plot)), Delta_el_plot, 'blue')
+        plt.step(range(len(Delta_off_plot)), Delta_off_plot, 'red')
+        # Configure plot
+        plt.ylabel(r'$\Delta_{}({}, {})$'.format(i + 1, j + 1, k + 1))
+        plt.xlabel('el-step')
+        plt.grid(True)
+        plt.tight_layout(h_pad=0., w_pad=0., pad=2)
+
+    plt.savefig('Delta_Y_k_0_D_{:06.2f}_c_0.1_eligibility.pdf'.format(factor),
+                bbox_inches='tight')
+    plt.show()
+    plt.close()
+
+
 def main():
     """Runs the TD(\lambda) algorithm for the Samuelson problem."""
     print('wait for it...')
@@ -228,6 +273,7 @@ def main():
         plot_Y(m, Ys_H, Ys_el_H, X_ric, F_ric, factor)
         plot_F(m, Fs_H, Fs_el_H, X_ric, F_ric, factor)
         plot_Delta(m, Fs_H, Fs_el_H, X_ric, F_ric, factor)
+        plot_Delta_Y(m, Ys_H, Ys_el_H, X_ric, F_ric, factor)
 
 
 if __name__ == '__main__':

@@ -6,6 +6,7 @@ from MJLS import MJLS
 from mjlstd import mjlstd
 from mjlstd_online import mjlstd_online
 from mjlstd_eligibility import mjlstd_eligibility
+import matplotlib
 import matplotlib.pyplot as plt
 import pickle
 import numpy as np
@@ -222,17 +223,21 @@ def plot_Delta_Y_sum(m, Y_off, Y_el, X_ric, F_ric, factor):
     Delta_off = [sum(sum(sum(abs((X_ric - f)/X_ric)))) / 12. for f in Y_off]
     Delta_el = [sum(sum(sum(abs((X_ric - f)/X_ric)))) / 12. for f in Y_el]
 
+    fontsize = 15
+
     plt.figure()
 
-    plt.step(range(len(Delta_off)), Delta_off, 'red',
-             label=r'Offline')
-    plt.step(range(len(Delta_el)), Delta_el, 'blue',
-             label=r'Online')
-    plt.legend(loc=1)
+    matplotlib.rc('xtick', labelsize=fontsize-2)
+    matplotlib.rc('ytick', labelsize=fontsize-2)
+
+    plt.step(range(len(Delta_off)), Delta_off, 'red', label=r'Offline')
+    plt.step(range(len(Delta_el)), Delta_el, 'blue', label=r'Online')
+    plt.legend(loc=1, fontsize=fontsize)
 
     # Configure plot
-    plt.ylabel(r'$\sum \Delta Y$')
-    plt.xlabel(r'$\ell$-step')
+    plt.ylabel(r'$\Delta Y$', fontsize=fontsize)
+    plt.xlabel(r'$(\ell, t)$-step', fontsize=fontsize)
+
     plt.grid(True)
     plt.tight_layout(h_pad=0., w_pad=0., pad=2)
 
@@ -247,17 +252,20 @@ def plot_Delta_F_sum(m, F_off, F_el, F_ric, factor):
     Delta_off = [sum(sum(sum(abs((F_ric - f)/F_ric)))) / 12. for f in F_off]
     Delta_el = [sum(sum(sum(abs((F_ric - f)/F_ric)))) / 12. for f in F_el]
 
+    fontsize = 15
+
     plt.figure()
 
-    plt.step(range(len(Delta_off)), Delta_off, 'red',
-             label=r'Offline')
-    plt.step(range(len(Delta_el)), Delta_el, 'blue',
-             label=r'Online')
-    plt.legend(loc=1)
+    matplotlib.rc('xtick', labelsize=fontsize-2)
+    matplotlib.rc('ytick', labelsize=fontsize-2)
+
+    plt.step(range(len(Delta_off)), Delta_off, 'red', label=r'Offline')
+    plt.step(range(len(Delta_el)), Delta_el, 'blue', label=r'Online')
+    plt.legend(loc=1, fontsize=fontsize)
 
     # Configure plot
-    plt.ylabel(r'$\sum \Delta F$')
-    plt.xlabel(r'$\ell$-step')
+    plt.ylabel(r'$\Delta F$', fontsize=fontsize)
+    plt.xlabel(r'$\ell$-step', fontsize=fontsize)
     plt.grid(True)
     plt.tight_layout(h_pad=0., w_pad=0., pad=2)
 

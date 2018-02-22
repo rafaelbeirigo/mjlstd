@@ -10,6 +10,7 @@ import matplotlib
 import matplotlib.pyplot as plt
 import pickle
 import numpy as np
+from subprocess import call
 
 
 def load(filename):
@@ -334,6 +335,12 @@ def main():
         plot_Delta_Y(m, Ys_H, Ys_el_H, X_ric, F_ric, factor)
         plot_Delta_Y_sum(m, Ys_H, Ys_el_H, X_ric, F_ric, factor)
         plot_Delta_F_sum(m, Fs_H, Fs_el_H, F_ric, factor)
+
+        call(['cp', 'Delta_Y_sum_k_0_D_001.00_c_0.1_eligibility.pdf',
+              '/home/rafaelbeirigo/papers/2018mjlstdon/fig/sam_Y.pdf'])
+
+        call(['cp', 'Delta_F_sum_k_0_D_001.00_c_0.1_eligibility.pdf',
+              '/home/rafaelbeirigo/papers/2018mjlstdon/fig/sam_F.pdf'])
 
 
 if __name__ == '__main__':

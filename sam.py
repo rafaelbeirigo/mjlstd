@@ -216,25 +216,27 @@ def plot_Delta_Y(m, Y_off, Y_el, X_ric, F_ric):
     plt.close()
 
 
-def plot_Delta_Y_sum(m, Y_off, Y_el, X_ric, F_ric):
-    Delta_off = [sum(sum(sum(abs((X_ric - f)/X_ric)))) / 12. for f in Y_off]
-    Delta_el = [sum(sum(sum(abs((X_ric - f)/X_ric)))) / 12. for f in Y_el]
-
-    fontsize = 15
-
+def plot_Delta_Y_sum(m, Y_off_H, Y_el_H, X_ric, F_ric, fontsize=15):
     plt.figure()
 
     matplotlib.rc('xtick', labelsize=fontsize-2)
     matplotlib.rc('ytick', labelsize=fontsize-2)
 
-    plt.step(range(len(Delta_off)), Delta_off, 'red', label=r'Offline')
-    plt.step(range(len(Delta_el)), Delta_el, 'blue', label=r'Online')
+    data = [(Y_off_H, 'Offline', 'red'),
+            (Y_el_H, 'Online', 'blue')]
+    for Y_H, label, color in data:
+        F = A(Y_H, X_ric)
+        Y_avg, Y_std = np.mean(F, 0), np.std(F, 0)
+
+        x = range(len(Y_avg))
+        plt.step(x, Y_avg, label=label, color=color)
+        plot_error(x, Y_avg, Y_std)
+
     plt.legend(loc=1, fontsize=fontsize)
 
     # Configure plot
     plt.ylabel(r'$\Delta Y$', fontsize=fontsize)
     plt.xlabel(r'$(\ell, t)$-step', fontsize=fontsize)
-
     plt.grid(True)
     plt.tight_layout(h_pad=0., w_pad=0., pad=2)
 
@@ -371,7 +373,7 @@ def main():
         Fs_el_H_.append(Fs_el_H)
         Ys_el_H_.append(Ys_el_H)
 
-    # plot_Delta_Y_sum(m, Ys_H_, Ys_el_H_, X_ric, F_ric)
+    plot_Delta_Y_sum(m, Ys_H_, Ys_el_H_, X_ric, F_ric)
     plot_Delta_F_sum(m, Fs_H_, Fs_el_H_, F_ric)
 
     call(['cp', 'sam_Y.pdf',

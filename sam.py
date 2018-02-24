@@ -244,14 +244,10 @@ def plot_Delta_Y_sum(m, Y_off, Y_el, X_ric, F_ric):
     plt.close()
 
 
-def plot_Delta_F_sum(m, F_off, F_el, F_ric):
-    Delta_off = [sum(sum(sum(abs((F_ric - f)/F_ric)))) / 12. for f in F_off]
-    Delta_el = [sum(sum(sum(abs((F_ric - f)/F_ric)))) / 12. for f in F_el]
 def e(x):
     """Calculates the number of elements in x."""
     return reduce((lambda x, y: x * y), x.shape)
 
-    fontsize = 15
 
 def d(x, y):
     """Calculates a normalized difference."""
@@ -289,14 +285,20 @@ def plot_error(x, y, y_err):
                      color='silver')
 
 
+def plot_Delta_F_sum(m, F_off, F_el, F_ric, fontsize=15):
+    off = A(F_off, F_ric)
+    off_avg, off_std = np.mean(off, 0), np.std(off, 0)
 
     plt.figure()
 
     matplotlib.rc('xtick', labelsize=fontsize-2)
     matplotlib.rc('ytick', labelsize=fontsize-2)
 
-    plt.step(range(len(Delta_off)), Delta_off, 'red', label=r'Offline')
-    plt.step(range(len(Delta_el)), Delta_el, 'blue', label=r'Online')
+    x = range(len(off_avg))
+    plt.step(x, off_avg, 'red', label=r'Offline')
+    plot_error(x, off_avg, off_std)
+
+    # plt.step(range(len(Delta_el)), Delta_el, 'blue', label=r'Online')
     plt.legend(loc=1, fontsize=fontsize)
 
     # Configure plot

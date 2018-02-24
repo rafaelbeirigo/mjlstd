@@ -36,7 +36,7 @@ def get_E_cal_X(m, X):
     return E_cal_X
 
 
-def plot_Y(m, Y_off, Y_el, X_ric, F_ric, factor):
+def plot_Y(m, Y_off, Y_el, X_ric, F_ric):
     plt.figure()
 
     plt.suptitle(r'Entries of Y at each $t,\ell$-step for '
@@ -79,13 +79,12 @@ def plot_Y(m, Y_off, Y_el, X_ric, F_ric, factor):
         plt.grid(True)
         plt.tight_layout(h_pad=0., w_pad=0., pad=2)
 
-    plt.savefig('Y_k_0_D_{:06.2f}_c_0.1_eligibility.pdf'.format(factor),
-                bbox_inches='tight')
+    plt.savefig('Y_k_0_D_c_0.1_eligibility.pdf', bbox_inches='tight')
     plt.show()
     plt.close()
 
 
-def plot_F(m, F_off, F_el, X_ric, F_ric, factor):
+def plot_F(m, F_off, F_el, X_ric, F_ric):
     plt.figure()
 
     plt.suptitle(r'Entries of F at each $\ell$-step for '
@@ -123,13 +122,12 @@ def plot_F(m, F_off, F_el, X_ric, F_ric, factor):
         plt.grid(True)
         plt.tight_layout(h_pad=0., w_pad=0., pad=2)
 
-    plt.savefig('F_k_0_D_{:06.2f}_c_0.1_eligibility.pdf'.format(factor),
-                bbox_inches='tight')
+    plt.savefig('F_k_0_D_c_0.1_eligibility.pdf', bbox_inches='tight')
     plt.show()
     plt.close()
 
 
-def plot_Delta(m, F_off, F_el, X_ric, F_ric, factor):
+def plot_Delta(m, F_off, F_el, X_ric, F_ric):
     Delta_off = [100. * abs((F_ric - f)/F_ric) for f in F_off]
     Delta_el = [100. * abs((F_ric - f)/F_ric) for f in F_el]
 
@@ -168,13 +166,12 @@ def plot_Delta(m, F_off, F_el, X_ric, F_ric, factor):
         plt.grid(True)
         plt.tight_layout(h_pad=0., w_pad=0., pad=2)
 
-    plt.savefig('Delta_k_0_D_{:06.2f}_c_0.1_eligibility.pdf'.format(factor),
-                bbox_inches='tight')
+    plt.savefig('Delta_k_0_D_c_0.1_eligibility.pdf', bbox_inches='tight')
     plt.show()
     plt.close()
 
 
-def plot_Delta_Y(m, Y_off, Y_el, X_ric, F_ric, factor):
+def plot_Delta_Y(m, Y_off, Y_el, X_ric, F_ric):
     Delta_off = [abs((X_ric - f)/X_ric) for f in Y_off]
     Delta_el = [abs((X_ric - f)/X_ric) for f in Y_el]
 
@@ -213,13 +210,12 @@ def plot_Delta_Y(m, Y_off, Y_el, X_ric, F_ric, factor):
         plt.grid(True)
         plt.tight_layout(h_pad=0., w_pad=0., pad=2)
 
-    plt.savefig('Delta_Y_k_0_D_{:06.2f}_c_0.1_eligibility.pdf'.format(factor),
-                bbox_inches='tight')
+    plt.savefig('Delta_Y_k_0_D_c_0.1_eligibility.pdf', bbox_inches='tight')
     plt.show()
     plt.close()
 
 
-def plot_Delta_Y_sum(m, Y_off, Y_el, X_ric, F_ric, factor):
+def plot_Delta_Y_sum(m, Y_off, Y_el, X_ric, F_ric):
     Delta_off = [sum(sum(sum(abs((X_ric - f)/X_ric)))) / 12. for f in Y_off]
     Delta_el = [sum(sum(sum(abs((X_ric - f)/X_ric)))) / 12. for f in Y_el]
 
@@ -241,14 +237,13 @@ def plot_Delta_Y_sum(m, Y_off, Y_el, X_ric, F_ric, factor):
     plt.grid(True)
     plt.tight_layout(h_pad=0., w_pad=0., pad=2)
 
-    plt.savefig('Delta_Y_sum_k_0_D_{:06.2f}_c_0.1_'
-                'eligibility.pdf'.format(factor), bbox_inches='tight')
+    plt.savefig('Delta_Y_sum_k_0_D_c_0.1_eligibility.pdf', bbox_inches='tight')
 
     plt.show()
     plt.close()
 
 
-def plot_Delta_F_sum(m, F_off, F_el, F_ric, factor):
+def plot_Delta_F_sum(m, F_off, F_el, F_ric):
     Delta_off = [sum(sum(sum(abs((F_ric - f)/F_ric)))) / 12. for f in F_off]
     Delta_el = [sum(sum(sum(abs((F_ric - f)/F_ric)))) / 12. for f in F_el]
 
@@ -269,8 +264,7 @@ def plot_Delta_F_sum(m, F_off, F_el, F_ric, factor):
     plt.grid(True)
     plt.tight_layout(h_pad=0., w_pad=0., pad=2)
 
-    plt.savefig('Delta_F_sum_k_0_D_{:06.2f}_c_0.1_'
-                'eligibility.pdf'.format(factor), bbox_inches='tight')
+    plt.savefig('Delta_F_sum_k_0_D_c_0.1_eligibility.pdf', bbox_inches='tight')
 
     plt.show()
     plt.close()
@@ -294,57 +288,55 @@ def main():
     }
     p = Parameters(**args)
 
-    factors = [1.]
-    for factor in factors:
-        filename = 'factor_{:06.2f}.pickle'.format(factor)
-        data = load(filename)
-        if data is None:
-            args = {
-                'T': int(1e6),
-                'N': sc.N,
-                'A': sc.A,
-                'B': sc.B,
-                'C': sc.C,
-                'D': factor * sc.D,
-                'R': sc.P,
-                'epsilon': sp.epsilon,
-            }
-            [F_ric, X_ric] = riccati(**args)
-
-            args = {
-                'N': sc.N,
-                'm': sc.m,
-                'n': sc.n,
-                'A': sc.A,
-                'B': sc.B,
-                'C': sc.C,
-                'D': sc.D,
-                'P': sc.P,
-                'X': 0. * sc.X,
-                'F': F_ric,
-            }
-            m = MJLS(**args)
-
-            (Fs, Ys, Fs_H, Ys_H) = mjlstd(p, m)
-            (Fs_el, Ys_el, Fs_el_H, Ys_el_H) = mjlstd_eligibility(p, m)
-
-            data = (m, F_ric, X_ric,
-                    Fs, Ys, Fs_H, Ys_H,
-                    Fs_el, Ys_el, Fs_el_H, Ys_el_H)
-            save(data, filename)
-
+    filename = 'sam.pickle'
+    data = load(filename)
+    if data is not None:
         (m, F_ric, X_ric,
          Fs, Ys, Fs_H, Ys_H,
          Fs_el, Ys_el, Fs_el_H, Ys_el_H) = data
+    else:
+        args = {
+            'T': int(1e6),
+            'N': sc.N,
+            'A': sc.A,
+            'B': sc.B,
+            'C': sc.C,
+            'D': sc.D,
+            'R': sc.P,
+            'epsilon': sp.epsilon,
+        }
+        [F_ric, X_ric] = riccati(**args)
 
-        plot_Delta_Y_sum(m, Ys_H, Ys_el_H, X_ric, F_ric, factor)
-        plot_Delta_F_sum(m, Fs_H, Fs_el_H, F_ric, factor)
+        args = {
+            'N': sc.N,
+            'm': sc.m,
+            'n': sc.n,
+            'A': sc.A,
+            'B': sc.B,
+            'C': sc.C,
+            'D': sc.D,
+            'P': sc.P,
+            'X': 0. * sc.X,
+            'F': F_ric,
+        }
+        m = MJLS(**args)
 
-        call(['cp', 'Delta_Y_sum_k_0_D_001.00_c_0.1_eligibility.pdf',
-              '/home/rafaelbeirigo/papers/2018mjlstdon/fig/sam_Y.pdf'])
+        (Fs, Ys, Fs_H, Ys_H) = mjlstd(p, m)
+        (Fs_el, Ys_el, Fs_el_H, Ys_el_H) = mjlstd_eligibility(p, m)
 
-        call(['cp', 'Delta_F_sum_k_0_D_001.00_c_0.1_eligibility.pdf',
-              '/home/rafaelbeirigo/papers/2018mjlstdon/fig/sam_F.pdf'])
+        data = (m, F_ric, X_ric,
+                Fs, Ys, Fs_H, Ys_H,
+                Fs_el, Ys_el, Fs_el_H, Ys_el_H)
+        save(data, filename)
+
+    plot_Delta_Y_sum(m, Ys_H, Ys_el_H, X_ric, F_ric)
+    plot_Delta_F_sum(m, Fs_H, Fs_el_H, F_ric)
+
+    call(['cp', 'Delta_Y_sum_k_0_D_001.00_c_0.1_eligibility.pdf',
+          '/home/rafaelbeirigo/papers/2018mjlstdon/fig/sam_Y.pdf'])
+
+    call(['cp', 'Delta_F_sum_k_0_D_001.00_c_0.1_eligibility.pdf',
+          '/home/rafaelbeirigo/papers/2018mjlstdon/fig/sam_F.pdf'])
 
 
 if __name__ == '__main__':

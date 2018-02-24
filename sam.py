@@ -357,11 +357,20 @@ def main():
     }
     m = MJLS(**args)
 
-    (Fs, Ys, Fs_H, Ys_H) = mjlstd(p, m)
-    (Fs_el, Ys_el, Fs_el_H, Ys_el_H) = mjlstd_eligibility(p, m)
+    Fs_H_, Ys_H_, Fs_el_H_, Ys_el_H_ = [], [], [], []
+    for r in range(sp.R):
+        p.seed = r
 
-    plot_Delta_Y_sum(m, Ys_H, Ys_el_H, X_ric, F_ric)
-    plot_Delta_F_sum(m, Fs_H, Fs_el_H, F_ric)
+        (Fs, Ys, Fs_H, Ys_H) = mjlstd(p, m)
+        (Fs_el, Ys_el, Fs_el_H, Ys_el_H) = mjlstd_eligibility(p, m)
+
+        Fs_H_.append(Fs_H)
+        Ys_H_.append(Ys_H)
+        Fs_el_H_.append(Fs_el_H)
+        Ys_el_H_.append(Ys_el_H)
+
+    # plot_Delta_Y_sum(m, Ys_H_, Ys_el_H_, X_ric, F_ric)
+    plot_Delta_F_sum(m, Fs_H_, Fs_el_H_, F_ric)
 
     call(['cp', 'Delta_Y_sum_k_0_D_001.00_c_0.1_eligibility.pdf',
           '/home/rafaelbeirigo/papers/2018mjlstdon/fig/sam_Y.pdf'])

@@ -1,3 +1,4 @@
+from functools import reduce
 from riccati import riccati
 import sam_constants as sc
 import sam_parameters as sp
@@ -246,8 +247,48 @@ def plot_Delta_Y_sum(m, Y_off, Y_el, X_ric, F_ric):
 def plot_Delta_F_sum(m, F_off, F_el, F_ric):
     Delta_off = [sum(sum(sum(abs((F_ric - f)/F_ric)))) / 12. for f in F_off]
     Delta_el = [sum(sum(sum(abs((F_ric - f)/F_ric)))) / 12. for f in F_el]
+def e(x):
+    """Calculates the number of elements in x."""
+    return reduce((lambda x, y: x * y), x.shape)
 
     fontsize = 15
+
+def d(x, y):
+    """Calculates a normalized difference."""
+    return (x - y) / y
+
+
+def s(x):
+    """Calculates the absolute sum of the elements."""
+    return sum(sum(sum(abs(x))))
+
+
+def D(x, y):
+    """Calculates the Delta, normalized by the number of coefficients."""
+    return s(d(x, y)) / e(x)
+
+
+def A(x, y):
+    """Calculates the Delta for an entire history."""
+    Delta = []
+    for seq in x:
+        delta = []
+        for f in seq:
+            d = D(f, y)
+            delta.append(d)
+        Delta.append(delta)
+
+    return np.array(Delta)
+
+
+def plot_error(x, y, y_err):
+    plt.fill_between(x,
+                     [x - y for x, y in zip(y, y_err)],
+                     [x + y for x, y in zip(y, y_err)],
+                     step='pre',
+                     color='silver')
+
+
 
     plt.figure()
 

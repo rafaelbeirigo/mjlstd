@@ -288,46 +288,34 @@ def main():
     }
     p = Parameters(**args)
 
-    filename = 'sam.pickle'
-    data = load(filename)
-    if data is not None:
-        (m, F_ric, X_ric,
-         Fs, Ys, Fs_H, Ys_H,
-         Fs_el, Ys_el, Fs_el_H, Ys_el_H) = data
-    else:
-        args = {
-            'T': int(1e6),
-            'N': sc.N,
-            'A': sc.A,
-            'B': sc.B,
-            'C': sc.C,
-            'D': sc.D,
-            'R': sc.P,
-            'epsilon': sp.epsilon,
-        }
-        [F_ric, X_ric] = riccati(**args)
+    args = {
+        'T': int(1e6),
+        'N': sc.N,
+        'A': sc.A,
+        'B': sc.B,
+        'C': sc.C,
+        'D': sc.D,
+        'R': sc.P,
+        'epsilon': sp.epsilon,
+    }
+    [F_ric, X_ric] = riccati(**args)
 
-        args = {
-            'N': sc.N,
-            'm': sc.m,
-            'n': sc.n,
-            'A': sc.A,
-            'B': sc.B,
-            'C': sc.C,
-            'D': sc.D,
-            'P': sc.P,
-            'X': 0. * sc.X,
-            'F': F_ric,
-        }
-        m = MJLS(**args)
+    args = {
+        'N': sc.N,
+        'm': sc.m,
+        'n': sc.n,
+        'A': sc.A,
+        'B': sc.B,
+        'C': sc.C,
+        'D': sc.D,
+        'P': sc.P,
+        'X': 0. * sc.X,
+        'F': F_ric,
+    }
+    m = MJLS(**args)
 
-        (Fs, Ys, Fs_H, Ys_H) = mjlstd(p, m)
-        (Fs_el, Ys_el, Fs_el_H, Ys_el_H) = mjlstd_eligibility(p, m)
-
-        data = (m, F_ric, X_ric,
-                Fs, Ys, Fs_H, Ys_H,
-                Fs_el, Ys_el, Fs_el_H, Ys_el_H)
-        save(data, filename)
+    (Fs, Ys, Fs_H, Ys_H) = mjlstd(p, m)
+    (Fs_el, Ys_el, Fs_el_H, Ys_el_H) = mjlstd_eligibility(p, m)
 
     plot_Delta_Y_sum(m, Ys_H, Ys_el_H, X_ric, F_ric)
     plot_Delta_F_sum(m, Fs_H, Fs_el_H, F_ric)

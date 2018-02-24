@@ -238,7 +238,7 @@ def plot_Delta_Y_sum(m, Y_off, Y_el, X_ric, F_ric):
     plt.grid(True)
     plt.tight_layout(h_pad=0., w_pad=0., pad=2)
 
-    plt.savefig('Delta_Y_sum_k_0_D_c_0.1_eligibility.pdf', bbox_inches='tight')
+    plt.savefig('sam_Y.pdf', bbox_inches='tight')
 
     plt.show()
     plt.close()
@@ -309,7 +309,7 @@ def plot_Delta_F_sum(m, F_off_H, F_el_H, F_ric, fontsize=15):
     plt.grid(True)
     plt.tight_layout(h_pad=0., w_pad=0., pad=2)
 
-    plt.savefig('Delta_F_sum_k_0_D_c_0.1_eligibility.pdf', bbox_inches='tight')
+    plt.savefig('sam_F.pdf', bbox_inches='tight')
 
     plt.show()
     plt.close()
@@ -374,10 +374,10 @@ def main():
     # plot_Delta_Y_sum(m, Ys_H_, Ys_el_H_, X_ric, F_ric)
     plot_Delta_F_sum(m, Fs_H_, Fs_el_H_, F_ric)
 
-    call(['cp', 'Delta_Y_sum_k_0_D_001.00_c_0.1_eligibility.pdf',
+    call(['cp', 'sam_Y.pdf',
           '/home/rafaelbeirigo/papers/2018mjlstdon/fig/sam_Y.pdf'])
 
-    call(['cp', 'Delta_F_sum_k_0_D_001.00_c_0.1_eligibility.pdf',
+    call(['cp', 'sam_F.pdf',
           '/home/rafaelbeirigo/papers/2018mjlstdon/fig/sam_F.pdf'])
 
 

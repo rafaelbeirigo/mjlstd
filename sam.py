@@ -285,20 +285,22 @@ def plot_error(x, y, y_err):
                      color='silver')
 
 
-def plot_Delta_F_sum(m, F_off, F_el, F_ric, fontsize=15):
-    off = A(F_off, F_ric)
-    off_avg, off_std = np.mean(off, 0), np.std(off, 0)
-
+def plot_Delta_F_sum(m, F_off_H, F_el_H, F_ric, fontsize=15):
     plt.figure()
 
     matplotlib.rc('xtick', labelsize=fontsize-2)
     matplotlib.rc('ytick', labelsize=fontsize-2)
 
-    x = range(len(off_avg))
-    plt.step(x, off_avg, 'red', label=r'Offline')
-    plot_error(x, off_avg, off_std)
+    data = [(F_off_H, 'Offline', 'red'),
+            (F_el_H, 'Online', 'blue')]
+    for F_H, label, color in data:
+        F = A(F_H, F_ric)
+        F_avg, F_std = np.mean(F, 0), np.std(F, 0)
 
-    # plt.step(range(len(Delta_el)), Delta_el, 'blue', label=r'Online')
+        x = range(len(F_avg))
+        plt.step(x, F_avg, label=label, color=color)
+        plot_error(x, F_avg, F_std)
+
     plt.legend(loc=1, fontsize=fontsize)
 
     # Configure plot

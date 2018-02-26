@@ -236,7 +236,7 @@ def plot_Delta_Y_sum(m, Y_off_H, Y_el_H, X_ric, F_ric, fontsize=15):
 
     # Configure plot
     plt.ylabel(r'$\Delta Y$', fontsize=fontsize)
-    plt.xlabel(r'$(\ell, t)$-step', fontsize=fontsize)
+    plt.xlabel(r'Episode', fontsize=fontsize)
     plt.grid(True)
     plt.tight_layout(h_pad=0., w_pad=0., pad=2)
 
@@ -307,7 +307,7 @@ def plot_Delta_F_sum(m, F_off_H, F_el_H, F_ric, fontsize=15):
 
     # Configure plot
     plt.ylabel(r'$\Delta F$', fontsize=fontsize)
-    plt.xlabel(r'$\ell$-step', fontsize=fontsize)
+    plt.xlabel(r'Episode batch', fontsize=fontsize)
     plt.grid(True)
     plt.tight_layout(h_pad=0., w_pad=0., pad=2)
 

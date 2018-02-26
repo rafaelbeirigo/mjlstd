@@ -3,6 +3,7 @@ from scipy.linalg import inv
 from sam_run_episode import get_next_theta
 import random
 
+
 def log_D(k, got_D):
     f = open('D.log', 'a')
     f.write('{: 6} {: 6.1e} {: 6.1e} {: 6.1e} {: 6.1e}\n'.format(k, *got_D))

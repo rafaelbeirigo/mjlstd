@@ -339,6 +339,8 @@ def main():
         }
         p = Parameters(**args)
 
+        F_ric = sc.F
+
         args = {
             'N': sc.N,
             'm': sc.m,

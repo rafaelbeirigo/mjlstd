@@ -5,6 +5,9 @@ N = 24
 # Number of rows in the state array (or vector)
 n = 6
 
+# Number of columns in the state array (`1', if it is a vector)
+m = 1
+
 A = np.array([[[1.0031, -0.0065, 0.0036, 0.0201, -0.0003, 0.0002],
                [-0.0065, 1.0166, -0.0140, -0.0003, 0.0208, -0.0007],
                [0.0036, -0.0140, 1.0281, 0.0002, -0.0007, 0.0213],

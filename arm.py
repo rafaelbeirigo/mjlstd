@@ -1,6 +1,6 @@
 from functools import reduce
 from riccati import riccati
-import sam_constants as sc
+import arm_constants as sc
 import sam_parameters as sp
 from Parameters import Parameters
 from MJLS import MJLS
@@ -240,7 +240,7 @@ def plot_Delta_Y_sum(m, Y_off_H, Y_el_H, X_ric, F_ric, fontsize=15):
     plt.grid(True)
     plt.tight_layout(h_pad=0., w_pad=0., pad=2)
 
-    plt.savefig('sam_Y.pdf', bbox_inches='tight')
+    plt.savefig('arm_Y.pdf', bbox_inches='tight')
 
     plt.show()
     plt.close()
@@ -311,7 +311,7 @@ def plot_Delta_F_sum(m, F_off_H, F_el_H, F_ric, fontsize=15):
     plt.grid(True)
     plt.tight_layout(h_pad=0., w_pad=0., pad=2)
 
-    plt.savefig('sam_F.pdf', bbox_inches='tight')
+    plt.savefig('arm_F.pdf', bbox_inches='tight')
 
     plt.show()
     plt.close()
@@ -321,7 +321,7 @@ def main():
     """Runs the TD(\lambda) algorithm for the Samuelson problem."""
     print('wait for it...')
 
-    data = load('sam.pickle')
+    data = load('arm.pickle')
     if data is not None:
         (m, X_ric, F_ric, Ys_H_, Ys_el_H_, Fs_H_, Fs_el_H_) = data
     else:
@@ -378,16 +378,16 @@ def main():
             Ys_el_H_.append(Ys_el_H)
 
         data = (m, X_ric, F_ric, Ys_H_, Ys_el_H_, Fs_H_, Fs_el_H_)
-        save(data, 'sam.pickle')
+        save(data, 'arm.pickle')
 
     plot_Delta_Y_sum(m, Ys_H_, Ys_el_H_, X_ric, F_ric)
     plot_Delta_F_sum(m, Fs_H_, Fs_el_H_, F_ric)
 
-    call(['cp', 'sam_Y.pdf',
-          '/home/rafaelbeirigo/papers/2018mjlstdon/fig/sam_Y.pdf'])
+    call(['cp', 'arm_Y.pdf',
+          '/home/rafaelbeirigo/papers/2018mjlstdon/fig/arm_Y.pdf'])
 
-    call(['cp', 'sam_F.pdf',
-          '/home/rafaelbeirigo/papers/2018mjlstdon/fig/sam_F.pdf'])
+    call(['cp', 'arm_F.pdf',
+          '/home/rafaelbeirigo/papers/2018mjlstdon/fig/arm_F.pdf'])
 
 
 if __name__ == '__main__':

@@ -172,6 +172,9 @@ def mjlstd(p, m):
     np.random.seed(p.seed)
 
     for l in range(p.L):
+        print('mjlstd.py: L {:3d} of {:3d} '
+              '({:3.0f}%)'.format(l + 1, p.L, 100. * (l + 1)/p.L))
+
         (Ys, Ys_h) = get_Y(p, m, Fs.copy(), Ys.copy(), [])
         Fs = get_F(m, Fs.copy(), Ys.copy())
 

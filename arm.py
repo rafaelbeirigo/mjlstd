@@ -339,7 +339,17 @@ def main():
         }
         p = Parameters(**args)
 
-        F_ric = sc.F
+        args = {
+            'T': int(1e6),
+            'N': sc.N,
+            'A': sc.A,
+            'B': sc.B,
+            'C': sc.C,
+            'D': sc.D,
+            'R': sc.P,
+            'epsilon': sp.epsilon,
+        }
+        [F_ric, X_ric] = riccati(**args)
 
         args = {
             'N': sc.N,

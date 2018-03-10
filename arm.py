@@ -322,7 +322,7 @@ def main():
     print('wait for it...')
 
     data = load('arm.pickle')
-    if data is not None:
+    if False and data is not None:
         (m, X_ric, F_ric, Ys_H_, Ys_el_H_, Fs_H_, Fs_el_H_) = data
     else:
         seed = 0

@@ -381,7 +381,7 @@ def main():
         save(data, 'arm.pickle')
 
     plot_Delta_Y_sum(m, Ys_H_, Ys_el_H_, X_ric, F_ric)
-    plot_Delta_F_sum(m, Fs_H_, Fs_el_H_, F_ric)
+    # plot_Delta_F_sum(m, Fs_H_, Fs_el_H_, F_ric)
 
     call(['cp', 'arm_Y.pdf',
           '/home/rafaelbeirigo/papers/2018mjlstdon/fig/arm_Y.pdf'])

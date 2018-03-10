@@ -142,7 +142,14 @@ def get_F(m, Fs, Ys):
 
         Y = Ys[i]
 
-        Fs[i] = (-inv(B_.dot(Y).dot(B) + D_.dot(D))).dot(B_).dot(Y).dot(A)
+        DD = D_.dot(D)
+
+        # Insert a "identity-like" row if it is all zeros
+        for row in range(DD.shape[0]):
+            if not np.any(DD[row]):
+                DD[row][row] = 1.0
+
+        Fs[i] = (-inv(B_.dot(Y).dot(B) + DD)).dot(B_).dot(Y).dot(A)
 
     return Fs
 

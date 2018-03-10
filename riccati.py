@@ -27,7 +27,15 @@ def riccati(T, N, A, B, C, D, R, epsilon):
         for i in range(N):
             # Aliases (for legibility purposes)
             F0 = matmul(B_[i], matmul(EX[i], B[i]))
-            F0 = -inv(F0 + matmul(D_[i], D[i]))
+
+            DD = matmul(D_[i], D[i])
+
+            # Insert a "identity-like" row if it is all zeros
+            for row in range(DD.shape[0]):
+                if not np.any(DD[row]):
+                    DD[row][row] = 1.0
+
+            F0 = -inv(F0 + DD)
             F[i] = matmul(F0, matmul(B_[i], matmul(EX[i], A[i])))
 
             X0 = matmul(A_[i], matmul(EX[i], A[i])) + matmul(C_[i], C[i])

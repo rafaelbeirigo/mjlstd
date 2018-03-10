@@ -360,7 +360,7 @@ def main():
             'C': sc.C,
             'D': sc.D,
             'P': sc.P,
-            'X': 0. * sc.A,
+            'X': 0. * X_ric,
             'F': F_ric,
         }
         m = MJLS(**args)

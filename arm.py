@@ -81,7 +81,6 @@ def plot_Y(m, Y_off, Y_el, X_ric, F_ric):
         plt.tight_layout(h_pad=0., w_pad=0., pad=2)
 
     plt.savefig('Y_k_0_D_c_0.1_eligibility.pdf', bbox_inches='tight')
-    plt.show()
     plt.close()
 
 
@@ -124,7 +123,6 @@ def plot_F(m, F_off, F_el, X_ric, F_ric):
         plt.tight_layout(h_pad=0., w_pad=0., pad=2)
 
     plt.savefig('F_k_0_D_c_0.1_eligibility.pdf', bbox_inches='tight')
-    plt.show()
     plt.close()
 
 
@@ -168,7 +166,6 @@ def plot_Delta(m, F_off, F_el, X_ric, F_ric):
         plt.tight_layout(h_pad=0., w_pad=0., pad=2)
 
     plt.savefig('Delta_k_0_D_c_0.1_eligibility.pdf', bbox_inches='tight')
-    plt.show()
     plt.close()
 
 
@@ -212,7 +209,6 @@ def plot_Delta_Y(m, Y_off, Y_el, X_ric, F_ric):
         plt.tight_layout(h_pad=0., w_pad=0., pad=2)
 
     plt.savefig('Delta_Y_k_0_D_c_0.1_eligibility.pdf', bbox_inches='tight')
-    plt.show()
     plt.close()
 
 
@@ -242,7 +238,6 @@ def plot_Delta_Y_sum(m, Y_off_H, Y_el_H, X_ric, F_ric, fontsize=15):
 
     plt.savefig('arm_Y.pdf', bbox_inches='tight')
 
-    plt.show()
     plt.close()
 
 
@@ -313,7 +308,6 @@ def plot_Delta_F_sum(m, F_off_H, F_el_H, F_ric, fontsize=15):
 
     plt.savefig('arm_F.pdf', bbox_inches='tight')
 
-    plt.show()
     plt.close()
 
 

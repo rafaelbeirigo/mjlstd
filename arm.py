@@ -311,6 +311,10 @@ def plot_Delta_F_sum(m, F_off_H, F_el_H, F_ric, fontsize=15):
     plt.close()
 
 
+def saverep(data, name, r):
+    save(data, name + '-{:03d}.pkl'.format(r + 1))
+
+
 def main():
     """Runs the TD(\lambda) algorithm for the Samuelson problem."""
     print('wait for it...')

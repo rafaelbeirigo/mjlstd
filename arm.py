@@ -363,7 +363,6 @@ def main():
         }
         m = MJLS(**args)
 
-        Fs_H_, Ys_H_, Fs_el_H_, Ys_el_H_ = [], [], [], []
         for r in range(sp.R):
             print('arm.py: Repetition {:3d} of {:3d} '
                   '({:3.0f}%)'.format(r + 1, sp.R, 100. * (r + 1)/sp.R))

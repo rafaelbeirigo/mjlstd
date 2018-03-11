@@ -372,6 +372,10 @@ def main():
                   '({:3.0f}%)'.format(r + 1, sp.R, 100. * (r + 1)/sp.R))
 
             p.seed = r
+            Fs_H = loadrep('Fs_H', r)
+            Ys_H = loadrep('Ys_H', r)
+            Fs_el_H = loadrep('Fs_el_H', r)
+            Ys_el_H = loadrep('Ys_el_H', r)
 
             (Fs, Ys, Fs_H, Ys_H) = mjlstd(p, m)
             (Fs_el, Ys_el, Fs_el_H, Ys_el_H) = mjlstd_eligibility(p, m)

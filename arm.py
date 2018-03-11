@@ -378,6 +378,7 @@ def main():
             Ys_el_H = loadrep('Ys_el_H', r)
 
             if (Fs_H is None or Ys_H is None or Fs_el_H is None or Ys_el_H is None):
+                print('Calculating...')
                 p.seed = r
 
                 (Fs, Ys, Fs_H, Ys_H) = mjlstd(p, m)

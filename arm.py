@@ -374,8 +374,6 @@ def main():
             Fs_el_H_.append(Fs_el_H)
             Ys_el_H_.append(Ys_el_H)
 
-    plot_Delta_Y_sum(m, Ys_H_, Ys_el_H_, X_ric, F_ric)
-
     call(['cp', 'arm_Y.pdf',
           '/home/rafaelbeirigo/papers/2018mjlstdon/fig/arm_Y.pdf'])
 

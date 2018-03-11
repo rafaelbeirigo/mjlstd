@@ -373,10 +373,10 @@ def main():
             (Fs, Ys, Fs_H, Ys_H) = mjlstd(p, m)
             (Fs_el, Ys_el, Fs_el_H, Ys_el_H) = mjlstd_eligibility(p, m)
 
-            Fs_H_.append(Fs_H)
-            Ys_H_.append(Ys_H)
-            Fs_el_H_.append(Fs_el_H)
-            Ys_el_H_.append(Ys_el_H)
+            saverep(Fs_H, 'Fs_H', r)
+            saverep(Ys_H, 'Ys_H', r)
+            saverep(Fs_el_H, 'Fs_el_H', r)
+            saverep(Ys_el_H, 'Ys_el_H', r)
 
 
 if __name__ == '__main__':

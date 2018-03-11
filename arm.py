@@ -374,12 +374,6 @@ def main():
             Fs_el_H_.append(Fs_el_H)
             Ys_el_H_.append(Ys_el_H)
 
-    call(['cp', 'arm_Y.pdf',
-          '/home/rafaelbeirigo/papers/2018mjlstdon/fig/arm_Y.pdf'])
-
-    call(['cp', 'arm_F.pdf',
-          '/home/rafaelbeirigo/papers/2018mjlstdon/fig/arm_F.pdf'])
-
 
 if __name__ == '__main__':
     main()

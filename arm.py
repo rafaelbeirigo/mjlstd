@@ -371,19 +371,21 @@ def main():
             print('arm.py: Repetition {:3d} of {:3d} '
                   '({:3.0f}%)'.format(r + 1, sp.R, 100. * (r + 1)/sp.R))
 
-            p.seed = r
             Fs_H = loadrep('Fs_H', r)
             Ys_H = loadrep('Ys_H', r)
             Fs_el_H = loadrep('Fs_el_H', r)
             Ys_el_H = loadrep('Ys_el_H', r)
 
-            (Fs, Ys, Fs_H, Ys_H) = mjlstd(p, m)
-            (Fs_el, Ys_el, Fs_el_H, Ys_el_H) = mjlstd_eligibility(p, m)
+            if (Fs_H is None or Ys_H is None or Fs_el_H is None or Ys_el_H is None):
+                p.seed = r
 
-            saverep(Fs_H, 'Fs_H', r)
-            saverep(Ys_H, 'Ys_H', r)
-            saverep(Fs_el_H, 'Fs_el_H', r)
-            saverep(Ys_el_H, 'Ys_el_H', r)
+                (Fs, Ys, Fs_H, Ys_H) = mjlstd(p, m)
+                (Fs_el, Ys_el, Fs_el_H, Ys_el_H) = mjlstd_eligibility(p, m)
+
+                saverep(Fs_H, 'Fs_H', r)
+                saverep(Ys_H, 'Ys_H', r)
+                saverep(Fs_el_H, 'Fs_el_H', r)
+                saverep(Ys_el_H, 'Ys_el_H', r)
 
 
 if __name__ == '__main__':

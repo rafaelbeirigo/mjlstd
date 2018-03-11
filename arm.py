@@ -315,6 +315,10 @@ def saverep(data, name, r):
     save(data, name + '-{:03d}.pkl'.format(r + 1))
 
 
+def loadrep(name, r):
+    return load(name + '-{:03d}.pkl'.format(r + 1))
+
+
 def main():
     """Runs the TD(\lambda) algorithm for the Samuelson problem."""
     print('wait for it...')

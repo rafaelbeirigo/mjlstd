@@ -367,6 +367,7 @@ def main():
         }
         m = MJLS(**args)
 
+        Fs_H_, Ys_H_, Fs_el_H_, Ys_el_H_ = [], [], [], []
         for r in range(sp.R):
             print('arm.py: Repetition {:3d} of {:3d} '
                   '({:3.0f}%)'.format(r + 1, sp.R, 100. * (r + 1)/sp.R))
@@ -386,6 +387,13 @@ def main():
                 saverep(Ys_H, 'Ys_H', r)
                 saverep(Fs_el_H, 'Fs_el_H', r)
                 saverep(Ys_el_H, 'Ys_el_H', r)
+
+            Fs_H_.append(Fs_H)
+            Ys_H_.append(Ys_H)
+            Fs_el_H_.append(Fs_el_H)
+            Ys_el_H_.append(Ys_el_H)
+
+    plot_Delta_Y_sum(m, Ys_H_, Ys_el_H_, X_ric, F_ric)
 
 
 if __name__ == '__main__':

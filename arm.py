@@ -7,6 +7,7 @@ from MJLS import MJLS
 from mjlstd import mjlstd
 from mjlstd_eligibility import mjlstd_eligibility
 import matplotlib
+matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 import pickle
 import numpy as np

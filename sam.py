@@ -321,7 +321,7 @@ def main():
     """Runs the TD(\lambda) algorithm for the Samuelson problem."""
     print('wait for it...')
 
-    data = load('sam.pickle')
+    data = load('sam.pkl')
     if data is not None:
         (m, X_ric, F_ric, Ys_H_, Ys_el_H_, Fs_H_, Fs_el_H_) = data
     else:

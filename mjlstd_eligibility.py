@@ -31,13 +31,13 @@ def get_Y(p, m, Fs, Ys, Ys_hist):
     gamma = 1.0       # TODO: do we really want it constant?
     lambda_ = 0.1     # TODO: do we really want it constant?
 
-    e = np.zeros(m.N)
-
     for t in range(1, p.T + 1):
         Upsilon = np.eye(m.n)
 
         # TODO: parametrize
         theta = random.randint(0, m.N - 1)
+
+        e = np.zeros(m.N)
 
         for k in range(1, p.K):
             alpha = 0.1 / k
@@ -46,7 +46,8 @@ def get_Y(p, m, Fs, Ys, Ys_hist):
 
             delta = get_delta(m, Fs, Ys, Upsilon, gamma, theta, next_theta)
 
-            e[theta] += 1
+            if e[theta] == 0:
+                e[theta] = 1
 
             for i in range(m.N):
                 Ys[i] += alpha * e[i] * delta

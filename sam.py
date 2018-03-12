@@ -378,7 +378,7 @@ def main():
             Ys_el_H_.append(Ys_el_H)
 
         data = (m, X_ric, F_ric, Ys_H_, Ys_el_H_, Fs_H_, Fs_el_H_)
-        save(data, 'sam.pickle')
+        save(data, 'sam.pkl')
 
     plot_Delta_Y_sum(m, Ys_H_, Ys_el_H_, X_ric, F_ric)
     plot_Delta_F_sum(m, Fs_H_, Fs_el_H_, F_ric)

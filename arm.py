@@ -369,7 +369,6 @@ def main():
         m = MJLS(**args)
 
         Fs_H_, Fs_el_H_ = [], []
-        Ys_H_, Ys_el_H_ = [], []
         for r in range(sp.R):
             print('arm.py: Repetition {:3d} of {:3d} '
                   '({:3.0f}%)'.format(r + 1, sp.R, 100. * (r + 1)/sp.R))
@@ -377,29 +376,19 @@ def main():
             Fs_H = loadrep('Fs_H', r)
             Fs_el_H = loadrep('Fs_el_H', r)
 
-            Ys_H = loadrep('Ys_H', r)
-            Ys_el_H = loadrep('Ys_el_H', r)
-
-            if (Ys_H is None or Ys_el_H is None):
+            if (Fs_H is None or Fs_el_H is None):
                 print('Calculating...')
                 p.seed = r
 
-                (_, Ys, Fs_H, Ys_H) = mjlstd(p, m)
-                (_, Ys_el, Fs_el_H, Ys_el_H) = mjlstd_eligibility(p, m)
+                (_, _, Fs_H, _) = mjlstd(p, m)
+                (_, _, Fs_el_H, _) = mjlstd_eligibility(p, m)
 
                 saverep(Fs_H, 'Fs_H', r)
                 saverep(Fs_el_H, 'Fs_el_H', r)
 
-                saverep(Ys_H, 'Ys_H', r)
-                saverep(Ys_el_H, 'Ys_el_H', r)
-
             Fs_H_.append(Fs_H)
             Fs_el_H_.append(Fs_el_H)
 
-            Ys_H_.append(Ys_H)
-            Ys_el_H_.append(Ys_el_H)
-
-    plot_Delta_Y_sum(m, Ys_H_, Ys_el_H_, X_ric, F_ric)
     plot_Delta_F_sum(m, Fs_H_, Fs_el_H_, F_ric)
 
 

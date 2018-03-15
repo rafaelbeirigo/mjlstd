@@ -249,7 +249,7 @@ def e(x):
 
 def d(x, y):
     """Calculates a normalized difference."""
-    return (x - y) / y
+    return (x - y)
 
 
 def s(x):

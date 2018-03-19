@@ -317,7 +317,7 @@ def saverep(data, name, r):
 
 
 def loadrep(name, r):
-    return load(name + '-{:03d}.pkl'.format(r + 1))
+    return load('pkl/' + name + '-{:03d}.pkl'.format(r + 1))
 
 
 def main():

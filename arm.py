@@ -377,7 +377,11 @@ def main():
             Fs_H = loadrep('Fs_H', r)
             Fs_el_H = loadrep('Fs_el_H', r)
 
-            if (Fs_H is None or Fs_el_H is None):
+            Ys_H = loadrep('Ys_H', r)
+            Ys_el_H = loadrep('Ys_el_H', r)
+
+            if (Fs_H is None or Fs_el_H is None
+                or Ys_H is None or Ys_el_H is None):
                 print('Calculating...')
                 p.seed = r
 

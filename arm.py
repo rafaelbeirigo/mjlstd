@@ -313,7 +313,7 @@ def plot_Delta_F_sum(m, F_off_H, F_el_H, F_ric, fontsize=15):
 
 
 def saverep(data, name, r):
-    save(data, name + '-{:03d}.pkl'.format(r + 1))
+    save(data, 'pkl/' + name + '-{:03d}.pkl'.format(r + 1))
 
 
 def loadrep(name, r):

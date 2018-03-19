@@ -385,8 +385,8 @@ def main():
                 print('Calculating...')
                 p.seed = r
 
-                (_, _, Fs_H, _) = mjlstd(p, m)
-                (_, _, Fs_el_H, _) = mjlstd_eligibility(p, m)
+                (_, _, Fs_H, Ys_H) = mjlstd(p, m)
+                (_, _, Fs_el_H, Ys_el_H) = mjlstd_eligibility(p, m)
 
                 saverep(Fs_H, 'Fs_H', r)
                 saverep(Fs_el_H, 'Fs_el_H', r)

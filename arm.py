@@ -225,6 +225,9 @@ def plot_Delta_Y_sum(m, Y_off_H, Y_el_H, X_ric, F_ric, fontsize=15):
         F = A(Y_H, X_ric)
         Y_avg, Y_std = np.mean(F, 0), np.std(F, 0)
 
+        save(Y_avg, 'Y_avg-' + label + '.pkl')
+        save(Y_std, 'Y_std-' + label + '.pkl')
+
         x = range(len(Y_avg))
         plt.step(x, Y_avg, label=label, color=color)
         plot_error(x, Y_avg, Y_std)

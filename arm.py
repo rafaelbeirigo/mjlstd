@@ -391,6 +391,9 @@ def main():
                 saverep(Fs_H, 'Fs_H', r)
                 saverep(Fs_el_H, 'Fs_el_H', r)
 
+                saverep(Ys_H, 'Ys_H', r)
+                saverep(Ys_el_H, 'Ys_el_H', r)
+
             Fs_H_.append(Fs_H)
             Fs_el_H_.append(Fs_el_H)
 

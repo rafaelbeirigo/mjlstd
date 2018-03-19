@@ -397,6 +397,9 @@ def main():
             Fs_H_.append(Fs_H)
             Fs_el_H_.append(Fs_el_H)
 
+            Ys_H_.append(Ys_H)
+            Ys_el_H_.append(Ys_el_H)
+
     plot_Delta_F_sum(m, Fs_H_, Fs_el_H_, F_ric)
 
 

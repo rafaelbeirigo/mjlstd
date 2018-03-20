@@ -222,11 +222,8 @@ def plot_Delta_Y_sum(m, Y_off_H, Y_el_H, X_ric, F_ric, fontsize=15):
     data = [(Y_off_H, 'Offline', 'red'),
             (Y_el_H, 'Online', 'blue')]
     for Y_H, label, color in data:
-        F = A(Y_H, X_ric)
-        Y_avg, Y_std = np.mean(F, 0), np.std(F, 0)
-
-        save(Y_avg, 'Y_avg-' + label + '.pkl')
-        save(Y_std, 'Y_std-' + label + '.pkl')
+        Y_avg = load('Y_avg-' + label + '.pkl')
+        Y_std = load('Y_std-' + label + '.pkl')
 
         x = range(len(Y_avg))
         plt.step(x, Y_avg, label=label, color=color)
@@ -331,20 +328,6 @@ def main():
     if False and data is not None:
         (m, X_ric, F_ric, Ys_H_, Ys_el_H_, Fs_H_, Fs_el_H_) = data
     else:
-        seed = 0
-
-        args = {
-            'L': sp.L,
-            'T': sp.T,
-            'K': sp.K,
-            'lambda_': sp.lambda_,
-            'epsilon': sp.epsilon,
-            'c': sp.c,
-            'eta': sp.eta,
-            'seed': seed,
-        }
-        p = Parameters(**args)
-
         args = {
             'T': int(1e6),
             'N': sc.N,
@@ -357,53 +340,6 @@ def main():
         }
         [F_ric, X_ric] = riccati(**args)
 
-        args = {
-            'N': sc.N,
-            'm': sc.m,
-            'n': sc.n,
-            'A': sc.A,
-            'B': sc.B,
-            'C': sc.C,
-            'D': sc.D,
-            'P': sc.P,
-            'X': 0. * X_ric,
-            'F': F_ric,
-        }
-        m = MJLS(**args)
-
-        Fs_H_, Fs_el_H_ = [], []
-        Ys_H_, Ys_el_H_ = [], []
-        for r in range(sp.R):
-            print('arm.py: Repetition {:3d} of {:3d} '
-                  '({:3.0f}%)'.format(r + 1, sp.R, 100. * (r + 1)/sp.R))
-
-            Fs_H = loadrep('Fs_H', r)
-            Fs_el_H = loadrep('Fs_el_H', r)
-
-            Ys_H = loadrep('Ys_H', r)
-            Ys_el_H = loadrep('Ys_el_H', r)
-
-            if (Fs_H is None or Fs_el_H is None
-                or Ys_H is None or Ys_el_H is None):
-                print('Calculating...')
-                p.seed = r
-
-                (_, _, Fs_H, Ys_H) = mjlstd(p, m)
-                (_, _, Fs_el_H, Ys_el_H) = mjlstd_eligibility(p, m)
-
-                saverep(Fs_H, 'Fs_H', r)
-                saverep(Fs_el_H, 'Fs_el_H', r)
-
-                saverep(Ys_H, 'Ys_H', r)
-                saverep(Ys_el_H, 'Ys_el_H', r)
-
-            Fs_H_.append(Fs_H)
-            Fs_el_H_.append(Fs_el_H)
-
-            Ys_H_.append(Ys_H)
-            Ys_el_H_.append(Ys_el_H)
-
-    plot_Delta_F_sum(m, Fs_H_, Fs_el_H_, F_ric)
     plot_Delta_Y_sum(m, Ys_H_, Ys_el_H_, X_ric, F_ric)
 
 

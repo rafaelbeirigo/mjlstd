@@ -213,7 +213,7 @@ def plot_Delta_Y(m, Y_off, Y_el, X_ric, F_ric):
     plt.close()
 
 
-def plot_Delta_Y_sum(m, Y_off_H, Y_el_H, X_ric, F_ric, fontsize=15):
+def plot_Delta_Y_sum(Y_off_H, Y_el_H, X_ric, F_ric, fontsize=15):
     plt.figure()
 
     matplotlib.rc('xtick', labelsize=fontsize-2)

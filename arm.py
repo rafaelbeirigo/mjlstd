@@ -222,14 +222,28 @@ def plot_Delta_Y_sum(Y_off_H, Y_el_H, X_ric, F_ric, fontsize=15):
     data = [(Y_off_H, 'Offline', 'red'),
             (Y_el_H, 'Online', 'blue')]
     for Y_H, label, color in data:
-        Y_avg = load('Y_avg-' + label + '.pkl')
-        Y_std = load('Y_std-' + label + '.pkl')
+        Y_avg_orig = load('Y_avg-' + label + '.pkl')
+        Y_std_orig = load('Y_std-' + label + '.pkl')
+
+        Y_avg = Y_avg_orig[0::10]/max(Y_avg_orig)
+        Y_std = Y_std_orig[0::10]/max(Y_avg_orig)
 
         x = range(len(Y_avg))
-        plt.step(x, Y_avg, label=label, color=color)
+        plt.plot(x, Y_avg, label=label, color=color)
         plot_error(x, Y_avg, Y_std)
 
     plt.legend(loc=1, fontsize=fontsize)
+
+    plt.xticks((0, 250, 500, 750, 1000, 1250, 1500, 1750, 2000),
+               ('0',
+                '2500',
+                '5000',
+                '7500',
+                '10000',
+                '12500',
+                '15000',
+                '17500',
+                '20000'), fontsize=10)
 
     # Configure plot
     plt.ylabel(r'$\Delta Y$', fontsize=fontsize)
@@ -324,23 +338,19 @@ def main():
     """Runs the TD(\lambda) algorithm for the Samuelson problem."""
     print('wait for it...')
 
-    data = load('arm.pickle')
-    if False and data is not None:
-        (m, X_ric, F_ric, Ys_H_, Ys_el_H_, Fs_H_, Fs_el_H_) = data
-    else:
-        args = {
-            'T': int(1e6),
-            'N': sc.N,
-            'A': sc.A,
-            'B': sc.B,
-            'C': sc.C,
-            'D': sc.D,
-            'R': sc.P,
-            'epsilon': sp.epsilon,
-        }
-        [F_ric, X_ric] = riccati(**args)
+    args = {
+        'T': int(1e6),
+        'N': sc.N,
+        'A': sc.A,
+        'B': sc.B,
+        'C': sc.C,
+        'D': sc.D,
+        'R': sc.P,
+        'epsilon': sp.epsilon,
+    }
+    [F_ric, X_ric] = riccati(**args)
 
-    plot_Delta_Y_sum(m, Ys_H_, Ys_el_H_, X_ric, F_ric)
+    plot_Delta_Y_sum(None, None, X_ric, F_ric)
 
 
 if __name__ == '__main__':

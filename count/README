@@ -1,0 +1,6 @@
+P, P_tilde e Fvec_tilde foram obtidas de
+cerob/MarkovianSimulator/riccati/1000_iter/loop_loop_iteration_0100.mat
+Git: origin/plot c88519f4d18a719f0fd1401096c22b7600762187
+
+Elas são calculadas na estratégia de aproximação de P por
+maximização de verossimilhança.

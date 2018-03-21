@@ -154,7 +154,7 @@ def get_F(m, Fs, Ys):
     return Fs
 
 
-def mjlstd(p, m):
+def mjlstdoff(p, m):
     """Applies the TD(\lambda) method to solve a MJLS.
     Args:
         p (:obj:`Parameters`): parameters for the algorithm; for details on

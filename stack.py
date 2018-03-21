@@ -9,6 +9,6 @@ def stack(a):
         c.append(b.shape[0])
         c.append(b.shape[1])
 
-        d = d + b.reshape(-1).tolist()
+        d = d + b.reshape(-1, order='F').tolist()
 
     return [-1] + [count] + c + d

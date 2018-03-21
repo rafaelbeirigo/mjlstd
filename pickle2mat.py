@@ -2,15 +2,18 @@ from stack import stack
 import pickle
 from scipy.io import savemat
 import numpy as np
-from subprocess import call
+import os
+
 
 ##################################################
 # Opens pickle data and saves it as matlab data. #
 ##################################################
 
+dir = 'count'
+
 # Define names and filenames
-a = [['mjlstdon', 'Fs_el_H-001.pkl'],
-     ['mjlstdoff', 'Fs_H-001.pkl']]
+a = [['mjlstdon', '{:s}/Fs_el_H-001.pkl'.format(dir)],
+     ['mjlstdoff', '{:s}/Fs_H-001.pkl'.format(dir)]]
 
 # Open the data from the files using the filenames
 for b in a:
@@ -27,12 +30,14 @@ for b in a:
                     e[:, 1] *= 0.
                     e[:, 4] *= 0.
 
+        f = stack(d)
+        f = np.reshape(np.array(f), (len(f), 1))
+
         # Save the data in matlab format using the names
         # loop_loop_iteration_0001.mat
-        filename = '{:s}/loop_loop_iteration_{:04d}.mat'.format(b[0], i)
-        f = np.array(stack(d))
-        savemat(filename, mdict={'Fvec_tilde': f.reshape(len(f), 1)})
-        i = i + 1
+        dir_ = '/home/rafaelbeirigo/cerob/MarkovianSimulator/{:s}'.format(b[0])
+        filename = 'loop_loop_iteration_{:04d}.mat'.format(i)
+        path = os.path.join(dir_, filename)
+        savemat(path, mdict={'Fvec_tilde': f})
 
-    call(['cp', '-r', b[0],
-          '/home/rafaelbeirigo/cerob/MarkovianSimulator/'])
+        i = i + 1

@@ -1,5 +1,11 @@
+from stack import stack
 import pickle
 from scipy.io import savemat
+import numpy as np
+
+##################################################
+# Opens pickle data and saves it as matlab data. #
+##################################################
 
 # Define names and filenames
 a = [['mjlstdon', 'Fs_el_H-001.pkl'],
@@ -13,5 +19,7 @@ for b in a:
         # Save the data in matlab format using the names
         # loop_loop_iteration_0001.mat
         filename = '{:s}/loop_loop_iteration_{:04d}.mat'.format(b[0], i)
-        savemat(filename, mdict={'Fvec_tilde': d})
+        e = np.array(stack(d))
+        f = e.reshape(len(e), 1)
+        savemat(filename, mdict={'Fvec_tilde': f})
         i = i + 1

@@ -152,7 +152,7 @@ def mjlstdon(p, m):
     np.random.seed(p.seed)
 
     for l in range(p.L):
-        print('mjlstd_eligibility.py: L {:3d} of {:3d} '
+        print('mjlstdon.py: L {:3d} of {:3d} '
               '({:3.0f}%)'.format(l + 1, p.L, 100. * (l + 1)/p.L))
 
         (Ys, Ys_h) = get_Y(p, m, Fs.copy(), Ys.copy(), [])

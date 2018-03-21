@@ -30,9 +30,8 @@ for b in a:
         # Save the data in matlab format using the names
         # loop_loop_iteration_0001.mat
         filename = '{:s}/loop_loop_iteration_{:04d}.mat'.format(b[0], i)
-        e = np.array(stack(d))
-        f = e.reshape(len(e), 1)
-        savemat(filename, mdict={'Fvec_tilde': f})
+        f = np.array(stack(d))
+        savemat(filename, mdict={'Fvec_tilde': f.reshape(len(f), 1)})
         i = i + 1
 
     call(['cp', '-r', b[0],

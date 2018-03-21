@@ -4,8 +4,8 @@ import arm_constants as sc
 import arm_parameters as sp
 from Parameters import Parameters
 from MJLS import MJLS
-from mjlstd import mjlstd
-from mjlstd_eligibility import mjlstd_eligibility
+from mjlstdoff import mjlstdoff
+from mjlstdon import mjlstdon
 import matplotlib
 matplotlib.use('Agg')
 import matplotlib.pyplot as plt

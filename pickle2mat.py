@@ -17,6 +17,16 @@ for b in a:
     c = pickle.load(open(b[1], 'rb'))
     i = 1
     for d in c:
+        for e in d:
+            # Zero the adequate columns
+            if i >= 9:
+                if i <= 16:
+                    e[:, 0] *= 0.
+                    e[:, 3] *= 0.
+                else:
+                    e[:, 1] *= 0.
+                    e[:, 4] *= 0.
+
         # Save the data in matlab format using the names
         # loop_loop_iteration_0001.mat
         filename = '{:s}/loop_loop_iteration_{:04d}.mat'.format(b[0], i)

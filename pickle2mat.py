@@ -2,6 +2,7 @@ from stack import stack
 import pickle
 from scipy.io import savemat
 import numpy as np
+from subprocess import call
 
 ##################################################
 # Opens pickle data and saves it as matlab data. #
@@ -23,3 +24,6 @@ for b in a:
         f = e.reshape(len(e), 1)
         savemat(filename, mdict={'Fvec_tilde': f})
         i = i + 1
+
+    call(['cp', '-r', b[0],
+          '/home/rafaelbeirigo/cerob/MarkovianSimulator/'])

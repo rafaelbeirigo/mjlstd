@@ -134,7 +134,7 @@ def get_F(m, Fs, Ys):
     return Fs
 
 
-def mjlstd_eligibility(p, m):
+def mjlstdon(p, m):
     """Applies the TD(\lambda) method to solve a MJLS.
     Args:
         p (:obj:`Parameters`): parameters for the algorithm; for details on

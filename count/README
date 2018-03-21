@@ -4,3 +4,8 @@ Git: origin/plot c88519f4d18a719f0fd1401096c22b7600762187
 
 Elas são calculadas na estratégia de aproximação de P por
 maximização de verossimilhança.
+
+Fs_el_H-001.pkl e Fs_H-001.pkl correspondem aos históricos
+("rastros") de Fs, calculadas pelo TD(λ) online ("el" vem de
+"eligibility") e offline, respectivamente.
+Git: master f3269b2da69d1c87b85c121c8d4817dd3a8b7459

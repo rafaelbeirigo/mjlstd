@@ -14,21 +14,6 @@ import numpy as np
 from subprocess import call
 
 
-def load(filename):
-    """Loads persisted data."""
-    try:
-        with open(filename, 'rb') as f:
-            return pickle.load(f)
-    except Exception:
-        return None
-
-
-def save(data, filename):
-    """Persists data."""
-    with open(filename, 'wb') as f:
-        pickle.dump(data, f, pickle.HIGHEST_PROTOCOL)
-
-
 def get_E_cal_X(m, X):
     E_cal_X = np.zeros_like(X)
     for i in range(m.N):

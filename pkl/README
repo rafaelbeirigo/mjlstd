@@ -1,3 +1,8 @@
-P foi obtida de
+A pasta "P" faz parte de experimerimentos para avaliar a
+"qualidade" das diversas matrizes de probabilidade de
+transição existentes. As outras duas são P_tilde, e
+P_hardcoded.
+
+P foi calculada por mle, obtida de
 cerob/MarkovianSimulator/riccati/1000_iter/loop_loop_iteration_0100.mat
 Git: origin/plot c88519f4d18a719f0fd1401096c22b7600762187

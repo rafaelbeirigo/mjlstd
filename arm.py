@@ -390,9 +390,6 @@ def main():
                 saverep(Fs_H, 'Fs_H', r)
                 saverep(Fs_el_H, 'Fs_el_H', r)
 
-            Ys_H_.append(Ys_H)
-            Ys_el_H_.append(Ys_el_H)
-
     plot_Delta_Y_sum(m, Ys_H_, Ys_el_H_, X_ric, F_ric)
 
 

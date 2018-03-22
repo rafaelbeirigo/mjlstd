@@ -323,72 +323,66 @@ def main():
     """Runs the TD(\lambda) algorithm for the Samuelson problem."""
     print('wait for it...')
 
-    data = load('arm.pickle')
-    if False and data is not None:
-        (m, X_ric, F_ric, Ys_H_, Ys_el_H_, Fs_H_, Fs_el_H_) = data
-    else:
-        seed = 0
+    args = {
+        'L': sp.L,
+        'T': sp.T,
+        'K': sp.K,
+        'lambda_': sp.lambda_,
+        'epsilon': sp.epsilon,
+        'c': sp.c,
+        'eta': sp.eta,
+        'seed': seed,
+    }
+    p = Parameters(**args)
 
-        args = {
-            'L': sp.L,
-            'T': sp.T,
-            'K': sp.K,
-            'lambda_': sp.lambda_,
-            'epsilon': sp.epsilon,
-            'c': sp.c,
-            'eta': sp.eta,
-            'seed': seed,
-        }
-        p = Parameters(**args)
+    args = {
+        'T': int(1e6),
+        'N': sc.N,
+        'A': sc.A,
+        'B': sc.B,
+        'C': sc.C,
+        'D': sc.D,
+        'R': sc.P,
+        'epsilon': sp.epsilon,
+    }
+    [F_ric, X_ric] = riccati(**args)
 
-        args = {
-            'T': int(1e6),
-            'N': sc.N,
-            'A': sc.A,
-            'B': sc.B,
-            'C': sc.C,
-            'D': sc.D,
-            'R': sc.P,
-            'epsilon': sp.epsilon,
-        }
-        [F_ric, X_ric] = riccati(**args)
+    args = {
+        'N': sc.N,
+        'm': sc.m,
+        'n': sc.n,
+        'A': sc.A,
+        'B': sc.B,
+        'C': sc.C,
+        'D': sc.D,
+        'P': sc.P,
+        'X': 0. * X_ric,
+        'F': F_ric,
+    }
+    m = MJLS(**args)
 
-        args = {
-            'N': sc.N,
-            'm': sc.m,
-            'n': sc.n,
-            'A': sc.A,
-            'B': sc.B,
-            'C': sc.C,
-            'D': sc.D,
-            'P': sc.P,
-            'X': 0. * X_ric,
-            'F': F_ric,
-        }
-        m = MJLS(**args)
+    for r in range(sp.R):
+        print('arm.py: Repetition {:3d} of {:3d} '
+              '({:3.0f}%)'.format(r + 1, sp.R, 100. * (r + 1)/sp.R))
 
-        for r in range(sp.R):
-            print('arm.py: Repetition {:3d} of {:3d} '
-                  '({:3.0f}%)'.format(r + 1, sp.R, 100. * (r + 1)/sp.R))
+        Ys_H = loadrep('Ys_H', r)
+        Ys_el_H = loadrep('Ys_el_H', r)
 
-            Ys_H = loadrep('Ys_H', r)
-            Ys_el_H = loadrep('Ys_el_H', r)
+        Fs_H = loadrep('Fs_H', r)
+        Fs_el_H = loadrep('Fs_el_H', r)
 
-            Fs_H = loadrep('Fs_H', r)
-            Fs_el_H = loadrep('Fs_el_H', r)
+        if (Ys_H is None or Ys_el_H is None or Fs_H is None or Fs_el_H is None):
+            print('Calculating...')
+            p.seed = r
 
-            if (Ys_H is None or Ys_el_H is None or Fs_H is None or Fs_el_H is None):
-                print('Calculating...')
-                p.seed = r
+            (_, _, Fs_H, Ys_H) = mjlstd(p, m)
+            (_, _, Fs_el_H, Ys_el_H) = mjlstd_eligibility(p, m)
 
-                (_, _, Fs_H, Ys_H) = mjlstd(p, m)
-                (_, _, Fs_el_H, Ys_el_H) = mjlstd_eligibility(p, m)
+            saverep(Ys_H, 'Ys_H', r)
+            saverep(Ys_el_H, 'Ys_el_H', r)
 
-                saverep(Ys_H, 'Ys_H', r)
-                saverep(Ys_el_H, 'Ys_el_H', r)
-
-                saverep(Fs_H, 'Fs_H', r)
-                saverep(Fs_el_H, 'Fs_el_H', r)
+            saverep(Fs_H, 'Fs_H', r)
+            saverep(Fs_el_H, 'Fs_el_H', r)
 
 
 if __name__ == '__main__':

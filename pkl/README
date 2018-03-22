@@ -6,3 +6,5 @@ P_hardcoded.
 P foi calculada por mle, obtida de
 cerob/MarkovianSimulator/riccati/1000_iter/loop_loop_iteration_0100.mat
 Git: origin/plot c88519f4d18a719f0fd1401096c22b7600762187
+
+P_hardcoded foi encontrada no código-fonte do CERob.

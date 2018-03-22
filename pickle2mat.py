@@ -23,15 +23,17 @@ for b in a:
     c = pickle.load(open(b[1], 'rb'))
     i = 1
     for d in c:
+        j = 1
         for e in d:
             # Zero the adequate columns
-            if i >= 9:
-                if i <= 16:
+            if j >= 9:
+                if j <= 16:
                     e[:, 0] *= 0.
                     e[:, 3] *= 0.
                 else:
                     e[:, 1] *= 0.
                     e[:, 4] *= 0.
+            j += 1
 
         f = stack(d)
         f = np.reshape(np.array(f), (len(f), 1))

@@ -331,7 +331,7 @@ def main():
         'epsilon': ap.epsilon,
         'c': ap.c,
         'eta': ap.eta,
-        'seed': seed,
+        'seed': 0,
     }
     p = Parameters(**args)
 

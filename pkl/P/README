@@ -1,0 +1,7 @@
+Fs_el_H-001.pkl e Fs_H-001.pkl correspondem aos históricos
+("rastros") de Fs, calculadas pelo TD(λ) online ("el" vem de
+"eligibility") e offline, respectivamente.
+
+origin/master bcc92ed863508413df13b77e63c9c1af1a6ac649
+Author:     Rafael Beirigo <rafaelbeirigo@gmail.com>
+AuthorDate: Wed Mar 21 22:28:06 2018 -0300

@@ -13,4 +13,4 @@ lambda_ = 1e-1
 c = 1e-1
 eta = 1e0
 
-epsilon = 1e-3
+epsilon = 1e-6

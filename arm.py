@@ -1,7 +1,7 @@
 from functools import reduce
 from riccati import riccati
-import arm_constants as sc
-import arm_parameters as sp
+import arm_constants as ac
+import arm_parameters as ap
 from Parameters import Parameters
 from MJLS import MJLS
 from mjlstdoff import mjlstdoff
@@ -324,46 +324,46 @@ def main():
     print('wait for it...')
 
     args = {
-        'L': sp.L,
-        'T': sp.T,
-        'K': sp.K,
-        'lambda_': sp.lambda_,
-        'epsilon': sp.epsilon,
-        'c': sp.c,
-        'eta': sp.eta,
+        'L': ap.L,
+        'T': ap.T,
+        'K': ap.K,
+        'lambda_': ap.lambda_,
+        'epsilon': ap.epsilon,
+        'c': ap.c,
+        'eta': ap.eta,
         'seed': seed,
     }
     p = Parameters(**args)
 
     args = {
         'T': int(1e6),
-        'N': sc.N,
-        'A': sc.A,
-        'B': sc.B,
-        'C': sc.C,
-        'D': sc.D,
-        'R': sc.P,
-        'epsilon': sp.epsilon,
+        'N': ac.N,
+        'A': ac.A,
+        'B': ac.B,
+        'C': ac.C,
+        'D': ac.D,
+        'R': ac.P,
+        'epsilon': ap.epsilon,
     }
     [F_ric, X_ric] = riccati(**args)
 
     args = {
-        'N': sc.N,
-        'm': sc.m,
-        'n': sc.n,
-        'A': sc.A,
-        'B': sc.B,
-        'C': sc.C,
-        'D': sc.D,
-        'P': sc.P,
+        'N': ac.N,
+        'm': ac.m,
+        'n': ac.n,
+        'A': ac.A,
+        'B': ac.B,
+        'C': ac.C,
+        'D': ac.D,
+        'P': ac.P,
         'X': 0. * X_ric,
         'F': F_ric,
     }
     m = MJLS(**args)
 
-    for r in range(sp.R):
+    for r in range(ap.R):
         print('arm.py: Repetition {:3d} of {:3d} '
-              '({:3.0f}%)'.format(r + 1, sp.R, 100. * (r + 1)/sp.R))
+              '({:3.0f}%)'.format(r + 1, ap.R, 100. * (r + 1)/ap.R))
 
         Ys_H = loadrep('Ys_H', r)
         Ys_el_H = loadrep('Ys_el_H', r)

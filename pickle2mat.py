@@ -10,11 +10,13 @@ import os
 # Opens pickle data and saves it as matlab data. #
 ##################################################
 
-dir = 'count'
+xp = 'P'
+dirin = os.path.join('pkl', xp)
+dircerob = '/home/rafaelbeirigo/cerob/MarkovianSimulator/'
 
 # Define names and filenames
-a = [['mjlstdon', '{:s}/Fs_el_H-001.pkl'.format(dir)],
-     ['mjlstdoff', '{:s}/Fs_H-001.pkl'.format(dir)]]
+a = [['mjlstdon', os.path.join(dirin, 'Fs_el_H-001.pkl')],
+     ['mjlstdoff', os.path.join(dirin, 'Fs_H-001.pkl')]]
 
 # Open the data from the files using the filenames
 for b in a:
@@ -36,10 +38,10 @@ for b in a:
 
         # Save the data in matlab format using the names
         # loop_loop_iteration_0001.mat
-        dir_ = '/home/rafaelbeirigo/cerob/MarkovianSimulator/{:s}'.format(b[0])
+        dirout = os.path.join(dircerob, b[0], xp)
         call(['mkdir', '-p', dirout])
         filename = 'loop_loop_iteration_{:04d}.mat'.format(i)
-        path = os.path.join(dir_, filename)
+        path = os.path.join(dirout, filename)
         savemat(path, mdict={'Fvec_tilde': f})
 
         i = i + 1

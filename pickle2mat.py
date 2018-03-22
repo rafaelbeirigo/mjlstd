@@ -1,3 +1,4 @@
+from subprocess import call
 from stack import stack
 import pickle
 from scipy.io import savemat
@@ -36,6 +37,7 @@ for b in a:
         # Save the data in matlab format using the names
         # loop_loop_iteration_0001.mat
         dir_ = '/home/rafaelbeirigo/cerob/MarkovianSimulator/{:s}'.format(b[0])
+        call(['mkdir', '-p', dirout])
         filename = 'loop_loop_iteration_{:04d}.mat'.format(i)
         path = os.path.join(dir_, filename)
         savemat(path, mdict={'Fvec_tilde': f})

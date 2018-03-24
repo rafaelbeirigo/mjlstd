@@ -10,7 +10,7 @@ import os
 # Opens pickle data and saves it as matlab data. #
 ##################################################
 
-xp = 'P_hardcoded'
+xp = 'P'
 dirin = os.path.join('pkl', xp)
 dircerob = '/home/rafaelbeirigo/cerob/MarkovianSimulator/'
 

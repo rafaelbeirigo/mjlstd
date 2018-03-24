@@ -33,9 +33,9 @@ def get_initial_state(N):
     return theta
 
 
-def get_FX(P):
+def get_FX(P, T):
     args = {
-        'T': int(1e6),
+        'T': T,
         'N': ac.N,
         'A': ac.A,
         'B': ac.B,

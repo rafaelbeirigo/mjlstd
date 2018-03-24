@@ -53,6 +53,8 @@ def get_Y(p, m, Fs, Ys, Ys_hist):
                 Ys[i] += alpha * e[i] * delta
                 e[i] *= gamma * lambda_
 
+            Fs = get_F(m, Fs.copy(), Ys.copy())
+
             Upsilon = get_Upsilon(m, Fs, Upsilon, theta)
 
             theta = next_theta

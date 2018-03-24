@@ -67,7 +67,7 @@ for r in range(ap.R):
         P_tilde = normalize_flatten(P_count)
 
         print('Calculating F...')
-        [Fs, _] = get_FX(P_tilde)
+        [Fs, _] = get_FX(P_tilde, ap.T * (ap.K - 1))
 
         print('Appending F and P to their histories...')
         Fs_H.append(Fs)

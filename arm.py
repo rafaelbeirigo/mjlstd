@@ -356,24 +356,24 @@ def main():
         print('arm.py: Repetition {:3d} of {:3d} '
               '({:3.0f}%)'.format(r + 1, ap.R, 100. * (r + 1)/ap.R))
 
-        Ys_H = loadrep('Ys_H', r)
-        Ys_el_H = loadrep('Ys_el_H', r)
+        Ys_mjlstdoff_H = loadrep('Ys_mjlstdoff_H', r)
+        Ys_mjlstdon_H = loadrep('Ys_mjlstdon_H', r)
 
-        Fs_H = loadrep('Fs_H', r)
-        Fs_el_H = loadrep('Fs_el_H', r)
+        Fs_mjlstdoff_H = loadrep('Fs_mjlstdoff_H', r)
+        Fs_mjlstdon_H = loadrep('Fs_mjlstdon_H', r)
 
-        if (Ys_H is None or Ys_el_H is None or Fs_H is None or Fs_el_H is None):
+        if (Ys_mjlstdoff_H is None or Ys_mjlstdon_H is None or Fs_mjlstdoff_H is None or Fs_mjlstdon_H is None):
             print('Calculating...')
             p.seed = r
 
             (_, _, Fs_mjlstdoff_H, Ys_mjlstdoff_H) = mjlstdoff(p, m)
             (_, _, Fs_mjlstdon_H, Ys_mjlstdon_H) = mjlstdon(p, m)
 
-            saverep(Ys_H, 'Ys_H', r)
-            saverep(Ys_el_H, 'Ys_el_H', r)
+            saverep(Ys_mjlstdoff_H, 'Ys_mjlstdoff_H', r)
+            saverep(Ys_mjlstdon_H, 'Ys_mjlstdon_H', r)
 
-            saverep(Fs_H, 'Fs_H', r)
-            saverep(Fs_el_H, 'Fs_el_H', r)
+            saverep(Fs_mjlstdoff_H, 'Fs_mjlstdoff_H', r)
+            saverep(Fs_mjlstdon_H, 'Fs_mjlstdon_H', r)
 
 
 if __name__ == '__main__':

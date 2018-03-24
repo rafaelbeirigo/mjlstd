@@ -6,12 +6,11 @@ from Parameters import Parameters
 from MJLS import MJLS
 from mjlstdoff import mjlstdoff
 from mjlstdon import mjlstdon
+from file import saverep, loadrep, load
 import matplotlib
 matplotlib.use('Agg')
 import matplotlib.pyplot as plt
-import pickle
 import numpy as np
-from subprocess import call
 
 
 def get_E_cal_X(m, X):

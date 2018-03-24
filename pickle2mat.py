@@ -10,12 +10,12 @@ from os.path import join as ospj
 # Opens pickle data and saves it as matlab data. #
 ##################################################
 
-xp = 'P'
+xp = 'fair'
 dirin = ospj('./pkl', xp)
-dircerob = '/home/rafaelbeirigo/cerob/MarkovianSimulator/'
+dircerob = '/home/rafaelbeirigo/cerob/MarkovianSimulator/xp'
 
 # Define names and filenames
-algorithms = ['mjlstdon', 'mjlstdoff', 'mjlsmle']
+algorithms = ['mjlsmle']
 
 # Open the data from the files using the filenames
 for algorithm in algorithms:

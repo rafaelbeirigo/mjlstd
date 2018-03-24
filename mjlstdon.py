@@ -35,7 +35,7 @@ def get_Y(p, m, Fs, Ys, Ys_hist):
         Upsilon = np.eye(m.n)
 
         # TODO: parametrize
-        theta = random.randint(0, m.N)
+        theta = np.random.randint(0, m.N)
 
         e = np.zeros(m.N)
 

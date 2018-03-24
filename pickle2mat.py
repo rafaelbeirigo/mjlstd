@@ -3,7 +3,7 @@ from stack import stack
 import pickle
 from scipy.io import savemat
 import numpy as np
-import os
+from os.path import join as ospj
 
 
 ##################################################
@@ -11,39 +11,40 @@ import os
 ##################################################
 
 xp = 'P'
-dirin = os.path.join('pkl', xp)
+dirin = ospj('./pkl', xp)
 dircerob = '/home/rafaelbeirigo/cerob/MarkovianSimulator/'
 
 # Define names and filenames
-a = [['mjlstdon', os.path.join(dirin, 'Fs_el_H-001.pkl')],
-     ['mjlstdoff', os.path.join(dirin, 'Fs_H-001.pkl')]]
+algorithms = ['mjlstdon', 'mjlstdoff', 'mjlsmle']
 
 # Open the data from the files using the filenames
-for b in a:
-    c = pickle.load(open(b[1], 'rb'))
+for algorithm in algorithms:
+    pkl_filename = 'Fs_H_' + algorithm + '-001.pkl'
+    pkl_path = ospj(dirin, pkl_filename)
+    Fs_H = pickle.load(open(pkl_path, 'rb'))
     i = 1
-    for d in c:
+    for Fs in Fs_H:
         j = 1
-        for e in d:
+        for F in Fs:
             # Zero the adequate columns
             if j >= 9:
                 if j <= 16:
-                    e[:, 0] *= 0.
-                    e[:, 3] *= 0.
+                    F[:, 0] *= 0.
+                    F[:, 3] *= 0.
                 else:
-                    e[:, 1] *= 0.
-                    e[:, 4] *= 0.
+                    F[:, 1] *= 0.
+                    F[:, 4] *= 0.
             j += 1
 
-        f = stack(d)
-        f = np.reshape(np.array(f), (len(f), 1))
+        Fs_stack = stack(Fs)
+        Fs_stack = np.reshape(np.array(Fs_stack),
+                              (len(Fs_stack), 1))
 
-        # Save the data in matlab format using the names
-        # loop_loop_iteration_0001.mat
-        dirout = os.path.join(dircerob, b[0], xp)
+        # Save the data in matlab format
+        dirout = ospj(dircerob, algorithm, xp)
         call(['mkdir', '-p', dirout])
-        filename = 'loop_loop_iteration_{:04d}.mat'.format(i)
-        path = os.path.join(dirout, filename)
-        savemat(path, mdict={'Fvec_tilde': f})
+        mat_filename = 'loop_loop_iteration_{:04d}.mat'.format(i)
+        mat_path = ospj(dirout, mat_filename)
+        savemat(mat_path, mdict={'Fvec_tilde': Fs_stack})
 
         i = i + 1

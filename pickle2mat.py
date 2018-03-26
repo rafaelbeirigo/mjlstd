@@ -15,7 +15,7 @@ dirin = ospj('./pkl', xp)
 dircerob = '/home/rafaelbeirigo/cerob/MarkovianSimulator/xp'
 
 # Define names and filenames
-algorithms = ['mjlsmle']
+algorithms = ['mjlstdon', 'mjlstdoff', 'mjlsmle']
 
 # Open the data from the files using the filenames
 for algorithm in algorithms:

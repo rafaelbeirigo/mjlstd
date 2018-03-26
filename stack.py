@@ -1,3 +1,6 @@
+import numpy as np
+
+
 def stack(a):
     '''Stacks a list of matrices in a 1-D list.'''
     c = []                      # shapes (cols and rows)
@@ -11,4 +14,8 @@ def stack(a):
 
         d = d + b.reshape(-1, order='F').tolist()
 
-    return [-1] + [count] + c + d
+    e = [-1] + [count] + c + d
+
+    f = np.reshape(np.array(e), (len(e), 1))
+
+    return f

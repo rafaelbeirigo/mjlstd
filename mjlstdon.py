@@ -162,7 +162,12 @@ def mjlstdon(p, m):
               '({:3.0f}%)'.format(l + 1, p.L, 100. * (l + 1)/p.L))
 
         (Ys, Ys_h) = get_Y(p, m, Fs.copy(), Ys.copy(), [])
-        Fs = get_F(m, Fs.copy(), Ys.copy())
+
+        try:
+            Fs_new = get_F(m, Fs.copy(), Ys.copy())
+        except Exception:
+            Fs_new = Fs
+        Fs = Fs_new
 
         Ys_H.extend(Ys_h)
         Fs_H.append(Fs)

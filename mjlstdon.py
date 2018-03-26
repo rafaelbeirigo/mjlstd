@@ -59,7 +59,11 @@ def get_Y(p, m, Fs, Ys, Ys_hist):
 
         Ys_hist.append(Ys.copy())
 
-        Fs = get_F(m, Fs.copy(), Ys.copy())
+        try:
+            Fs_new = get_F(m, Fs.copy(), Ys.copy())
+        except Exception:
+            Fs_new = Fs
+        Fs = Fs_new
 
     return (Ys, Ys_hist)
 

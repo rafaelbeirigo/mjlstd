@@ -17,7 +17,6 @@ dircerob = '/home/rafaelbeirigo/cerob/MarkovianSimulator/xp'
 # Define names and filenames
 algorithms = ['mjlstdon', 'mjlstdoff', 'mjlsmle']
 
-# Open the data from the files using the filenames
 for algorithm in algorithms:
     pkl_filename = 'Fs_H_' + algorithm + '-001.pkl'
     pkl_path = ospj(dirin, pkl_filename)
@@ -48,3 +47,4 @@ for algorithm in algorithms:
         savemat(mat_path, mdict={'Fvec_tilde': Fs_stack})
 
         i = i + 1
+# Open data from the files using the filenames

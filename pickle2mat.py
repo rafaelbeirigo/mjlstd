@@ -41,7 +41,7 @@ for algorithm in algorithms:
                               (len(Fs_stack), 1))
 
         # Save the data in matlab format
-        dirout = ospj(dircerob, algorithm, xp)
+        dirout = ospj(dircerob, xp, algorithm)
         call(['mkdir', '-p', dirout])
         mat_filename = 'loop_loop_iteration_{:04d}.mat'.format(i)
         mat_path = ospj(dirout, mat_filename)

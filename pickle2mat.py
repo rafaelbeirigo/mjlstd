@@ -1,3 +1,4 @@
+from pathlib import Path
 from subprocess import call
 from stack import stack
 import pickle
@@ -11,7 +12,7 @@ from os.path import join as ospj
 
 xp = 'fair'
 dirin = ospj('./pkl', xp)
-dircerob = '/home/rafaelbeirigo/cerob/MarkovianSimulator/xp'
+dircerob = str(Path.home()) + '/cerob/MarkovianSimulator/xp'
 
 # Define names and filenames
 algorithms = ['mjlstdon-t']

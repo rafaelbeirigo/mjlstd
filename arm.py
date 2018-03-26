@@ -356,17 +356,17 @@ def main():
         print('arm.py: Repetition {:3d} of {:3d} '
               '({:3.0f}%)'.format(r + 1, ap.R, 100. * (r + 1)/ap.R))
 
-        Ys_mjlstdon_H = loadrep('Ys_mjlstdon_H', r)
-        Fs_mjlstdon_H = loadrep('Fs_mjlstdon_H', r)
+        Ys_H_mjlstdon = loadrep('Ys_H_mjlstdon', r)
+        Fs_H_mjlstdon = loadrep('Fs_H_mjlstdon', r)
 
-        if (Ys_mjlstdon_H is None or Fs_mjlstdon_H is None):
+        if (Ys_H_mjlstdon is None or Fs_H_mjlstdon is None):
             print('Calculating...')
             p.seed = r
 
-            (_, _, Fs_mjlstdon_H, Ys_mjlstdon_H) = mjlstdon(p, m)
+            (_, _, Fs_H_mjlstdon, Ys_H_mjlstdon) = mjlstdon(p, m)
 
-            saverep(Ys_mjlstdon_H, 'Ys_mjlstdon_H', r)
-            saverep(Fs_mjlstdon_H, 'Fs_mjlstdon_H', r)
+            saverep(Ys_H_mjlstdon, 'Ys_H_mjlstdon', r)
+            saverep(Fs_H_mjlstdon, 'Fs_H_mjlstdon', r)
 
 
 if __name__ == '__main__':
